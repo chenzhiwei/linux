@@ -1,0 +1,13 @@
+keepalive 2
+deadtime 30
+warntime 5
+initdead 120
+udpport 6942
+ucast eth1 172.16.12.42
+auto_failback off
+node host41 host42 
+ping_group group1 172.16.12.1
+respawn hacluster /usr/lib64/heartbeat/ipfail
+respawn hacluster /usr/lib64/heartbeat/dopd
+apiauth dopd gid=haclient uid=hacluster
+use_logd yes

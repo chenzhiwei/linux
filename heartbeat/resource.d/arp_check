@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# This script is used to ensure correct mapping of vip<->mac
+# For we use eth network not serial line to probe heartbeat mostly,
+# when switch box becomes unstable temporaryly, heartbeat A will think 
+# heartbeat B is dead, and acquire all resources. 
+# After switch box becomes stable, heartbeat A and B will arbitrate, and 
+# one of heartbeat servers will giveup all resources!
+# But another heartbeat will not send arp-broadcasting again! and may cause
+# problems, for ip resource is not the same as other resources!
+#
+#
+
+SEND_ARP=/usr/lib/heartbeat/send_arp
+[ -x $SEND_ARP ] || SEND_ARP=/usr/lib64/heartbeat/send_arp
+[ -x $SEND_ARP ] || SEND_ARP=/opt/lib/heartbeat/send_arp
+
+PIDFILE_DIR=/var/run/heartbeat/rsctmp/send_arp
+[ -d $PIDFILE_DIR ] || PIDFILE_DIR=/opt/var/run/heartbeat/rsctmp/send_arp
+
+HARESOURCES=/etc/ha.d/haresources
+[ -f $HARESOURCES ] || HARESOURCES=/opt/etc/ha.d/haresources
+
+RES=`awk '$0 !~ /^\s*#/ {
+        for(i=2; i<NF+1; i++) {
+                if($i ~ /IPaddr/) { printf($i " ") }
+        }
+}' $HARESOURCES`
+
+for res in $RES; do
+    ipaddr=`echo $res | cut -f 3 -d ':'`
+    ip=`echo $ipaddr | cut -f 1 -d '/'`
+    eth=`echo $ipaddr | cut -f 3 -d '/'`
+    /sbin/ip addr show | grep -q $ip && $SEND_ARP -i 200 -r 5 -p $PIDFILE_DIR/send_arp-$ip $eth $ip auto $ip ffffffffffff
+done
+
+exit 0

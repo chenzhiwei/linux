@@ -1,0 +1,73 @@
+# heartbeat配置相关
+
+## heartbeat是什么
+heartbeat是集群管理中保证集群高可用的一个服务软件，它可以瞬间接管一台机器上的所有资源（包括访问资源、提供服务的资源和IP地址等等）
+
+## heartbeat的工作原理
+heartbeat最核心的包括两个部分，心跳监测部分和资源接管部分，心跳监测可以通过网络链路和串口进行，而且支持冗余链路，目前版本只支持2个节点间的监测和备份(后续版本将支持多个节点)，它们之间相互发送报文来告诉对方自己当前的状态，如果在指定的时间内未受到对方（提供服务方）发送的报文，那么就认为对方失效，这时需启动资源接管模块来接管运行在对方主机上的资源或者服务。 
+
+## heartbeat的配置文件
+heartbeat主要的配置文件有3个，分别是authkeys,ha.cf和haresources。
+
+### authkeys
+auth 2  
+\#1 crc  
+2 sha1 somewords  
+\#3 md5  somewords
+
+该文件为heartbeat的认证文件，该文件主要是用于集群中两个节点的认证，采用的算法和密钥(如果有的话)在集群中节点上必须相同，目前提供了3种算法：crc/md5/sha1。其中crc不能够提供认证，它只能够用于校验数据包是否损坏，而sha1/md5需要一个密钥来进行认证，从资源消耗的角度来讲，md5消耗的比较多，sha1次之，因此建议一般使用sha1算法。
+
+可以看出，示例中使用的是sha1算法，如果要换用其他算法只需要修改auth指令后面的数字，然后取消相应行的注释即可。另外，该文件的属性必须为600，否则heartbeat启动将失败。
+
+### ha.cf
+keepalive 2  
+warntime 5  
+deadtime 30  
+initdead 120  
+udpport 6942  
+bcast eth0  
+\# mcast eth0 225.0.0.1 694 1 0  
+ucast eth1 172.16.12.42  
+auto\_failback off  
+watchdog /dev/watchdog  
+node host41 host42  
+\# ping 172.16.12.1
+ping\_group group1 172.16.12.1  
+respawn hacluster /usr/lib64/heartbeat/ipfail  
+respawn hacluster /usr/lib64/heartbeat/dopd  
+apiauth dopd gid=haclient uid=hacluster  
+use\_logd yes
+
+keepalive 为发送心跳报文的间隔，默认单位为秒，也可以使用500ms来代理500毫秒，等同于0.5。
+
+warntime 认为对方可能宕掉的间隔时间。
+
+deadtime 认为对方宕掉的间隔时间，超过这个时间，则认为对方已经宕掉。
+
+initdead 等待对方启动的最大时间，（超过这个时间会自动认为对方已经启动成功？）。
+
+udpport 表示heartbeat广播/单播通讯使用的udp端口
+
+bcast 心跳所使用的网络接口
+
+ucast 单播通讯，对方网络接口及IP地址
+
+mcast 组播通讯，参数如下： 通讯所用的接口 绑定的组播IP（224.0.0.0-239.255.255.255）通讯端口 ttl 是否允许环回
+
+auto\_failback 表示当主节点（即提供资源/服务的节点）正常之后是否将资源/服务切换回来
+
+watchdog 看门狗定时器，如果节点一分钟内没有心跳，则重启节点
+
+node 就是heartbeat集群中的节点信息（节点的主机名: uname -n）
+
+ping/ping\_group 用于建立伪集群成员，作用是监测物理链路，如果该节点与伪集群成员不相通，那么该节点无权接管资源/服务
+
+### haresources
+host41 IPaddr2::202.102.154.41/24/eth0/202.102.154.255 IPaddr2::202.102.154.42/24/eth0/202.102.154.255 IProute::202.102.154.1 nginx arp\_check
+
+第一列表示主节点（提供服务的节点）主机名，两个IPaddr2和IProute为该节点上的资源，nginx和arp\_check可以认为是节点上的服务。当节点进行切换时，会执行以下命令 IPaddr2 202.102.154.41/24/eth0/202.102.154.255 start; IProute 202.102.154.1 start; nginx start; arp\_check start等，这些切换资源和服务的程序在/etc/init.d目录和/etc/ha.d/resource.d目录下存放着，一般都是shell脚本。haresources示例中的意思是新加两个公网IP、添加公网IP网关、启动nginx服务并进行arp检查。
+
+## 参考资料
+1\. heartbeat主页： <http://www.linux-ha.org/>  
+2\. heartbeat文档： <http://www.linux-ha.org/doc/users-guide/users-guide.html>  
+3\. heartbeat配置示例： <https://github.com/chenzhiwei/configure/tree/master/heartbeat>

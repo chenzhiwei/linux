@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+unset LANG; export LANG
+LC_ALL=C
+export LC_ALL
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+# We need to split the argument into pieces that IPaddr OCF RA can
+# recognize, sed is prefered over Bash specific builtin functions 
+# for portability.
+
+usage() {
+  echo "usage: $0 default-gw $LEGAL_ACTIONS"
+}
+
+if [ $# != 2 ]; then
+    usage
+    exit 1
+fi
+
+DEFAULT_GW=$1
+ACT=$2
+
+case $2 in
+  start)
+    /sbin/ip r | grep $DEFAULT_GW|grep -q default ||
+    /sbin/ip r add default via $DEFAULT_GW
+    ;;
+  stop)
+#    /sbin/ip r | grep $DEFAULT_GW|grep -q default &&
+#    /sbin/ip r del default via $DEFAULT_GW 
+    ;;
+  status)
+    /sbin/ip r | grep $DEFAULT_GW|grep -q default
+    ;;
+  *)
+    usage
+    ;;
+esac
+exit 0

@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+#
+#	2006, Huang Zhen <zhen.huang@gmail.com>
+#	convert it to calling OCF counterpart.
+#
+#	Copyright (C) 2004 Horms <horms@verge.net.au>
+#
+#       Based on IPaddr2: Copyright (C) 2003 Tuomo Soini <tis@foobar.fi>
+#
+# 	License:      GNU General Public License (GPL)
+# 	Support:      linux-ha@lists.linux-ha.org
+#
+#	This script send out gratuitous Arp for an IP address
+#
+#       It can be used _instead_ of the IPaddr2 or IPaddr resource
+#       to send gratuitous arp for an IP address on a given interface, 
+#       without adding the address to that interface. I.e. if for
+#       some reason you want to send gratuitous arp for addresses
+#       managed by IPaddr2 or IPaddr on an additional interface.
+#
+#	usage: $0 ip-address[/netmaskbits[/interface[:label][/broadcast]]] \
+#	    {start|stop|status|monitor}
+#
+#	The "start" arg adds an IP alias.
+#
+#	Surprisingly, the "stop" arg removes one.	:-)
+#
+#
+
+set -e
+
+unset LANG; export LANG
+LC_ALL=C
+export LC_ALL
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+# We need to split the argument into pieces that IPaddr OCF RA can
+# recognize, sed is prefered over Bash specific builtin functions 
+# for portability.
+
+usage() {
+  echo "usage: $0 ip-address/interface $LEGAL_ACTIONS"
+}
+
+if [ $# != 2 ]; then
+    usage
+    exit 1
+fi
+BASEIP=`echo $1 | sed "s%/.*%%"`
+INTERFACE=`echo $1 | sed "s%${BASEIP}/%%"`
+
+OCF_TYPE=SendArp
+OCF_RESKEY_ip=$BASEIP
+OCF_RESKEY_nic=$INTERFACE
+OCF_RESOURCE_INSTANCE=${OCF_TYPE}_$BASEIP
+export OCF_TYPE OCF_RESOURCE_INSTANCE OCF_RESKEY_ip OCF_RESKEY_nic
+
+ra_execocf $2
+
+# EOF - end of file

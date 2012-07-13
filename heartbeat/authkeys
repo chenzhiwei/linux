@@ -1,0 +1,4 @@
+auth 2
+#1 crc
+2 sha1 HA_somestring
+#3 md5 HA_somestring
