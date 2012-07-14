@@ -126,8 +126,8 @@ xforwardedfor=yes
 ```
 就这样配置，stunnel就可以代理https请求的abc.com了。在stunnel4.44版本之前与HAProxy结合使用时都需要打一个HAProxy提供的[补丁][stunnel_patch]，但之后的版本就不需要打HAProxy的补丁了。
 
-## 相关资料
-1\. HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>
-2\. 第一次接触HAProxy与Stunnel时的参考资料： <http://www.cnblogs.com/wsky/archive/2011/04/06/2007095.html>
+[stunnel_patch]: http://haproxy.1wt.eu/download/patches/
 
-[stunnel\_patch]: http://haproxy.1wt.eu/download/patches/
+## 相关资料
+1\. HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>  
+2\. 第一次接触HAProxy与Stunnel时的参考资料： <http://www.cnblogs.com/wsky/archive/2011/04/06/2007095.html>
