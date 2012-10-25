@@ -1,0 +1,167 @@
+# DRBD配置相关
+
+## DRBD是什么
+DRBD(Distributed Replicated Block Device)是一个用软件实现的、无共享的、服务器之间镜像块设备内容的存储复制解决方案。
+
+## DRBD的工作原理
+         +-----------+
+         |  文件系统 |
+         +-----------+
+               |
+               V
+        +--------------+
+        |   块设备层   |
+        | (/dev/drbd1) |
+        +--------------+
+         |            |
+         |            |
+         V            V
+ +-------------+  +------------+
+ |  本地硬盘   |  |  远程硬盘  |
+ | (/dev/hdb1) |  | (/dev/hdb1)|
+ +-------------+  +------------+
+     host1             host2
+
+如上图所示，本地硬盘和远程硬盘分别放置在两台不同的主机（host1和host2）上，两台主机硬盘中的内容是实时同步的，当host1出故障不可用时，可以使用host2，待host1机器恢复之后再从host2的硬盘上同步数据。
+
+## DRBD的复制模式
+DRBD有如下3种模式：
+
+协议A：异步复制协议。本地写成功后立即返回，数据放在发送buffer中，可能丢失。
+
+协议B：内存同步（半同步）复制协议。本地写成功并将数据发送到对方后立即返回，如果双机掉电，数据可能丢失。
+
+协议C：同步复制协议。本地和对方写成功确认后返回。如果双机掉电或磁盘同时损坏，则数据可能丢失。
+
+在使用时，一般用协议C。由于协议C是本地和对方写成功时再认为写入成功，因此会有一定时延。
+
+## DRBD的配置
+[主机]操作系统：CentOS 5.4 x86\_64 / 主机名:host1 / IP地址：192.169.100.1 / drbd分区： /dev/vdb  
+[备机]操作系统：CentOS 5.4 x86\_64 / 主机名:host2 / IP地址：192.168.100.2 / drbd分区： /dev/vdb
+
+### 配置文件drbd.conf
+global {
+    usage-count yes;
+}
+
+common {
+    protocol C;
+    syncer { rate 10M; }
+}
+
+resource r0 {
+    net {
+        cram-hmac-alg sha1;
+        shared-secret "FooBar";
+    } 
+    on host1 {
+        device    /dev/drbd0;
+        disk      /dev/vdb;
+        address   192.169.100.1:7898;
+        meta-disk internal;
+    }
+    on host2{
+        device    /dev/drbd0;
+        disk      /dev/vdb;
+        address   192.168.100.2:7898;
+        meta-disk internal;
+    }
+}
+
+配置文件中各项意义如下：
+
+useage-count 是否参加DRBD使用者统计，默认值为yes
+
+protocol 用哪种复制协议，也可以对单个resource进行配置
+
+syncer 主备节点同步时的网络速率最大值，单位是字节
+
+resource DRBD设备资源，可以有多个
+
+net 里面是主备之间通信使用的算法及密钥
+
+on 之后是主机名，里面为该主机的详细配置
+
+另：两个主机上的drbd.conf配置文件是相同的。
+
+更详细的配置文件说明：[drbd.conf](http://www.drbd.org/users-guide/re-drbdconf.html)
+
+## 使用DRBD
+### 在两台主机上创建DRBD记录信息的数据块
+```
+# drbdadm  create-md  r0 # r0是配置文件中的资源名字
+```
+
+注意：如果执行这条命令时出错，可以用以下方法解决。
+```
+# dd if=/dev/zero bs=1M count=1 of=/dev/vdb; sync # 将vdb换成你自己的设备即可
+# drbdadm create-md r0
+# mkfs /dev/drbd0 # 将drbd0换成你自己的块设备名字
+```
+
+### 分别在主备机上启动DRBD
+```
+# /etc/init.d/drbd start
+```
+
+### 查看DRBD的状态
+```
+# cat /proc/drbd
+```
+
+在不设置主的情况下两台机器上的状态是相同的，内容如下：
+```
+version: 8.3.2 (api:88/proto:86-90)
+GIT-hash: dd7985327f146f33b86d4bff5ca8c94234ce840e build by mockbuild@v20z-x86-64.home.local, 2009-08-29 14:07:55
+ 0: cs:Connected ro:Secondary/Secondary ds:Inconsistent/Inconsistent C r----
+    ns:0 nr:0 dw:0 dr:0 al:0 bm:0 lo:0 pe:0 ua:0 ap:0 ep:1 wo:b oos:41941724
+```
+其中第一行为DRBD的版本信息，第二行为DRBD开发都最后提交源码的时间点。  
+第三行就是DRBD的状态信息了：  
+cs: connection status 连接状态  
+ro: role 角色，本机角色/远程主机角色（注：旧版本DRBD为st）  
+ds: data status 数据同步状态，本机状态/远程主机状态（由于示例没有设置主备，因此两边的状态都显示Incosistent）  
+C 使用的同步协议
+
+### 将host1设置为主状态
+```
+# drbdsetup /dev/drbd0 primary -o
+```
+再看DRBD的状态（/proc/drbd）显示如下：
+```
+version: 8.3.2 (api:88/proto:86-90)
+GIT-hash: dd7985327f146f33b86d4bff5ca8c94234ce840e build by mockbuild@v20z-x86-64.home.local, 2009-08-29 14:07:55
+ 0: cs:SyncSource ro:Primary/Secondary ds:UpToDate/Inconsistent C r----
+    ns:281600 nr:0 dw:0 dr:281600 al:0 bm:17 lo:0 pe:0 ua:0 ap:0 ep:1 wo:b oos:41660124
+	[>....................] sync'ed:  0.7% (40680/40956)M
+	finish: 1:03:17 speed: 10,964 (10,428) K/sec
+```
+以上表示数据正在同步中，具体各项含义可以从中看出来，等ds两边均为UpToDate时表示两台机器已经同步完成。
+
+### 挂载DRBD
+在host1（主机）上挂载DRBD：
+```
+# mount /dev/drbd0 /mnt
+```
+之后就可以在/mnt下进行各种文件读写操作了，并且会实时同步到host2这台机器上面。
+
+### 切换DRBD主备
+先在host1（主机）上卸载DRBD，然后将其降为备机：
+```
+# umount /mnt
+# drbdadm secondary r0
+```
+再次查看/proc/drbd状态时会显示如下信息：
+```
+cs:Connected ro:Secondary/Secondary ds:UpToDate/UpToDate
+```
+将host2（备机）升级为主机并挂载DRBD：
+```
+# drbdadm primary r0
+# mount /dev/drbd0 /mnt
+```
+
+## 参考资料
+1\. DRBD主页： <http://www.drbd.org/>  
+2\. DRBD文档： <http://www.drbd.org/users-guide/>  
+3\. DRBD配置示例： <https://github.com/chenzhiwei/configure/tree/master/drbd>
