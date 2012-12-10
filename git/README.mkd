@@ -1,0 +1,97 @@
+# git的相关配置
+
+## 使用git
+### 全局设置
+```
+$ git config --global user.name "Chen Zhiwei"
+$ git config --global user.email zhiweik@gmail.com
+```
+配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考[示例](https://github.com/chenzhiwei/linux/blob/master/git/.gitconfig)。
+
+### 开始使用
+* 创建新的git仓库
+
+```
+$ mkdir git_repo
+$ cd git_repo
+$ git init
+$ echo "test" > README.mkd
+$ git add README.mkd
+$ git commit -m "add README.mkd file"
+$ git remote add origin git@github.com:username/test.git
+$ git push -u origin master
+```
+
+* 使用已存在的git仓库
+
+```
+$ cd git_repo
+$ git remote add origin git@github.com:username/test.git
+$ git push -u origin master
+```
+注意，如果提示`fatal: remote origin already exists.`，那么说明该本地仓库已经有远端地址了。你可以先使用`git remote rm origin`删除origin，或者使用`git remote add other_name git@github.com:username/test.git`来添加（提交时记得使用`git push -u other_name master`）。
+
+## 为本地仓库创建两个镜像
+假设现有仓库地址为： git@github.com:chenzhiwei/linux.git
+
+```
+$ git clone git@github.com:chenzhiwei/linux.git
+$ cd linux
+$ git remote add backup git@gitcafe.com:chenzhiwei/linux.git
+$ git push -u backup master
+```
+之后每次修改时，在最后push的时候需要执行两条命令：
+
+```
+$ git push origin
+$ git push backup
+```
+如果要只执行一次push就提交到两个远端仓库，那么需要修改仓库根目录下的.git/config文件，添加以下内容：
+
+```
+[remote "both"]
+    url = git@github.com:chenzhiwei/linux.git
+    url = git@gitcafe.com:chenzhiwei/linux.git
+```
+然后在提交更新时使用`git push both`就可以将更新提交到两个远端仓库了。
+
+一个完整的.git/config文件示例如下：
+
+```
+[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+[remote "origin"]
+    fetch = +refs/heads/*:refs/remotes/origin/*
+    url = git@github.com:chenzhiwei/linux.git
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+[remote "backup"]
+    url = git@gitcafe.com:chenzhiwei/linux.git
+    fetch = +refs/heads/*:refs/remotes/backup/*
+[remote "both"]
+    url = git@github.com:chenzhiwei/linux.git
+    url = git@gitcafe.com:chenzhiwei/linux.git
+```
+
+## 在现有仓库上创建孤儿分支
+孤儿分支意思为该分支中没有任何内容，与之前创建的其他分支没有任何关联。
+
+```
+$ git clone git@github.com:chenzhiwei/test.git
+$ cd test
+$ git checkout --orphan new_branch
+Switched to a new branch 'new_branch'
+$ git rm -rf . # 删除旧工作目录树中所有文件
+$ rm .gitignore # 如果有该文件的话就删除
+$ echo "orphan branch" > README.mkd
+$ git add .
+$ git commit -m "add README.mkd file"
+$ git push origin new_branch
+```
+
+## 提交单个分支到远端git仓库
+`git push`命令默认是将所有分支(branch)都提交到git仓库，有时你只想提交某个分支到远端仓库，那么就就需要使用`git push origin HEAD`。当然也可以使用`git config --global push.default tracking`命令来改变`git push`的默认操作，意思是执行`git push`时默认只提交当前分支到远端git仓库。
