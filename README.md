@@ -1,6 +1,8 @@
-configure
-=========
+# Linux Related Stuff
 
-configure files of many softwares
+I wrote these stuff for later use.
 
-one directory have one software configure files
+These are configuration file and how-to document of many linux softwares.
+
+* Origin repo: <https://github.com/chenzhiwei/linux>
+* Backup repo: <https://gitcafe.com/chenzhiwei/linux>
