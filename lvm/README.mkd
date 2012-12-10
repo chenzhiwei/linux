@@ -1,0 +1,49 @@
+# LVM相关
+
+## LVM是什么
+LVM全称Logical Volume Manager，逻辑卷管理器，其作用是在不损坏磁盘数据的情况下结磁盘空间进行增加、删除。
+
+## 与LVM相关的几个词语
+PV全称Physical Volume，物理卷。将物理分区使用pvcreate命令转换成LVM底层物理卷，然后才能将其利用。
+
+VG全称Volume Group，卷组。许多PV（物理卷）组全成VG（卷组）。
+
+LV全称Logical Volume，逻辑卷。由VG来创建LV，创建完LV之后就可以格式化并投入使用了。
+
+PE全称Physical Extend，物理扩展块。
+
+LE全称Logical Extend，逻辑扩展块。
+
+## LVM操作流程
+
+### 1.创建PV
+```
+# pvcreate /dev/sdb1
+```
+
+### 2.创建VG
+```
+# vgcreate vgname /dev/sdb1
+```
+其中-s代表--physicalextentsize，稍后补充。
+
+### 3.创建LV
+```
+# lvcreate -l 512 -n lvname vgname
+```
+
+### 4.扩展LV
+```
+# pvcreate /dev/sdb2
+# vgextend vgname /dev/sdb2
+# vgdisplay //列出Free PE的大小，假如为1024
+# lvextend -l +1024 /dev/vgname/lvname
+# resize2fs /dev/vgname/lvname
+```
+
+### 5.注意事项
+以后补充。
+
+## 参考资料
+1.<http://aixecc.blog.51cto.com/3931677/822865>  
+2.<http://bbs.chinaunix.net/thread-2258612-1-1.html>
