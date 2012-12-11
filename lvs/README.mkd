@@ -1,0 +1,58 @@
+# LVS配置相关
+
+## LVS是什么
+LVS全称Linux Virtual Server，Linux虚拟服务器（集群），其宗旨是实现一个高性能、高可用的服务器。
+
+## LVS体系结构
+LVS主要有三个组成部分，分别是负载调度器（Load Balancer）、服务器池（Server Pool）和后端存储（Backend Storage）。
+
+* 负载调度器
+负载调度器是整个集群对外面服务的前端机，负责将用户请求转发到服务器池中执行。该调度器可以使用IP负载均衡技术、基于内容分发技术或二者的结合。其HA可以用heartbeat或keepalived来实现。
+
+* 服务器池
+服务器池是一组真正执行用户请求的服务器，请求可以是WEB、DB、MAIL、DNS等服务。
+
+* 后端存储
+后端存储为服务器池提供一个共享的存储区，这样可以使服务器池中的机器很容易的拥有相同的内容，提供相同的服务。
+
+后端存储在LVS中是可选的部分，如果不使用后端存储的话，那么需要保证每台服务器池中的数据都是一致，这样在某些情况下比较麻烦。比如服务器池是用来提供WEB服务的，那么所有机器上必须得有相同的WEB目录代码，如果对代码做变更的话，这批机器需要同时变更，成本比较大。这时就比较麻烦了，如果使用后端存储的话，只需要将WEB代码保存后端存储机器上，然后挂载到服务器池上（NFS/GFS/...）。
+
+## LVS配置及使用
+
+### 相关软件包
+* ipvsadm.x86\_64
+* modcluster.x86\_64
+* oddjob.x86\_64
+* oddjob-devel.x86\_64
+* oddjob-libs.x86\_64
+* system-config-cluster.noarch
+* piranha.x86\_64
+```
+# yum -y install piranha.x86_64 httpd.x86_64 php.x86_64 system-config-cluster.noarch modcluster.x86_64 \
+    ipvsadm.x86_64 oddjob.x86_64 oddjob-devel.x86_64 oddjob-libs.x86_64
+```
+
+其中piranha为集群管理工具，有专门的WEB界面，可以直接通过WEB界面配置LVS，其配置文件都在/etc/sysconfig/ha目录下面。
+
+LVS的主配置文件： /etc/sysconfig/ha/lvs.cf  
+LVS管理界面的文档目录： /etc/sysconfig/ha/web  
+WEB管理界面的httpd配置文件: /etc/sysconfig/ha/conf/httpd.conf  
+WEB管理界面的登录名和密码： /etc/sysconfig/ha/conf/piranha.passwd
+
+### LVS配置示例
+一个WEB站点有两台前端机，LVS主备节点用的HA用heartbeat来实现，调度使用NAT模式。
+
+* 负载调度器
+scheduler1: IP地址为10.1.2.11，网关10.1.2.1  
+scheduler2: IP地址为10.1.2.12，网关10.1.2.1  
+对外提供服务的IP地址为10.1.2.15（VIP，模拟公网IP），其在scheduler1和scheduler2上面来回漂。
+
+* 服务器池
+web1: IP地址为10.1.2.21，网关10.1.2.1  
+web2: IP地址为10.1.2.22，网关10.1.2.1
+
+配置起来很简单，只是有一点还没弄明白，卡住了。稍后再补充。
+
+## 参考资料
+1.操作系统环境为CentOS 5.4。
+2.<http://wenku.baidu.com/view/713cf8c5bb4cf7ec4afed014.html>
