@@ -27,10 +27,6 @@ LVS主要有三个组成部分，分别是负载调度器（Load Balancer）、�
 * oddjob-libs.x86\_64
 * system-config-cluster.noarch
 * piranha.x86\_64
-```
-# yum -y install piranha.x86_64 httpd.x86_64 php.x86_64 system-config-cluster.noarch modcluster.x86_64 \
-    ipvsadm.x86_64 oddjob.x86_64 oddjob-devel.x86_64 oddjob-libs.x86_64
-```
 
 其中piranha为集群管理工具，有专门的WEB界面，可以直接通过WEB界面配置LVS，其配置文件都在/etc/sysconfig/ha目录下面。
 
@@ -43,16 +39,18 @@ WEB管理界面的登录名和密码： /etc/sysconfig/ha/conf/piranha.passwd
 一个WEB站点有两台前端机，LVS主备节点用的HA用heartbeat来实现，调度使用NAT模式。
 
 * 负载调度器
+
 scheduler1: IP地址为10.1.2.11，网关10.1.2.1  
 scheduler2: IP地址为10.1.2.12，网关10.1.2.1  
 对外提供服务的IP地址为10.1.2.15（VIP，模拟公网IP），其在scheduler1和scheduler2上面来回漂。
 
 * 服务器池
+
 web1: IP地址为10.1.2.21，网关10.1.2.1  
 web2: IP地址为10.1.2.22，网关10.1.2.1
 
 配置起来很简单，只是有一点还没弄明白，卡住了。稍后再补充。
 
 ## 参考资料
-1.操作系统环境为CentOS 5.4。
+1.操作系统环境为CentOS 5.4。  
 2.<http://wenku.baidu.com/view/713cf8c5bb4cf7ec4afed014.html>
