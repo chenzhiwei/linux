@@ -1,0 +1,140 @@
+# keepalived配置相关
+
+## keepalived是什么
+keepalived是集群管理中保证集群高可用的一个服务软件，其功能类似于[heartbeat][heartbeat]，用来防止单点故障。
+
+## keepalived工作原理
+keepalived是以VRRP协议为实现基础的，VRRP全称Virtual Router Redundancy Protocol，即[虚拟路由冗余协议][vrrp]。
+
+keepalived主要有三个模块，分别是core、check和vrrp。core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check负责健康检查，包括常见的各种检查方式。vrrp模块是来实现VRRP协议的。
+
+## keepalived的配置文件
+keepalived只有一个配置文件keepalived.conf，里面主要包括以下几个配置区域，分别是global\_defs、static\_ipaddress、static\_routes、vrrp\_instance和virtual\_server。
+
+下面以host163/host164两节点为例来说明，其IP地址分别为10.1.2.163/10.1.2.164，其中host163为主节点。VIP为10.1.2.11和192.168.1.11（模拟公网）。
+
+* global\_defs区域主要是配置故障发生时的通知对象以及机器标识
+```
+global_defs {
+    notification_email {
+        a@abc.com
+        b@abc.com
+        ...
+    }
+    notification_email_from alert@abc.com
+    smtp_server smtp.abc.com
+    smtp_connect_timeout 30
+    enable_traps
+    router_id host163
+}
+```
+
+其中enable\_traps是开启SNMP陷井（Simple Network Management Protocol）；router\_id是标识本节点的字符串，通常为hostname，但不一定非得是hostname。
+
+* static\_ipaddress和static\_routes区域是本机的IP和路由信息
+```
+static_ipaddress {
+    10.1.2.163/24 brd 10.210.213.255 dev eth0
+    ...
+}
+
+static_routes {
+    10.0.0.0/8 via 10.1.2.1 dev eth0
+    172.16.0.0/12 via 10.1.2.1 dev eth0
+    ...
+}
+```
+
+static\_ipaddress和static\_routes分别表示`/sbin/ip addr add/del 10.1.2.163/24 brd 10.210.213.255 dev eth0`和`/sbin/ip route add/del 10.0.0.0/8 via 10.1.2.1 dev eth0`。
+
+注意： 如果你的机器已经配置了IP地址及路由信息，那么就不用在配置文件中配置static\_ipaddress和static\_routes区域了，也就是说**通常这两人个区域是不需要配置的**。
+
+* vrrp\_instance区域包含VRRP同步组和VRRP实例两个区域
+```
+vrrp_sync_group VG_1 {
+    group {
+        inside_network   # name of vrrp_instance (below)
+        outside_network  # One for each moveable IP.
+        ...
+    }
+    notify_master /path/to_master.sh
+    notify_backup /path/to_backup.sh
+    notify_fault "/path/fault.sh VG_1"
+    notify /path/notify.sh
+    smtp_alert
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface eth0
+    use_vmac <VMAC_INTERFACE>
+    dont_track_primary
+    track_interface {
+        eth0
+        eth1
+    }
+    mcast_src_ip <IPADDR>
+    lvs_sync_daemon_interface eth1
+    garp_master_delay 10
+    virtual_router_id 1
+    priority 100
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 12345678
+    }
+    virtual_ipaddress {
+        10.1.2.11/24 brd 255.255.255.0 dev eth0
+        192.168.1.11/24 brd 255.255.255.0 dev eth1
+    }
+
+    virtual_routes {
+        172.16.212.0/12 via 10.1.2.1
+        192.168.1.0/24 via 192.168.1.1 via dev eth2
+        blackhole 192.168.114.0/24
+    }
+
+    nopreempt
+    preempt_delay 300
+    debug
+    notify_master <STRING>|<QUOTED-STRING>
+    notify_backup <STRING>|<QUOTED-STRING>
+    notify_fault <STRING>|<QUOTED-STRING>
+    notify <STRING>|<QUOTED-STRING>
+    smtp_alert
+}
+```
+这里重点讲一下vrrp\_instance区域  
+state 初始化状态，只可以填写MASTER和BACKUP，但是由于启动keepalived之后是由priority的值来选举，所以这个state状态可以说没什么用。  
+interface 网口，VRRP协议相关的那个网口。比如双方IP段均为10.1.2.0/24，那么这个interface值就应该是这个IP段所在的网口。  
+use\_vmac 使用VRRP协议的虚拟MAC地址。  
+dont\_track\_primary 忽略VRRP interface的错误。  
+virtual\_router\_id 区别多个vrrpd instance区域的选项。  
+priority 选举master，要成为master，那么这个选项的值必须高于其他机器50个点。  
+advert\_int 检查对方存活的时间间隔。  
+authentication 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS。  
+virtual\_ipaddress vip，不解释了。  
+virtual\_routes 虚拟路由，当IP漂过来之后需要添加的路由信息。
+
+其他选项暂时不作说明。
+
+## keepalived配置文件示例
+请看该文档同级目录下的配置文件示例。
+
+说明：  
+10.210.214.113 为keepalived的备机，其配置文件为113.keepalived.conf  
+10.210.214.163 为keepalived的主机，其配置文件为163.keepalived.conf  
+10.210.214.253 为Virtual IP，即提供服务的内网IP地址，在网卡eth0上面  
+192.168.1.11 为模拟的提供服务的公网IP地址，在网卡eth1上面
+
+## 安装keepalived
+从keepalived官网[下载][keepalived]合适的版本，解压并执行如下命令完成安装。
+```
+# cd keepalived-xxx
+# ./configure --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --mandir=/usr/share
+# make && make install
+```
+
+[vrrp]: http://en.wikipedia.org/wiki/VRRP
+[heartbeat]: https://github.com/chenzhiwei/linux/tree/master/heartbeat
+[keepalived]: http://www.keepalived.org/download.html
