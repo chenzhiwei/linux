@@ -34,18 +34,18 @@ global_defs {
 
 ```
 static_ipaddress {
-    10.1.2.163/24 brd 10.210.213.255 dev eth0
+    10.210.214.163/24 brd 10.210.214.255 dev eth0
     ...
 }
 
 static_routes {
-    10.0.0.0/8 via 10.1.2.1 dev eth0
-    172.16.0.0/12 via 10.1.2.1 dev eth0
+    10.0.0.0/8 via 10.210.214.1 dev eth0
+    172.16.0.0/12 via 10.210.214.1 dev eth0
     ...
 }
 ```
 
-static\_ipaddress和static\_routes分别表示`/sbin/ip addr add/del 10.1.2.163/24 brd 10.210.213.255 dev eth0`和`/sbin/ip route add/del 10.0.0.0/8 via 10.1.2.1 dev eth0`。
+static\_ipaddress和static\_routes分别表示`/sbin/ip addr add/del 10.210.214.163/24 brd 10.210.214.255 dev eth0`和`/sbin/ip route add/del 10.0.0.0/8 via 10.210.214.1 dev eth0`。
 
 注意： 如果你的机器已经配置了IP地址及路由信息，那么就不用在配置文件中配置static\_ipaddress和static\_routes区域了，也就是说**通常这两人个区域是不需要配置的**。
 
@@ -85,14 +85,13 @@ vrrp_instance VI_1 {
         auth_pass 12345678
     }
     virtual_ipaddress {
-        10.1.2.11/24 brd 255.255.255.0 dev eth0
-        192.168.1.11/24 brd 255.255.255.0 dev eth1
+        10.210.214.253/24 brd 10.210.214.255 dev eth0
+        192.168.1.11/24 brd 192.168.1.255 dev eth1
     }
 
     virtual_routes {
-        172.16.212.0/12 via 10.1.2.1
-        192.168.1.0/24 via 192.168.1.1 via dev eth2
-        blackhole 192.168.114.0/24
+        172.16.0.0/12 via 10.210.214.1
+        192.168.1.0/24 via 192.168.1.1 dev eth1
     }
 
     nopreempt
@@ -113,7 +112,7 @@ dont\_track\_primary 忽略VRRP interface的错误。
 virtual\_router\_id 区别多个vrrpd instance区域的选项。  
 priority 选举master，要成为master，那么这个选项的值必须高于其他机器50个点。  
 advert\_int 检查对方存活的时间间隔。  
-authentication 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS。  
+authentication 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS（密码只识别前8位）。  
 virtual\_ipaddress vip，不解释了。  
 virtual\_routes 虚拟路由，当IP漂过来之后需要添加的路由信息。
 
