@@ -1,0 +1,185 @@
+# iptables命令
+
+## iptables是什么
+iptables是与 Linux 内核集成的 IP 信息包过滤系统，该系统有利于在 Linux 系统上更好地控制 IP 信息包过滤和防火墙配置。
+
+## iptables示例
+### filter表INPUT链
+怎么处理发往本机的包。
+
+```
+# iptables {-A|-D|-I} INPUT rule-specification
+# iptables -A INPUT -s 10.1.2.11 -p tcp --dport 80 -j DROP
+# iptables -A INPUT -s 10.1.2.11 -p tcp --dport 80 -j REJECT --reject-with tcp-reset
+# iptables -A INPUT -s 10.1.2.11 -p tcp --dport 80 -j ACCEPT
+```
+
+以上表示将从源地址10.1.2.11访问本机80端口的包丢弃（以tcp-reset方式拒绝和接受）。
+
+-s 表示源地址（--src,--source），其后面可以是一个IP地址（10.1.2.11）、一个IP网段（10.0.0.0/8）、几个IP或网段（192.168.1.11/32,10.0.0.0/8，添加完成之后其实是两条规则）。  
+-d 表示目的地址（--dst,--destination），其后面可以是一个IP地址（10.1.2.11）、一个IP网段（10.0.0.0/8）、几个IP或网段（10.1.2.11/32,10.1.3.0/24，添加完成之后其实是两条规则）。  
+-p 表示协议类型（--protocol），后面可以是tcp, udp, udplite, icmp, esp, ah, sctp, all，其中all表示所有的协议。  
+--sport 表示源端口（--source-port），后面可以是一个端口（80）、一系列端口（80:90，从80到90之间的所有端口），一般在OUTPUT链使用。  
+--dport 表示目的端口（--destination-port），后面可以是一个端口（80）、一系列端口（80:90，从80到90之间的所有端口）。  
+-j 表示iptables规则的目标（--jump），即一个符合目标的数据包来了之后怎么去处理它。常用的有ACCEPT, DROP, REJECT, REDIRECT, LOG, DNAT, SNAT。
+
+
+```
+# iptables -A INPUT -p tcp --dport 80 -j DROP
+# iptables -A INPUT -p tcp --dport 80:90 -j DROP
+# iptables -A INPUT -m multiport -p tcp --dports 80,8080 -j DROP
+```
+
+以上表示将所有访问本机80端口（80和90之间的所有端口，80和8080端口）的包丢弃。
+
+-m 匹配更多规则（--match），可以指定更多的iptables匹配扩展。可以是tcp, udp, multiport, cpu, time, ttl等，即你可以指定一个或多个端口，或者本机的一个CPU核心，或者某个时间段内的包。
+
+### filter表OUTPUT链
+怎么处理本机向外发的包。
+
+```
+# iptables -A OUTPUT -p tcp --sport 80 -j DROP
+```
+
+以上这条规则意思是不允许访问本机80端口的包出去。即你可以向本机80端口发送请求包，但是本机回应给你的包会被该条规则丢弃。
+
+INPUT链与OUTPUT链用法一样，但是表示的意思不同。
+
+### filter表的FORWARD链
+For packets being routed through the box（不知道怎么解释）。
+
+其用法与INPUT链和OUTPUT链类似。
+
+## nat表
+nat表有三条链，分别是PREROUTING, OUTPUT, POSTROUTING。
+
+### nat表PREROUTING链
+修改发往本机的包。
+
+```
+# iptables -t nat -A PREROUTING -p tcp -d 202.102.152.23 --dport 80 -j DNAT --to-destination 10.67.15.23:8080
+# iptables -t nat -A PREROUTING -p tcp -d 202.102.152.23 -j DNAT --to-destination 10.67.15.23
+```
+
+以上这两条规则的意思是将发往IP地址202.102.152.23和端口80的包的目的地址修改为10.67.15.23，目的端口修改为8080。将发往202.102.152.23的其他非80端口的包目的地址修改为10.67.15.23。第二条规则中的-p tcp是可选的，也可以指定其他协议。
+
+其实类似这样的规则一般在路由器上做，路由器上有个公网IP（202.102.152.23），其中有个用户的内网IP（10.67.15.23）想提供外网的web服务，而路由器又不想将公网IP地址绑定到用户机器上，因此就出来了以上的蛋疼规则。
+
+### nat表POSTROUTING链
+修改本机向外发的包。
+
+```
+# iptables -t nat -A POSTROUTING -p tcp -s 10.67.15.23 --sport 8080 -j SNAT --to-source 202.102.152.23:80
+# iptables -t nat -A POSTROUTING -p tcp -s 10.67.15.23 -j SNAT --to-source 202.102.152.23
+```
+
+以上两条规则的意思是将从IP地址10.67.15.23和端口8080发出的包的源地址修改为202.102.152.23，源端口修改为80。将从10.67.15.23发出的非80端口的包的源地址修改为202.102.152.23。
+
+这两条正好与以上两条PREROUTING共同完成了内网用户想提供外网服务的功能。
+
+其中的--to-destination和--to-source都可以缩写成--to，在DNAT和SNAT中会分别被理解成--to-destination和--to-source。
+
+注： 之所以将内网服务的端口和外网服务的端口写的不一致是因为二者其实真的可以不一致。另外，是否将PREROUTNG中的-d改为域名就可以使用一个公网IP为不同用户提供服务了呢？这个需要哥哥我稍后验证。
+
+### nat表做HA的实例
+有两台服务器和三个IP地址，分别是10.1.2.21, 10.1.2.22, 10.1.5.11。假设他们提供的是相同的WEB服务，现在想让他们做HA，而10.1.5.11是他们的VIP。
+
+* 10.1.2.21这台的NAT规则如下：
+
+```
+# iptables -t nat -A PREROUTING -p tcp -d 10.1.2.11 --dport 80 -j DNAT --to-destination 10.1.2.21:80
+# iptables -t nat -A POSTROUTING -p tcp -s 10.1.2.21 --sport 80 -j SNAT --to-source 10.1.2.11:80
+```
+
+* 10.1.2.22这台的NAT规则如下：
+
+```
+# iptables -t nat -A PREROUTING -p tcp -d 10.1.2.11 --dport 80 -j DNAT --to-destination 10.1.2.22:80
+# iptables -t nat -A POSTROUTING -p tcp -s 10.1.2.22 --sport 80 -j SNAT --to-source 10.1.2.11:80
+```
+
+默认可以认为VIP在10.1.2.21上挂着，那么当这台机器发生故障不能提供服务时，我们可以及时将VIP挂到10.1.2.22上，这样就可以保证服务不中断了。当然我们可以写一个简单的SHELL脚本来完成VIP的检测及挂载，方法非常简单。
+
+注： LVS的实现中貌似有这么一项，还没有深入去研究LVS。
+
+### nat表为虚拟机做内外网联通
+宿主机内网IP是10.67.15.183(eth1)，外网IP是202.102.152.183(eth0)，内网网关是10.67.15.1，其上面的虚拟机IP是10.67.15.250(eth1)。
+
+目前虚拟机只能连接内网，其路由信息如下：
+
+```
+# ip r s
+10.67.15.0/24 dev eth1  proto kernel  scope link  src 10.67.15.250
+169.254.0.0/16 dev eth1  scope link  metric 1003 
+192.168.0.0/16 via 10.67.15.1 dev eth1 
+172.16.0.0/12 via 10.67.15.1 dev eth1 
+10.0.0.0/8 via 10.67.15.1 dev eth1 
+default via 10.67.15.1 dev eth1
+```
+
+若要以NAT方式实现该虚拟机即能连接公网又能连接内网，则该虚拟机路由需要改成以下：
+
+```
+# ip r s
+10.67.15.0/24 dev eth1  proto kernel  scope link  src 10.67.15.250
+169.254.0.0/16 dev eth1  scope link  metric 1003 
+192.168.0.0/16 via 10.67.15.1 dev eth1 
+172.16.0.0/12 via 10.67.15.1 dev eth1 
+10.0.0.0/8 via 10.67.15.1 dev eth1 
+default via 10.67.15.183 dev eth1
+```
+虚拟机连接内网的网关地址也可以写成宿主机内网IP地址。
+
+宿主机上面添加如下NAT规则：
+
+```
+# iptables -t nat -A POSTROUTING -s 10.67.15.250/32 -d 10.0.0.0/8 -j SNAT --to-source 10.67.15.250
+# iptables -t nat -A POSTROUTING -s 10.67.15.250/32 -d 172.16.0.0/12 -j SNAT --to-source 10.67.15.250
+# iptables -t nat -A POSTROUTING -s 10.67.15.250/32 -d 192.168.0.0/16 -j SNAT --to-source 10.67.15.250
+# iptables -t nat -A POSTROUTING -s 10.67.15.250/32 -j SNAT --to-source 202.102.152.183
+```
+
+以上四条规则的意思是将从源地址10.67.15.250发往内网机器上的数据包的源地址改为10.67.15.250。将从源地址10.67.15.250发往公网机器上的数据包的源地址修改为202.102.152.183。
+
+## iptables管理命令
+### 查看iptables规则
+
+```
+# iptables -nL
+# iptables -n -L
+# iptables --numeric --list
+# iptables -S
+# iptables --list-rules
+# iptables -t nat -nL
+# iptables-save
+```
+-n代表--numeric，意思是IP和端口都以数字形式打印出来。否则会将127.0.0.1:80输出成localhost:http。端口与服务的对应关系可以在/etc/services中查看。  
+-L代表--list，列出iptables规则，默认列出filter链中的规则，可以用-t来指定列出哪个表中的规则。  
+-t代表--tables，指定一个表。  
+-S代表--list-rules，以原命令格式列出规则。  
+iptables-save命令是以原命令格式列出所有规则，可以-t指定某个表。
+
+### 清除iptables规则
+
+```
+# iptables -F
+# iptables --flush
+# iptables -F OUTPUT
+# iptables -t nat -F
+# iptables -t nat -F PREROUTING
+```
+
+-F代表--flush，清除规则，其后面可以跟着链名，默认是将指定表里所有的链规则都清除。
+
+### 保存iptables规则
+
+```
+# /etc/init.d/iptables save
+```
+
+该命令会将iptables规则保存到/etc/sysconfig/iptables文件里面，如果iptable有开机启动的话，开机时会自动将这些规则添加到机器上。
+
+## 其他内容
+iptables命令中的很多选项前面都可以加"!"，意思是“非”。如"! -s 10.0.0.0/8"表示除这个网段以外的源地址，"! --dport 80"表示除80以外的其他端口。
+
+还有其他的内容，慢慢补充。
