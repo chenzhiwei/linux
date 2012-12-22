@@ -1,0 +1,15 @@
+# 一些学习资源
+
+* Guide to IP Layer Network Administration with Linux
+
+可以当作字典来查询各种命令及应用场景，有事没事多看看。
+
+Linux系统IP层网络管理指南： <http://linux-ip.net/html/index.html>
+
+* GPG Howto document
+
+GPG的中文使用文档，安全通信的必备神器。<http://www.gnupg.org/howtos/zh/index.html>
+
+* Nginx开发从入门到精通
+
+淘宝核心系统服务器平台组成员共同写： <http://tengine.taobao.org/book/index.html>
