@@ -114,7 +114,10 @@ priority 选举master，要成为master，那么这个选项的值必须高于�
 advert\_int 检查对方存活的时间间隔。  
 authentication 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS（密码只识别前8位）。  
 virtual\_ipaddress vip，不解释了。  
-virtual\_routes 虚拟路由，当IP漂过来之后需要添加的路由信息。
+virtual\_routes 虚拟路由，当IP漂过来之后需要添加的路由信息。  
+notify\_master 该机器切换为主状态时所执行的脚本（如果脚本有参数的话，需要用双引号将脚本和参数一并引起来）。  
+notify\_backup 该机器切换为从状态时所执行的脚本（如果脚本有参数的话，需要用双引号将脚本和参数一并引起来）。  
+notify\_fault  该机器切换为故障状态时所执行的脚本（如果脚本有参数的话，需要用双引号将脚本和参数一并引起来）。
 
 其他选项暂时不作说明。
 
@@ -136,6 +139,25 @@ virtual\_routes 虚拟路由，当IP漂过来之后需要添加的路由信息�
 # make && make install
 ```
 
+## 说明
+
+目前就我的认识来说，当keepalived仅作为HA来使用时，它并不比heartbeat有什么优势。相反，我觉得还不如用heartbeat。
+
+heartbeat可以设置是否auto failback、主从角色的手动切换，而keepalived并没有这些功能（是我在文档中没看到？）。
+
+我们用到的HA场景如下： 两台主机host113和host163，内网IP在eth1网卡上，分别是10.210.214.113和10.210.214.163，VIP为公网IP在eth0上，IP地址是202.102.152.253，网关为202.102.152.1。当VIP在host113上提供服务时，host113上的默认路由为202.102.152.1，提供服务的端口为202.102.152.253:443。host113发生故障需要将VIP及服务切回到host163上的时候，需要以下几步，第一将VIP接管过来，第二添加默认路由202.102.152.1，第三启动在端口202.102.152.253:443上的服务。
+
+如此一来，keepalived需要另外的脚本来完成添加默认路由和启动服务工作，添加完默认路由之后也得发一个arping通知。并且按照keepalived官方文档上所说的`notify_master`的意思是specify a shell script to be executed during transition to master state，也就是说在切换角色期间来执行这个脚本，这样一来就会有如下问题，如果公网IP地址202.102.152.253还没有接管过来，那么就不可能用脚本成功启动202.102.152.253:443上面的服务。
+
+而heartbeat至少可以保证是先接管公网IP再启动上面的服务，顺序是可以保证的，效率可能没有keepalived高，因为heartbeat无论是接管IP地址还是启动服务都是靠另外的脚本来实现的。
+
+不要问我为何有以上需求。要为两个不同的域名提供https服务，由于SSL证书问题，必须有两个公网IP地址分别绑定443端口。
+
+当然，通过[SNI][sni]也可以实现一个公网IP绑定443端口来为多个域名提供https服务，但是这需要浏览器支持（M$的IE浏览器不支持）。（[nginx][nginx]/[apache][apache]）
+
 [vrrp]: http://en.wikipedia.org/wiki/VRRP
 [heartbeat]: https://github.com/chenzhiwei/linux/tree/master/heartbeat
 [keepalived]: http://www.keepalived.org/download.html
+[sni]: http://en.wikipedia.org/wiki/Server_Name_Indication
+[nginx]: http://nginx.org/en/docs/http/configuring_https_servers.html#sni
+[apache]: http://wiki.apache.org/httpd/NameBasedSSLVHostsWithSNI
