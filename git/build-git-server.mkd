@@ -1,0 +1,175 @@
+# 搭建gitserver
+
+## git daemon搭建只读gitserver
+
+```
+$ cd $HOME
+$ mkdir repositories
+$ cd repositories
+$ git init --bare test.git
+$ git daemon --reuseaddr --export-all --user=git --group=git\
+             --group=git  --base-path=$HOME/repositories $HOME/repositories
+$ cd /tmp
+$ git clone git://localhost/test.git
+```
+
+其中`git daemon`命令中的--export-all是指给所有git仓库进行非授权访问。如果不加该参数，那么git裸仓库中必须有`git-daemon-export-ok`才行，否则会提示`git repository not exported`。
+
+为了安全起见，可以将repositories目录下的所有仓库设置成git:git用户只读权限，然后以git:git用户来启动。
+
+## 以SSH方式搭建读写gitserver
+
+```
+# useradd --home-dir=/home/git --shell=/bin/false git
+# cd /home/git
+# git init --bare test.git
+# mkdir repositories
+# git init --bare repositories/subdir.git
+# mkdir .ssh
+# cat /tmp/zhiwei.id_rsa.pub >> .ssh/authorized_keys
+# chown -R git:git /home/git
+```
+
+以上几步表示已经搭建好gitserver了，下面是使用这个gitserver的方法（假设主机名为localhost）。
+
+```
+$ cd /tmp
+$ git clone git@localhost:test.git
+$ git clone git@localhost:repositories/subdir.git
+$ git clone ssh://git@localhost:test.git another_way
+$ git clone git@localhost:/var/xxx.git
+```
+
+最后一条命令是clone系统/var目录下的xxx.git。所以呢，要给git用户设置适当的权限，否则它可以做很多事情（通常会有安全隐患）。
+
+## 用gitolite来管理gitserver
+
+以上用SSH方式搭建的gitserver虽然简单，但是权限管理及控制不好做，当用户数量增加时，管理起来会很费劲，并且用户对所有仓库都有读写权限。
+
+为了对git仓库有更好的权限控制及管理，gitolite诞生了，gitolite是在git之上的[权限控制层][how]，如下所示：
+
+* git over plain ssh
+
+```
+# for read operations
+git clone ------> ssh --//--> sshd ------> git-upload-pack
+git fetch ------> ssh --//--> sshd ------> git-upload-pack
+
+# for write operations
+git push  ------> ssh --//--> sshd ------> git-receive-pack
+```
+
+* git over gitolite
+
+```
+# for read operations
+git clone ------> ssh --//--> sshd ---> gitolite --???--> git-upload-pack
+git fetch ------> ssh --//--> sshd ---> gitolite --???--> git-upload-pack
+
+# for write operations
+git push  ------> ssh --//--> sshd ---> gitolite --???--> git-receive-pack
+```
+
+### 安装部署gitolite
+
+gitolite地址： <https://github.com/sitaramc/gitolite>
+
+```
+# useradd --home-dir=/home/git --shell=/bin/bash git
+# su - git
+$ pwd
+/home/git
+$ git clone git://github.com/sitaramc/gitolite.git
+$ ./gitolite/install -ln  # optin 1, install gitolite to $HOME/bin
+$ ./gitolite/install -ln /usr/local/bin # option 2, install gitolite to /usr/local/bin
+$ gitolite/install -to /usr/local/gitolite/bin # option 3, install to specific dir
+$ gitolite setup -pk administrator.pub
+```
+
+以上是在服务器搭建gitolite的整个过程，下面就该在客户机上使用及管理gitolite了（假设gitolite服务器域名为ubuntu）。
+
+```
+$ git clone git@ubuntu:gitolite-admin.git
+$ tree -f gitolite-admin
+gitolite-admin
+|-- gitolite-admin/conf
+|   |-- gitolite-admin/conf/gitolite.conf
+|-- gitolite-admin/keydir
+    |-- gitolite-admin/keydir/zhiwei.pub
+$ cd gitolite-admin
+$ vim conf/gitolite.conf
+$ git add .
+$ git commit -m"add two user and one repo"
+$ git push
+```
+
+以上是管理gitolite的整个过程，下面提一个需求，然后来完成这个需求。
+
+```
+                    top-level
+                 /            \
+                |              |
+        second-l1              second-l2
+        |       |              |       |
+ third-l1      third-l2  third-l3     third-l4
+```
+
+一个部门有7个人，两个小组和一个部门主管，每个小组两个人和一个组长，现在每个小组成员都有一个仓库，每个小组成员之间不能相互访问对方仓库，而他们的组长有管理他们仓库的所有权限，部门主管有所有仓库的只读权限。以下是key文件的分布和gitolite.conf文件的内容。
+
+```
+$ tree -f gitolite-admin
+gitolite-admin
+|-- gitolite-admin/conf
+|   |-- gitolite-admin/conf/gitolite.conf
+|-- gitolite-admin/keydir
+    |-- gitolite-admin/keydir/admin.pub
+    |-- gitolite-admin/keydir/top-level.pub
+    |-- gitolite-admin/keydir/second-l1.pub
+    |-- gitolite-admin/keydir/second-l2.pub
+    |-- gitolite-admin/keydir/third-l1.pub
+    |-- gitolite-admin/keydir/third-l2.pub
+    |-- gitolite-admin/keydir/third-l3.pub
+    |-- gitolite-admin/keydir/third-l4.pub
+```
+
+```
+repo third-l1
+    RW+ = third-l1
+    RW  = second-l1
+repo third-l2
+    RW+ = third-l2
+    RW  = second-l1
+repo third-l3
+    RW+ = third-l3
+    RW  = second-l2
+repo third-l4
+    RW+ = third-l4
+    RW  = second-l2
+repos third-l1 third-l2 third-l3 third-l4
+    R   = top-level
+
+@repogroup = foo bar
+@usergroup = user1 user2
+repo @repogroup
+    RW  = @usergroup
+    R   = @all
+    RW+ = admin
+```
+
+当你在gitolite.conf中添加新的仓库时，提交之后gitolite会自动在服务端创建好空的裸仓库供你使用。
+
+更多关于gitolite管理的内容可以查看文档： <http://sitaramc.github.com/gitolite/admin.html>
+
+## 为gitolite添加httpd支持
+
+请看文档： <http://sitaramc.github.com/gitolite/http.html>
+
+## 其他常见git管理系统
+
+* gitosis
+* gerrit
+* gitorious
+* gitlab
+* Atlassian Stash(Enterprise)
+
+[how]: http://sitaramc.github.com/gitolite/how.html
