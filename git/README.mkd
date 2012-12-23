@@ -1,6 +1,9 @@
 # git的相关配置
 
 ## 使用git
+
+搭建gitserver： <https://github.com/chenzhiwei/linux/blob/master/git/build-git-server.mkd>
+
 ### 全局设置
 ```
 $ git config --global user.name "Chen Zhiwei"

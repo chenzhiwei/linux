@@ -86,6 +86,8 @@ $ gitolite/install -to /usr/local/gitolite/bin # option 3, install to specific d
 $ gitolite setup -pk administrator.pub
 ```
 
+注： 为了安全起见，请在安装部署完成之后请将git用户的shell改成不可登录的。
+
 以上是在服务器搭建gitolite的整个过程，下面就该在客户机上使用及管理gitolite了（假设gitolite服务器域名为ubuntu）。
 
 ```
