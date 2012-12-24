@@ -6,6 +6,8 @@ keepalived是集群管理中保证集群高可用的一个服务软件，其功�
 ## keepalived工作原理
 keepalived是以VRRP协议为实现基础的，VRRP全称Virtual Router Redundancy Protocol，即[虚拟路由冗余协议][vrrp]。
 
+VRRP（Virtual Router Redundancy Protocol）虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将N台提供相同功能的路由器组成一个路由器组，这个组里面有一个master和多个backend，master上面有一个对外提供服务的vip（该路由器所在局域网内其他机器的默认路由为该vip），每个backend给vip发vrrp包，当vip不给回复时就认为master宕掉了，这时就需要根据[VRRP包里的优先级][vrrp_priority]来[选举一个backend当master][select_master]。这样的话就可以保证路由器的高可用了。
+
 keepalived主要有三个模块，分别是core、check和vrrp。core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check负责健康检查，包括常见的各种检查方式。vrrp模块是来实现VRRP协议的。
 
 ## keepalived的配置文件
@@ -110,7 +112,7 @@ interface 网口，VRRP协议相关的那个网口。比如双方IP段均为10.1
 use\_vmac 使用VRRP协议的虚拟MAC地址。  
 dont\_track\_primary 忽略VRRP interface的错误。  
 virtual\_router\_id 区别多个vrrpd instance区域的选项。  
-priority 选举master，要成为master，那么这个选项的值必须高于其他机器50个点。  
+priority 选举master，要成为master，那么这个选项的值[必须高于其他机器50个点][priority_more_than_50]。  
 advert\_int 检查对方存活的时间间隔。  
 authentication 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS（密码只识别前8位）。  
 virtual\_ipaddress vip，不解释了。  
@@ -161,3 +163,6 @@ heartbeat可以设置是否auto failback、主从角色的手动切换，而keep
 [sni]: http://en.wikipedia.org/wiki/Server_Name_Indication
 [nginx]: http://nginx.org/en/docs/http/configuring_https_servers.html#sni
 [apache]: http://wiki.apache.org/httpd/NameBasedSSLVHostsWithSNI
+[vrrp_priority]: http://tools.ietf.org/html/rfc5798#section-5.1
+[select_master]: http://en.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol#Elections_of_master_routers
+[priority_more_than_50]: http://tools.ietf.org/html/rfc5798#section-8.3.2
