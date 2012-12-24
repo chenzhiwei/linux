@@ -6,7 +6,7 @@ keepalived是集群管理中保证集群高可用的一个服务软件，其功�
 ## keepalived工作原理
 keepalived是以VRRP协议为实现基础的，VRRP全称Virtual Router Redundancy Protocol，即[虚拟路由冗余协议][vrrp]。
 
-VRRP（Virtual Router Redundancy Protocol）虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将N台提供相同功能的路由器组成一个路由器组，这个组里面有一个master和多个backend，master上面有一个对外提供服务的vip（该路由器所在局域网内其他机器的默认路由为该vip），每个backend给vip发vrrp包，当vip不给回复时就认为master宕掉了，这时就需要根据[VRRP包里的优先级][vrrp_priority]来[选举一个backend当master][select_master]。这样的话就可以保证路由器的高可用了。
+虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将N台提供相同功能的路由器组成一个路由器组，这个组里面有一个master和多个backup，master上面有一个对外提供服务的vip（该路由器所在局域网内其他机器的默认路由为该vip），每个backup给vip发vrrp包，当vip不给回复时就认为master宕掉了，这时就需要根据[VRRP包里的优先级][vrrp_priority]来[选举一个backup当master][select_master]。这样的话就可以保证路由器的高可用了。
 
 keepalived主要有三个模块，分别是core、check和vrrp。core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。check负责健康检查，包括常见的各种检查方式。vrrp模块是来实现VRRP协议的。
 
