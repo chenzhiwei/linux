@@ -112,7 +112,7 @@ interface 网口，VRRP协议相关的那个网口。比如双方IP段均为10.1
 use\_vmac 使用VRRP协议的虚拟MAC地址。  
 dont\_track\_primary 忽略VRRP interface的错误。  
 virtual\_router\_id 区别多个vrrpd instance区域的选项。  
-priority 选举master，要成为master，那么这个选项的值[必须高于其他机器50个点][priority_more_than_50]，该项[取值范围][priority]是1-255。  
+priority 选举master，要成为master，那么这个选项的值[最好高于其他机器50个点][priority_more_than_50]，该项[取值范围][priority]是1-255（在此范围之外会被识别成默认值100）。  
 advert\_int 检查对方存活的时间间隔。  
 authentication 认证区域，认证类型有PASS和HA（IPSEC），推荐使用PASS（密码只识别前8位）。  
 virtual\_ipaddress vip，不解释了。  
@@ -125,7 +125,7 @@ notify\_fault  该机器切换为故障状态时所执行的脚本（如果脚�
 
 ## keepalived主从切换
 
-主从切换比较让人蛋疼，需要将backup配置文件的priority选项的值调整的比master高50，然后reload配置文件就可以切换了。当时你也可以将master的keepalived停止，这样也可以进行主从切换。
+主从切换比较让人蛋疼，需要将backup配置文件的priority选项的值调整的比master高50个点，然后reload配置文件就可以切换了。当时你也可以将master的keepalived停止，这样也可以进行主从切换。
 
 ## keepalived配置文件示例
 请看该文档同级目录下的配置文件示例。
