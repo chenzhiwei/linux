@@ -5,6 +5,14 @@ LVS全称Linux Virtual Server，Linux虚拟服务器（集群），其宗旨是�
 
 LVS其实就是给内核打了一个补丁，让内核支持Layer4层的转发，以做到负载均衡的目的。LVS中一个连接占用128 bytes，因此1G内存的LVS可以处理800万以上的请求。
 
+LVS可以通过三种方法来实现负载均衡（Load Balancer），分别是[DR][dr]、[NAT][nat]和[TUN][tun]。
+
+DR（Direct Routing）是使用IP负载均衡技术，通过来修改数据侦里的MAC地址来将请求发往后端服务器，这个扩展起来比较方便，但是这个方法要求负载均衡和后端服务器在同一个物理网络中。
+
+NAT方式是LVS内部实现了修改请求包的目的地址和端口以及修改回应包的源地址和端口。
+
+TUN退出IP Tunneling，通过包装IP数据包并直接转发到其他后端IP地址，后端服务器处理完成之后将结果直接返回给客户端（客户端收到的回应里看到的IP地址还是Director的）。
+
 ## 内核是否支持LVS
 
 现在的内核都默认打了LVS的补丁，可以用以下方式来检查。
@@ -117,3 +125,6 @@ piranha这个鸟东西bug实在太多了，非常不好用，还不如果我自�
 [piranha]: http://www.linuxvirtualserver.org/docs/ha/piranha.html
 [ultramonkey]: http://www.linuxvirtualserver.org/docs/ha/ultramonkey.html
 [lvs_keepalived]: https://github.com/chenzhiwei/linux/tree/master/lvs-keepalived
+[dr]: http://kb.linuxvirtualserver.org/wiki/LVS/DR
+[nat]: http://kb.linuxvirtualserver.org/wiki/LVS/NAT
+[tun]: http://kb.linuxvirtualserver.org/wiki/LVS/TUN
