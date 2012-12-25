@@ -151,19 +151,25 @@ notify\_fault  该机器切换为故障状态时所执行的脚本（如果脚�
 # make && make install
 ```
 
-## 说明
+## LVS NAT + Keepalived
 
-目前就我的认识来说，当keepalived仅作为HA来使用时，它并不比heartbeat有什么优势。相反，我觉得还不如用heartbeat。
+请看文档[LVS+Keepalived][lvs_keepalived]。
+
+## 说明
 
 我们用到的HA场景如下： 两台主机host113和host163，内网IP在eth1网卡上，分别是10.210.214.113和10.210.214.163，VIP为公网IP在eth0上，IP地址是202.102.152.253，网关为202.102.152.1。当VIP在host113上提供服务时，host113上的默认路由为202.102.152.1，提供服务的端口为202.102.152.253:443。host113发生故障需要将VIP及服务切回到host163上的时候，需要以下几步，第一将VIP接管过来，第二添加默认路由202.102.152.1，第三启动在端口202.102.152.253:443上的服务。
 
-如此一来，keepalived需要另外的脚本来完成添加默认路由和启动服务工作，添加完默认路由之后也得发一个arping通知。并且按照keepalived官方文档上所说的`notify_master`的意思是specify a shell script to be executed during transition to master state，也就是说在切换角色期间来执行这个脚本，这样一来就会有如下问题，如果公网IP地址202.102.152.253还没有接管过来，那么就不可能用脚本成功启动202.102.152.253:443上面的服务。
-
-而heartbeat至少可以保证是先接管公网IP再启动上面的服务，顺序是可以保证的，效率可能没有keepalived高，因为heartbeat无论是接管IP地址还是启动服务都是靠另外的脚本来实现的。
+如此一来，keepalived需要另外的脚本来完成添加默认路由和启动服务工作，这点和heartbeat中的resources是相同的。目前我进行了测试，发现keepalived速度要比heartbeat快，也就是说效率比heartbeat高。并且，最重要的一点，keepalived支持多个backup。
 
 不要问我为何有以上需求。要为两个不同的域名提供https服务，由于SSL证书问题，必须有两个公网IP地址分别绑定443端口。
 
 当然，通过[SNI][sni]也可以实现一个公网IP绑定443端口来为多个域名提供https服务，但是这需要浏览器支持（M$的IE浏览器不支持）。（[nginx][nginx]/[apache][apache]）
+
+## 吐槽
+
+keepalived的主从切换比较让人蛋疼，需要修改配置文件或停止一方的运行。但是由于keepalived是通过vrrp协议来实现failover（故障转移）的，因此也决定了手动主从切换的不便。
+
+另外，我发现我越来越喜欢keepalived了。。。
 
 [vrrp]: http://en.wikipedia.org/wiki/VRRP
 [heartbeat]: https://github.com/chenzhiwei/linux/tree/master/heartbeat
@@ -175,3 +181,4 @@ notify\_fault  该机器切换为故障状态时所执行的脚本（如果脚�
 [select_master]: http://en.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol#Elections_of_master_routers
 [priority_more_than_50]: http://tools.ietf.org/html/rfc5798#section-8.3.2
 [priority]: http://tools.ietf.org/html/rfc5798#section-5.2.4
+[lvs_keepalived]: https://github.com/chenzhiwei/linux/tree/master/lvs-keepalived
