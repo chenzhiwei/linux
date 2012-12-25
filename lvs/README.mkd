@@ -3,6 +3,19 @@
 ## LVS是什么
 LVS全称Linux Virtual Server，Linux虚拟服务器（集群），其宗旨是实现一个高性能、高可用的服务器。
 
+LVS其实就是给内核打了一个补丁，让内核支持Layer4层的转发，以做到负载均衡的目的。LVS中一个连接占用128 bytes，因此1G内存的LVS可以处理800万以上的请求。
+
+## 内核是否支持LVS
+
+现在的内核都默认打了LVS的补丁，可以用以下方式来检查。
+
+```bash
+# modprobe ip_vs
+# cat /proc/net/ip_vs
+```
+
+用ipvsadm命令`ipvsadm -Ln`来检查也可以。
+
 ## LVS体系结构
 
 LVS主要有三个组成部分，分别是负载调度器（Load Balancer）、服务器池（Server Pool）和后端存储（Backend Storage）。
@@ -56,11 +69,13 @@ scheduler2: IP地址为10.1.2.12，网关10.1.2.1
 web1: IP地址为10.1.2.21，网关10.1.2.1  
 web2: IP地址为10.1.2.22，网关10.1.2.1
 
-服务器池上启动相应的服务即可，另外需要添加一条nat规则，两台web机器上都需要添加：
+服务器池上启动相应的服务即可，因为该示例用的是DR模式，因此另外需要添加一条nat规则，两台web机器上都需要添加：
 
 ```
 # iptables -t nat -A PREROUTING -p tcp -d 10.1.2.15 --dport 80 -j REDIRECT
 ```
+
+注意： Director机器上一定要开启ip forward。
 
 ### 使用方法
 
@@ -87,9 +102,13 @@ piranha这个鸟东西bug实在太多了，非常不好用，还不如果我自�
 
 这个方法是我最开始接触LVS时在网上搜索到的，感觉这个方法非常不靠谱。接下来我会写一下关于使用keepalived实现LVS的方法。
 
+## LVS NAT + Keepalived
+
+参见[lvs+keepalived配置][lvs_keepalived]。
+
 ## 参考资料
 
-1.<http://www.austintek.com/LVS/LVS-HOWTO/HOWTO/index.html>
+1.<http://www.austintek.com/LVS/LVS-HOWTO/HOWTO/index.html>  
 2.<http://kb.linuxvirtualserver.org/wiki/LVS_Cluster_Management>
 
 [nfs]: http://en.wikipedia.org/wiki/Network_File_System
@@ -97,3 +116,4 @@ piranha这个鸟东西bug实在太多了，非常不好用，还不如果我自�
 [ha]: http://www.linuxvirtualserver.org/HighAvailability.html
 [piranha]: http://www.linuxvirtualserver.org/docs/ha/piranha.html
 [ultramonkey]: http://www.linuxvirtualserver.org/docs/ha/ultramonkey.html
+[lvs_keepalived]: https://github.com/chenzhiwei/linux/tree/master/lvs-keepalived
