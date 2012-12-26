@@ -63,7 +63,7 @@ static_routes {
 
 以上分别表示启动/关闭keepalived时在本机执行的如下命令：
 
-```bash
+```
 # /sbin/ip addr add 10.210.214.163/24 brd 10.210.214.255 dev eth0
 # /sbin/ip route add 10.0.0.0/8 via 10.210.214.1 dev eth0
 # /sbin/ip addr del 10.210.214.163/24 brd 10.210.214.255 dev eth0
@@ -278,7 +278,7 @@ virtual_server IP Port {
 
 当使用LVS+DR+Keepalived配置时，需要在real server上添加一条iptables规则（其中dport根据情况添加或缺省）：
 
-```bash
+```
 # iptables -t nat -A PREROUTING -p tcp -d 10.67.15.94 --dport 80 -j REDIRECT
 ```
 
