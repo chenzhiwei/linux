@@ -170,7 +170,8 @@ vrrp_instance VI_1 {
 
 * virtual_ipaddress_excluded 发送的VRRP包里不包含的IP地址，为减少回应VRRP包的个数。在网卡上绑定的IP地址比较多的时候用。
 
-* nopreempt 允许一个priority比较低的节点作为master，即使有priority更高的节点启动。可以理解为关闭了auto failback（state必须都是BACKUP这个选项才可用）。
+* nopreempt 允许一个priority比较低的节点作为master，即使有priority更高的节点启动。
+首先nopreemt必须在state为BACKUP的节点上才生效，其次要实现类似于关闭auto failback的功能需要将所有节点的state都设置为BACKUP，或者将master节点的priority设置的比BACKUP低。我个人推荐使用将所有节点的state都设置成BACKUP并且都加上nopreempt选项，这样就完成了关于autofailback功能，当想手动将某节点切换为MASTER时只需去掉该节点的nopreempt选项并且将priority改的比其他节点大，然后重新加载配置文件即可（等MASTER切过来之后再将配置文件改回去再reload一下）。
 
 * preempt_delay master启动多久之后进行接管资源（VIP/Route信息等），并提是没有`nopreempt`选项。
 
