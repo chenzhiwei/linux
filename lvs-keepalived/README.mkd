@@ -1,0 +1,15 @@
+# LVS+Keepalived
+
+LVS+Keepalived有两种常见的用法，一个是用NAT，另一个是用DR方式。
+
+## LVS+NAT+Keepalived
+
+请看keepalived的[配置页面][lvs_keepalived]。
+
+## LVS+DR+Keepalived
+
+也请查看keepalived的[配置页面][lvs_keepalived]。
+
+## 说明
+
+本来想把keepalived+lvs单独拿出来在这个页面写一下，但是发现放在在keepalived页面效果会更好。
