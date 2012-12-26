@@ -170,7 +170,7 @@ vrrp_instance VI_1 {
 
 * virtual_ipaddress_excluded 发送的VRRP包里不包含的IP地址，为减少回应VRRP包的个数。在网卡上绑定的IP地址比较多的时候用。
 
-* nopreempt 允许一个priority比较低的节点作为master，即使有priority更高的节点启动。可以理解为关闭了auto failback（貌似不好用）。
+* nopreempt 允许一个priority比较低的节点作为master，即使有priority更高的节点启动。可以理解为关闭了auto failback（state必须都是BACKUP这个选项才可用）。
 
 * preempt_delay master启动多久之后进行接管资源（VIP/Route信息等），并提是没有`nopreempt`选项。
 
@@ -281,7 +281,7 @@ virtual_server IP Port {
 # iptables -t nat -A PREROUTING -p tcp -d 10.67.15.94 --dport 80 -j REDIRECT
 ```
 
-当使用LVS+NAT+Keepalived配置时，需要将real server的默认路由配置成Director的VIP`10.67.15.94`。
+当使用LVS+NAT+Keepalived配置时，需要将real server的默认路由配置成Director的VIP`10.67.15.94`，必须确保client的请求是通过`10.67.15.94`到达real server的。
 
 ## 安装keepalived
 从keepalived官网[下载][keepalived]合适的版本，解压并执行如下命令完成安装。
@@ -291,6 +291,8 @@ virtual_server IP Port {
 # ./configure --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --mandir=/usr/share
 # make && make install
 ```
+
+你也可以打成[RPM][rpm]包，然后安装。
 
 ## 说明
 
@@ -328,3 +330,4 @@ keepalived的主从切换比较让人蛋疼，需要修改配置文件或停止�
 [nat]: http://kb.linuxvirtualserver.org/wiki/LVS/NAT
 [dr]: http://kb.linuxvirtualserver.org/wiki/LVS/DR
 [tun]: http://kb.linuxvirtualserver.org/wiki/LVS/TUN
+[rpm]: https://github.com/chenzhiwei/linux/tree/master/rpm-package-management
