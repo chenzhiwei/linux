@@ -76,6 +76,7 @@ function _db_connect() {
         exit('Connect Error(' . $GLOBALS['conn']->connect_errno . ')'
             . $GLOBALS['conn']->connect_error);
     }
+    $GLOBALS['conn']->set_charset('utf8');
 }
 
 function conn() {
@@ -107,6 +108,8 @@ function get_data($sql, $conn=null) {
         while($row = $result->fetch_array()) {
             $data[] = $row;
         }
+    } else {
+        return false;
     }
     $result->close();
 
