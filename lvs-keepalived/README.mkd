@@ -13,3 +13,5 @@ LVS+Keepalived有两种常见的用法，一个是用NAT，另一个是用DR方�
 ## 说明
 
 本来想把keepalived+lvs单独拿出来在这个页面写一下，但是发现放在在keepalived页面效果会更好。
+
+[lvs_keepalived]: https://github.com/chenzhiwei/linux/tree/master/keepalived#lvskeepalived%E9%85%8D%E7%BD%AE
