@@ -1,0 +1,220 @@
+# puppet配置及使用
+
+## puppet的简单介绍
+
+服务器集群自动化管理工具，节省重复劳动。
+
+## puppet的配置
+
+可以用`puppet config print all`来查看所有puppet的默认配置项，其中任何一项都可以在`puppet.conf`文件中进行修改。
+
+配置项的详细说明请参考： <http://docs.puppetlabs.com/references/latest/configuration.html>
+
+## puppet的使用
+
+puppet通过执行manifest里面的规则来完成各项任务。manifest是清单的意思，可以理解是puppet要执行操作的清单。
+
+可以通过`puppet config print manifest`命令来查看主manifest的位置，通常是`/etc/puppet/manifests/site.pp`。
+
+客户端可以通过`puppet apply --debug /etc/puppet/manifests/site.pp`来执行各种规则完成各项任务。
+
+一个典型的`site.pp`文件内容如下：
+
+```
+import "nodes/*"
+
+node default {
+    cron {
+        "check raid":
+        command => "/usr/local/scripts/check_raid.sh",
+        user    => root,
+        hour    => '*',
+        minute  => '*/5',
+        ensure  => present;
+
+        "add puppet cron":
+        command => "/usr/bin/puppet agent --server puppet.server.com",
+        user    => root,
+        minute  => [0,30];
+    }
+
+    exec {
+        "generate timestamp file":
+        command => "date +%s > timestamp.file",
+        path    => "/usr/bin:/usr/sbin:/bin",
+        onlyif  => "test -f timestamp.file",
+        cwd     => "/tmp";
+    }
+
+    file {
+        "pp_test.txt":
+        path    => "/tmp/pp_test.txt",
+        ensure  => present,
+        content => "Just do a puppet test!",
+        mode    => 0644;
+    }
+
+    host {
+        "add repo":
+        ensure  => present,
+        name    => "yum.puppet.com",
+        ip      => "192.168.1.15",
+        host_aliases => ["repo.puppet.com", "r.puppet.com"];
+    }
+
+    mount {
+        "mount to /mnt":
+        atboot  => true,
+        ensure  => present,
+        device  =>  "/dev/vdb",
+        name    => "/mnt",
+        fstype  => "ext4",
+        options => "defaults";
+    }
+
+    package {
+        "httpd":
+        name    => "httpd.x86_64",
+        ensure  => installed;
+    }
+
+    ssh_authorized_key {
+        "zhiwei's key":
+        ensure  => present,
+        name    => "zhiwei's ssh rsa key",
+        key     => "a long hex sting in ~/.ssh/id_rsa.pub",
+        type    => rsa,
+        user    => root;
+    }
+
+    tidy {
+        "remove tmp file":
+        age     => "1w",
+        recurse => true,
+        matches => ["[0-9a-z]*.tmp", "*.swap"];
+    }
+
+    user {
+        "add zhiwei":
+        ensure  => present,
+        home    => "/home/zhiwei",
+        name    => zhiwei,
+        password=> 123456,
+        shell   => /bin/bash,
+        managehome=>true;
+    }
+
+    yumrepo {
+        "private repo":
+        name    => "plus",
+        descr   => "Plus private repo",
+        baseurl => "http://private.puppet.com",
+        enabled => 1,
+        timeout => 5;
+    }
+}
+```
+
+其中nodes是和site.pp同级的目录，里面是定义的各种*.pp文件。
+
+这里面只是一些常用的类型的定义，可以在puppet官网上查到[所有类型][all-type]的定义。
+
+今天暂时写这么多，稍后再补充。
+
+[all-type]: http://docs.puppetlabs.com/references/latest/type.html
+
+## puppet 模块（module）用法
+
+puppet模块是什么东东。
+
+* puppet module相关命令
+
+```
+# puppet help module
+# puppet man module
+# man puppet-module
+```
+
+* 查看puppet module的安装路径及仓库地址
+
+```
+# puppet config print modulepath
+# puppet config print module_repository
+```
+
+* 修改puppet module的安装路径（modulepath）和仓库地址（module_repository）
+
+修改`/etc/puppet/puppet.conf`文件，添加如下内容：
+
+```
+modulepath = /path/to/modules
+module_repository = http://internal.web.com
+```
+
+* 安装puppet module
+
+以`logrotate`模块来讲述安装及使用方法：
+
+```
+# puppet module install rodjek/logrotate
+Preparing to install into /etc/puppet/modules ...
+Downloading from https://forge.puppetlabs.com ...
+Installing -- do not interrupt ...
+/etc/puppet/modules
+`-- rodjek-logrotate (v1.0.2)
+```
+
+执行以命令会从`module_repository`上下载下来`logrotate`模块前安装在`modulepath`目录下面，你可以进入该目录查看都安装了哪些文件。
+
+另一种安装方法是从`module_repository`网站下载压缩包，然后解压到`modulepath`。
+
+* 使用puppet module
+
+修改`site.pp`文件，添加以下内容：
+
+```
+logrotate::rule { 'messages':
+  path          => '/var/log/messages',
+  rotate        => 5,
+  size          => '100M',
+  rotate_every  => 'day',
+  compress      => true,
+  postrotate    => '/etc/init.d/syslog reload',
+}
+
+logrotate::rule { 'userdef':
+  path          => '/var/log/userdef/*.log',
+  rotate        => 3,
+  size          => '10M',
+  create        => true,
+  create_mode   => 0600,
+  create_owner  => userdef,
+  create_group  => userdef,
+}
+```
+
+以上的意思是在`/etc/logrotate.d`目录下生成`messages`和`userdef`文件，文件内容就是相关的logrotate规则。
+
+更多用法参考`man logrotate`或该模块主页： <https://github.com/rodjek/puppet-logrotate#logrotaterule>
+
+注意： `logrotate`模块会重写`/etc/cron.daily/logrotate`文件，如果用该模块，那么最好将所有logrotate都由它来完成。
+
+* 查找puppet官方提供的module
+
+地址： <http://forge.puppetlabs.com/>
+
+* 编写自己的module
+
+先大概了解一下模块的[组成部分][module-layout]，然后下载一个模块看看是怎么写的，对比着已有模块来编写自己的模块。
+
+建议在写模块之前阅读一下`logrotate`模块的内容，对自己编写模块会很有帮助，地址： <https://github.com/rodjek/puppet-logrotate>
+
+[module-layout]: http://docs.puppetlabs.com/puppet/2.7/reference/modules_fundamentals.html#module-layout
+
+## 吐槽
+
+不得不说，puppet虽然在配置管理这块要比cfengine好一些，语法什么的很简单，但是效率确实有点低。
+
+我用cfengine时最不爽的一点是在重装系统或在其他莫名情况下会遇到key不匹配的情况，这时需要删除cfengine的server端的client key。
+
+puppet的ssl证书问题可能也会让人头痛，不过我们不用puppet的server-client模式，因此这个问题可以忽略。
