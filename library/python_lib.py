@@ -1,13 +1,86 @@
 #!/usr/bin/env python
 
+import httplib
+import urllib2
+import urllib, re
+
+'''
+url get usage
+params = {'id':15}
+url = http://localhost/index.php
+print get(url, params)
+'''
+def get(url, params=None, headers={}):
+    m = re.match("(http|https)://([a-zA-Z0-9\.-]+)(/.*|$)", url)
+    scheme = m.group(1)
+    host = m.group(2)
+    uri = m.group(3)
+    if params:
+        # query = urllib.urlencode(params)
+        query = ''
+        for key in params.keys():
+            query = query + '&' + key + '=' + str(params[key])
+
+        query = query.lstrip('&')
+        uri = uri + '?' + query
+
+    try:
+        if scheme == 'http':
+            conn = httplib.HTTPConnection(host, timeout=5)
+        else:
+            conn = httplib.HTTPSConnection(host, timeout=5)
+        conn.request('GET', uri, headers=headers)
+        result = conn.getresponse()
+        code = result.status
+        content = result.read()
+        conn.close()
+    except Exception, e:
+        code = 0
+        content = 'get url exception!'
+        print e
+
+    return code, content
+
+'''
+url post usage
+data = {'name':'testname'}
+url = 'http://localhost/index.php'
+print post(url, data)
+'''
+def post(url, params=None, headers={}):
+    m = re.match("(http|https)://([a-zA-Z0-9\.-]+)(/.*|$)", url)
+    scheme = m.group(1)
+    host = m.group(2)
+    uri = m.group(3)
+    if params:
+        data = urllib.urlencode(params)
+
+    headers = {"Content-type": "application/x-www-form-urlencoded",
+                "Accept": "text/plain"}
+
+    try:
+        if scheme == 'https':
+            conn = httplib.HTTPSConnection(host, timeout=5)
+        else:
+            conn = httplib.HTTPConnection(host, timeout=5)
+        conn.request('POST', uri, body=data, headers=headers)
+        result = conn.getresponse()
+        code = result.status
+        content = result.read()
+        conn.close()
+    except Exception, e:
+        code = 0
+        content = 'post url exception!'
+        print e
+
+    return code, content
+
 ''' curl usage
 GET Method: params = {'id':'aaa'}
 POST Method: data = {'name':'bbb'}
 HEADERS: header = {'Host':'abc.com'}
 print curl('http://localhost/index.php', params, data, header)
 '''
-import urllib
-import urllib2
 def curl(url, params=None, data=None, header={}):
 
     if params:
