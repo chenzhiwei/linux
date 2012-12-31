@@ -15,7 +15,8 @@ function get_valid_ip() {
 
 function get_hosts() {
     if nc -w 3 -z $smarthost 443; then
-        curl -k -sS "https://$smarthost/svn/trunk/hosts"|awk '!/^127/ && /^[1-9]/'
+        curl -m 60 -k -sS "https://$smarthost/svn/trunk/hosts" | \
+            tr -d '\r' | awk '!/^127/ && /^[1-9]/'
         exit 0
     fi
     local ip=$(get_valid_ip)
@@ -23,7 +24,8 @@ function get_hosts() {
         echo "connect to $smarthost failed!"
         exit 1
     fi
-    curl -k -sS -H"Host: $smarthost" "https://$ip/svn/trunk/hosts"|awk '!/^127/ && /^[1-9]/'
+    curl -m 60 -k -sS -H"Host: $smarthost" "https://$ip/svn/trunk/hosts" | \
+        tr -d '\r' | awk '!/^127/ && /^[1-9]/'
 }
 
 function update_host() {
@@ -42,7 +44,7 @@ hosts=$(get_hosts)
 while read line
 do
     ip=$(echo $line | awk '{print $1}')
-    host=$(echo $line | awk '{print $2}' | grep -o "[0-9a-zA-Z\.\-]*")
+    host=$(echo $line | awk '{print $2}')
     update_host $ip $host
 done<<EOF
 $hosts
