@@ -1,0 +1,21 @@
+$TTL 600
+$ORIGIN jizhihuwai.com.
+@       IN      SOA     jizhihuwai.com. mail.jizhihuwai.com. (
+                        2013010401  ; serial
+                        10800       ; refresh (3 hours)
+                        900         ; retry (15 minutes)
+                        604800      ; expire (1 week)
+                        86400       ; minimum (1 day)
+)
+
+
+        IN      NS      ns1.jizhihuwai.com.
+        IN      NS      ns2.jizhihuwai.com.
+
+ns1     A       10.210.214.113
+ns2     A       10.210.214.163
+
+@       A       10.210.214.163
+blog    A       10.210.214.113
+wiki    CNAME   jizhihuwai.com.
+*       A       10.210.214.163
