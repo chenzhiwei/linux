@@ -209,7 +209,25 @@ logrotate::rule { 'userdef':
 
 建议在写模块之前阅读一下`logrotate`模块的内容，对自己编写模块会很有帮助，地址： <https://github.com/rodjek/puppet-logrotate>
 
+puppet标准库也提供了很多开发module的资源： <http://forge.puppetlabs.com/puppetlabs/stdlib>
+
 [module-layout]: http://docs.puppetlabs.com/puppet/2.7/reference/modules_fundamentals.html#module-layout
+
+## puppet新旧版本命令对比
+
+```
+Pre-2.6         Post-2.6
+puppetmasterd   puppet master
+puppetd         puppet agent
+puppet          puppet apply
+puppetca        puppet cert
+ralsh           puppet resource
+puppetrun       puppet kick
+puppetqd        puppet queue
+filebucket      puppet filebucket
+puppetdoc       puppet doc
+pi              puppet describe
+```
 
 ## 吐槽
 
