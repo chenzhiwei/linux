@@ -172,6 +172,7 @@ SPEC文件有以下几个段落：头部（Header），准备（Prep），构建
 rpmbuild工具会自动帮你完成很多工作，而很多时候这些工作会影响你的打包，因此你可以关闭他们。
 
 ```
+%define debug_package %{nil}
 AutoReq: 0
 AutoProv: 0
 AutoReqProv: 0
