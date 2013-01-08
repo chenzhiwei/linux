@@ -1,0 +1,59 @@
+<domain type='kvm'>
+    <name>hostname</name>
+    <uuid>hostname-uuid</uuid>
+
+    <vcpu>cpunum</vcpu>
+    <memory>memsize</memory>
+    <currentMemory>memsize</currentMemory>
+
+    <on_poweroff>destroy</on_poweroff>
+    <on_reboot>restart</on_reboot>
+    <on_crash>restart</on_crash>
+
+    <os>
+        <type arch='x86_64' machine='pc'>hvm</type>
+        <kernel>/var/instances/instance-hostname/kernel</kernel>
+        <initrd>/var/instances/instance-hostname/ramdisk</initrd>
+        <cmdline>root=/dev/vda console=ttyS0</cmdline>
+    </os>
+
+    <devices>
+        <!--<emulator>/usr/bin/kvm</emulator> Ubuntu Host-->
+        <emulator>/usr/libexec/qemu-kvm</emulator>
+        <disk type='file' device='disk'>
+            <driver name='qemu' type='raw'/>
+            <source file='/var/instances/instance-hostname/centos-6.2.x86_64.img' />
+            <target dev='vda'/>
+        </disk>
+
+        <disk type='file' device='disk'>
+            <driver name='qemu' type='raw'/>
+            <source file='/var/instances/instance-hostname/disk.vdb'/>
+            <target dev='vdb' bus='virtio'/>
+        </disk>
+
+        <interface type='bridge'>
+            <source bridge='br0'/>
+            <mac address='mac_addr0'/>
+            <model type='virtio'/>
+        </interface>
+
+        <interface type='bridge'>
+            <source bridge='br1'/>
+            <mac address='mac_addr1'/>
+            <model type='virtio'/>
+        </interface>
+
+        <graphics type='vnc' port='-1' autoport='yes' keymap='en-us' listen='hyper_ipaddr'/>
+        <!--graphics type='vnc' port='-1' autoport='yes' keymap='en-us' listen='0.0.0.0'/-->
+
+        <console type='stdio'>
+            <target port='1'/>
+        </console>
+
+        <serial type="file">
+            <source path='/var/instances/instance-hostname/console.log'/>
+            <target port="1"/>
+        </serial>
+    </devices>
+</domain>
