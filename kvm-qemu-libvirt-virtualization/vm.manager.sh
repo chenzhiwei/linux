@@ -15,8 +15,7 @@ INI_FILE=/var/images/vms.ini
 BASE_DIR=/var/instances
 IMG_DIR=/var/images
 
-IP=$(ip a | awk -F"[ /]" '/inet /{if($6 ~ /10\.(67\.15|73\.26|75\.7)\./)\
-    {print $6;exit;}}')
+IP=$(ip a | awk -F"[ /]" '/inet /{if($6 ~ /10\./){print $6;exit;}}')
 
 function ini_parser() {
     local vms=$(sed -e 's/[ \t]\+//g' -e '/^;/d' $INI_FILE)
