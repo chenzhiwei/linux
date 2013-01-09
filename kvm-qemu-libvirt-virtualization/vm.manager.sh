@@ -50,6 +50,7 @@ function prepare() {
     cp -rf $dir $BASE_DIR/instance-$hostname
     mv $BASE_DIR/instance-$hostname/instance-hostname.xml $instance_xml 
     qemu-img create $BASE_DIR/instance-$hostname/disk.local ${disk}G
+    mkfs.ext4 -F -q $BASE_DIR/instance-$hostname/disk.local
 }
 
 function edit_config() {
