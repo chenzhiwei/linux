@@ -133,6 +133,26 @@ Units = sectors of 512 bytes, counting from 0
 # cp /mnt/boot/initrd.img-3.2.0-23-generic ramdisk
 ```
 
+## 镜像制作2
+
+当你看了之前的制作镜像步骤后会发现很麻烦，现在介绍一种比较简单的制作方法。
+
+```
+# qemu-img create ubuntu-12.10.img 10G
+# mkfs.ext4 -F -q ubuntu-12.10.img
+# kvm -hda ubuntu-12.10.img -cdrom ubuntu-12.10-server-amd64.iso -boot d -m 1024 -vnc 0.0.0.0:20
+# mount -o loop ubuntu-12.10.img /mnt
+# cp /mnt/boot/initrd.img-3.5.0-17-generic ramdisk
+# cp /mnt/boot/vmlinuz-3.5.0-17-generic kernel
+# tune2fs -L new-lable ubuntu-12.10.img
+# vim /mnt/etc/fstab
+edit to the format you like
+LABEL=new-lable /               ext4    defaults 0 0
+/dev/vda        /               ext4    defaults 0 0
+# umount /mnt
+```
+
+以上几条命令的意思是将系统安装在整个磁盘上，即磁盘不分区，也就意味着这需要你自己指定内核来启动系统，详情请参见`instance-hostname.xml`文件中的配置。
 
 ## KVM虚拟机管理
 
