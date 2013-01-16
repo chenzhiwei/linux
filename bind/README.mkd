@@ -1,0 +1,13 @@
+# BIND相关介绍
+
+## BIND是什么
+
+BIND是Berkeley Internet Name Daemon的缩写，是现今互联网上最常见的DNS服务器软件。
+
+ISC的主席为BIND写了个[RRL][rrl]（Response Rate Limiting）补丁，可以有效的防护DDoS攻击，将来有可能加入到BIND里面。
+
+[rrl]: http://www.redbarn.org/dns/ratelimits
+
+## BIND的配置
+
+请先看配置文件，稍后整理成文档。
