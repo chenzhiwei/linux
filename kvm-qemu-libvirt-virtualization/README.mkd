@@ -154,6 +154,23 @@ LABEL=new-lable /               ext4    defaults 0 0
 
 以上几条命令的意思是将系统安装在整个磁盘上，即磁盘不分区，也就意味着这需要你自己指定内核来启动系统，详情请参见`instance-hostname.xml`文件中的配置。
 
+## 挂载qcow2格式的文件
+
+```
+# modprobe nbd max_part=16
+# qemu-nbd -c /dev/nbd0 disk.qcow2
+# partprobe /dev/nbd0
+# mount /dev/nbd0 /mnt
+# umount /mnt
+# qemu-nbd -d /dev/nbd0
+```
+
+以上几条命令的意思是给内核添加[nbd][nbd]模块，使用`qemu-nbd`命令去连接（connect）文件`disk.qcow2`，通知操作系统分区表已经被修改，挂载与卸载，断开连接（disconnect）。
+
+更多相关内容: <http://en.wikibooks.org/wiki/QEMU/Images#Mounting_an_image_on_the_host>
+
+[nbd]: http://en.wikipedia.org/wiki/Network_block_device
+
 ## KVM虚拟机管理
 
 按照以上方式创建完成虚拟机镜像之后libvirt会自动生成一个xml配置文件，管理虚拟机主要就靠这个xml文件了，管理的命令是virsh。
