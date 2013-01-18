@@ -165,7 +165,7 @@ LABEL=new-lable /               ext4    defaults 0 0
 # qemu-nbd -d /dev/nbd0
 ```
 
-以上几条命令的意思是给内核添加[nbd][nbd]模块，使用`qemu-nbd`命令去连接（connect）文件`disk.qcow2`，通知操作系统分区表已经被修改，挂载与卸载，断开连接（disconnect）。
+以上几条命令的意思是给内核添加[nbd][nbd]模块，使用`qemu-nbd`命令去连接（connect）文件`disk.qcow2`，通知操作系统分区表已经被修改，挂载与卸载，断开连接（disconnect）。其中`max_part=16`表示每块nbd设备支持的分区个数（`modinfo nbd`），命令`modprobe -r nbd`来删除内核中的nbd模块。
 
 更多相关内容: <http://en.wikibooks.org/wiki/QEMU/Images#Mounting_an_image_on_the_host>
 
