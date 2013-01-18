@@ -37,6 +37,8 @@ RPM包相关工具有rpm,rpmbuild,rpmsign,rpm2cpio等。
 
 先记住一个查看SPEC文件宏定义值的命令，然后再去记和签名相关的命令。另外，这些宏都定义在/usr/lib/rpm/macros文件中。
 
+注： 该文件`~/.rpmmacros`会重写系统定义的macros文件。
+
 ### rpm2cpio命令
 
 ```
