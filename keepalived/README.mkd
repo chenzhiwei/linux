@@ -158,6 +158,17 @@ vrrp_instance VI_1 {
 
 * virtual_router_id 取值在0-255之间，用来区分多个instance的VRRP组播。
 
+注意： 同一网段中virtual_router_id的值不能重复，否则会出错，相关错误信息如下。  
+```
+Keepalived_vrrp[27120]: ip address associated with VRID not present in received packet :
+one or more VIP associated with VRID mismatch actual MASTER advert
+bogus VRRP packet received on eth1 !!!
+receive an invalid ip number count associated with VRID!
+VRRP_Instance(xxx) ignoring received advertisment...
+```
+
+可以用这条命令来查看该网络中所存在的vrid：`tcpdump -nn -i any net 224.0.0.0/8`
+
 * priority 用来选举master的，要成为master，那么这个选项的值[最好高于其他机器50个点][priority_more_than_50]，该项[取值范围][priority]是1-255（在此范围之外会被识别成默认值100）。
 
 * advert_int 发VRRP包的时间间隔，即多久进行一次master选举（可以认为是健康查检时间间隔）。
