@@ -1,0 +1,106 @@
+# 部署Openstack环境
+
+OpenStack主要由七部分组成，分别是Identify, Image, Network, Compute, Block Storage, Object Storage, Dashboard，分别表示认证模块，镜像模块，网络模块，计算模块，块存储模块，对象存储模块和管理模块。
+
+## Identify(Keystone)
+为其他几个模块提供认证服务，所有的认证操作都会通过keystone来进行。
+
+整个keystone其实就是在数据库中建立用户（user）、角色（role）、Tenant、服务（service）、endpoint以及其相互对应关系。Tenant在之前的版本中叫做Project，Tenant是一个独立的资源容器。每个Tenant都可以定义独立的VLAN, volumes, instances, images, keys, users等。服务指的是OpenStack所提供的那几种服务（network, volume, image, identify, compute, swift）。endpoint是指各服务的内部、外部及管理接口址（REST API）。
+
+软件包：
+
+```
+keystone                 OpenStack identity service - Daemons
+python-keystone          OpenStack identity service - Python library
+python-keystoneclient    Client libary for Openstack Keystone API
+```
+
+## Image(Glance)
+提供镜像服务，创建虚拟机什么的都会从这里拉取镜像模板。
+
+你可以将镜像通过Glance来上传到相应目录并在数据库里标记镜像的位置、属性及相关权限。使用nova来创建instance的时候就是从Glance的数据库中来查找镜像文件及相关属性、权限。
+
+软件包：
+
+```
+glance                 OpenStack Image Registry and Delivery Service - Daemons
+glance-api             OpenStack Image Registry and Delivery Service - API
+glance-common          OpenStack Image Registry and Delivery Service - Common
+glance-registry        OpenStack Image Registry and Delivery Service - Registry
+python-glance          OpenStack Image Registry and Delivery Service - Python library
+python-glanceclient    Client library for Openstack glance server.
+```
+
+## Network(Quantum)
+提供网络服务，即创建虚拟机的IP地址分配及网络分配都由它来支配。
+
+软件包：
+
+```
+quantum-common                      common - Quantum is a virtual network service for Openstack.
+quantum-dhcp-agent                  Quantum is a virtual network service for Openstack. (dhcp agent)
+quantum-l3-agent                    Quantum is a virtual network service for Openstack. (l3 agent)
+quantum-plugin-openvswitch          Quantum is a virtual network service for Openstack. (openvswitch plugin)
+quantum-plugin-openvswitch-agent    Quantum is a virtual network service for Openstack. (openvswitch plugin agent)
+quantum-server                      server - Quantum is a virtual network service for Openstack
+python-quantum                      Quantum is a virutal network service for Openstack. (python library)
+python-quantumclient                client - Quantum is a virtual network service for Openstack
+```
+
+## Comupte(Nova)
+提供计算服务，nova是运行在libvirt上层的的一个管理工具，用来管理操作虚拟机。
+
+软件包：
+
+```
+nova-api             OpenStack Compute - API frontend
+nova-cert            OpenStack Compute - certificate management
+nova-common          OpenStack Compute - common files
+nova-compute         OpenStack Compute - compute node
+nova-compute-kvm     OpenStack Compute - compute node (KVM)
+nova-consoleauth     OpenStack Compute - Console Authenticator
+nova-novncproxy      OpenStack Compute - NoVNC proxy
+nova-scheduler       OpenStack Compute - virtual machine scheduler
+python-nova          OpenStack Compute Python libraries
+python-novaclient    client library for OpenStack Compute API
+```
+
+## Block Storage(Cinder)
+提供块存储服务，持久存储虚拟机上的数据，即一台虚拟机上面会挂载其他磁盘如vdb/vdc/vdd等，这个虚拟的磁盘就是Cinder在宿主机上创建的raw或qcow2文件。
+
+软件包：
+
+```
+cinder-api             Cinder storage service - api server
+cinder-common          Cinder starage service - common files
+cinder-scheduler       Cinder storage service - api server
+cinder-volume          Cinder storage service - api server
+python-cinder          Cinder python libraries
+python-cinderclient    python bindings to the OpenStack Volume API
+```
+
+## Object Storage(Swift)
+对象存储，存储的是一些资源文件，如图片、代码等文件。
+
+## Dashboard(horizon)
+管理这些模块的平台，所在操作都可以在Dashboard中进行。
+
+软件包：
+
+```
+openstack-dashboard      django web interface to Openstack
+python-django-horizon    Django module providing web based interaction with OpenStack
+python-openstack-auth    A django authentication backend for Openstack
+```
+
+## 说明
+以上是在Ubuntu 12.10环境下进行部署的。看似简单，但是其中各种细节很让人纠结，我还没搞定网络这块。
+
+## 吐槽
+OpenStack最开始的设计各种不规范，各种乱啊，之前的部分命令被重新定义了。官方的文档貌似都没人更新，里面存在的错误之处也没有得到更正。
+
+## 参考资料
+1.<http://docs.openstack.org/folsom/basic-install/content/>  
+2.<http://docs.openstack.org/trunk/openstack-compute/admin/content/>  
+3.<http://wiki.openstack.org/LibvirtXMLCPUModel>  
+4.<http://wiki.openstack.org/NovaConfigOptions>

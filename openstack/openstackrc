@@ -1,0 +1,11 @@
+HOST=10.73.26.252
+TOKEN=$(echo -n openstack | md5sum | awk '{print $1}')
+export OS_NO_CACHE=1
+export OS_USERNAME=DemoUser
+export OS_PASSWORD=123456
+export OS_TENANT_NAME=DemoTenant
+export OS_TENANT_ID=
+export OS_REGION_NAME=China
+
+export SERVICE_TOKEN=$TOKEN
+export SERVICE_ENDPOINT=http://$HOST:35357/v2.0
