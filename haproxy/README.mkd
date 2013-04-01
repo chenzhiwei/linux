@@ -55,8 +55,8 @@ backend host-abc-com
     option httpclose
     option redispatch
     retries 3
-    server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fail 3 maxconn 32
-    server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fail 3 maxconn 32
+    server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fall 3 maxconn 32
+    server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fall 3 maxconn 32
 
 backend host-cn
     balance roundrobin
@@ -65,9 +65,9 @@ backend host-cn
     option httpclose
     option redispatch
     retries 3
-    server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fail 3 maxconn 32
-    server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fail 3 maxconn 32
-    server abc-com3 192.168.1.102:80 check inter 2000 rise 2 fail 3 maxconn 32 backup
+    server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fall 3 maxconn 32
+    server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fall 3 maxconn 32
+    server abc-com3 192.168.1.102:80 check inter 2000 rise 2 fall 3 maxconn 32 backup
 
 backend host-xyz-url-xxx
     balance roundrobin
@@ -76,8 +76,8 @@ backend host-xyz-url-xxx
     option httpclose
     option redispatch
     retries 3
-    server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fail 3 maxconn 32
-    server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fail 3 maxconn 32
+    server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fall 3 maxconn 32
+    server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fall 3 maxconn 32
 ```
 包含listen区域的配置文件示例：
 ```
@@ -127,6 +127,16 @@ xforwardedfor=yes
 就这样配置，stunnel就可以代理https请求的abc.com了。在stunnel4.44版本之前与HAProxy结合使用时都需要打一个HAProxy提供的[补丁][stunnel_patch]，但之后的版本就不需要打HAProxy的补丁了。
 
 [stunnel_patch]: http://haproxy.1wt.eu/download/patches/
+
+## haproxy使用
+
+```
+# haproxy -c -f /etc/haproxy/haproxy.cfg
+# haproxy -D -f /etc/haporxy/haproxy.cfg
+# haproxy -D -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
+```
+
+注：很变态的是这些参数的位置不能随意更改。
 
 ## 相关资料
 1\. HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>  
