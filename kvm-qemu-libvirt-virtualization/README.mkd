@@ -55,7 +55,7 @@ virt-install命令在virtinst包里，在CentOS下该包名为python-virtinst，
 # chroot /mnt
 ```
 
-接下来怎么操作就不用我说了吧。。。
+接下来怎么操作就不用我说了吧。。。如果chroot之后系统提示`Cannot open /dev/urandom for reading: No such file or directory`，那么你在chroot之前需要执行以下命令`mount --bind /dev /mnt/dev`，其他相似问题类似处理方法。
 
 ### 提取文件系统
 
