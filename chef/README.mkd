@@ -1,0 +1,94 @@
+# Chef 配置及使用
+
+## Chef 简单介绍
+
+Chef 是一个集群自动化管理工具，可以批量执行命令、处理文本文件，代替人工来重复执行复杂、繁琐的操作。
+
+Chef 有两种运行模式，Server/Client 模式和 Chef-Solo 模式，前者是中心化管理而后者是去中心化管理，在实际运用中需要根据自己需求来选择适合自己的模式。这里我主要介绍 Server/Client 模式。
+
+## Chef 安装及配置
+Server/Client 模式需要部署 Server 节点、 Workstation 节点和 Client 节点，其中 Server 节点就是 Chef 的中心，所有指令都从这里发出。Workstation 可以认为是管理整个 Chef 的机器，管理人员通过 Workstation 来向 Server 发送相关命令及操作。Client 节点就是集群中需要被管理的节点。
+
+### Chef-Server 的搭建
+
+Chef-Server 就是整个集群的控制中心，集群中所有节点都是先从 Chef-Server 来拿到指令然后再执行。
+
+安装 Chef-Server RPM 包（chef-server-11.0.6-1.el6.x86_64.rpm），并为 Chef-Server 配置地址，这里设定其地址为`server.chef.com`并且集群中的其他节点都可以访问它。
+
+安装完成之后可以用`chef-server-ctl start`来启动，当然你也可以使用`chef-server-ctl reconfigure`来对其进行重新配置。
+
+### Workstation 的搭建
+
+Workstation 是用来管理 Chef 的一个节点，通过 Workstation 向 Server 发送指令进而在集群中其他节点上执行。
+
+Workstation 需要配置一下 Server 的相关信息，包括认证信息及 Server 的地址。
+
+Workstation 上面有一个工具叫作 Knife ，通常我们是通过 Knife 来对 Chef 做所有操作的。比如添加 node、cookbook、role 等。
+
+Knife 是通过其配置文件`knife.rb`来获取相关信息（Server 地址、cookbook 路径及相关认证密钥）的，该文件位置为`~/.chef/knife.rb`。
+
+本目录中的`knife.rb`文件是一个简单的示例，其完整参数可以参考[这里][knife.rb]。
+
+[knife.rb]: http://docs.opscode.com/config_rb_knife.html
+
+### Client 节点的搭建
+
+Client 节点就是集群中所被管理的节点，可以手动安装配置 Client 节点，也可以使用 Knife 命令来自动安装配置 Client 节点。
+
+**通过 Knife 来添加节点**
+
+可以使用`knife bootstrap`来添加新节点，具体用法如下：
+
+```
+# knife bootstrap 172.16.1.110 -x root -P password
+# knife bootstrap 172.16.1.111 -x root -i /path/to/your_identiy_file.pem
+```
+
+**手动添加节点**
+
+* 安装`chef-client-11.0.6-1.el6.x86_64.rpm`软件包
+
+* 拷贝密钥
+  从 Chef-Server 上拷贝到 Client 上， `/etc/chef-server/chef-validator.pem ==> /etc/chef/validator.pem`。 
+
+* 创建配置文件`/etc/chef/client.rb`，本目录中有一个简单示例，其完整配置可以参考[这里][client.rb]。
+
+[client.rb]: http://docs.opscode.com/config_rb_client.html
+
+## Knife工具的使用
+
+Chef 主要是靠 Knife 这个工具来对集群中节点进行管理的。
+
+Knife工具有很多二级指令，如下：
+
+### knife boostrap
+
+### knife client
+
+### knife cookbook
+
+### knife environment
+
+### knife node
+
+### knife role
+
+这里只简要列出了几个常用指令，更多指令可参见[这里][knife-subcommands]。
+
+[knife-subcommands]: http://docs.opscode.com/knife.html
+
+## Cookbook的使用
+
+一个cookbook可以认为是在一个指令集，里面主要包含了『资源』和『提供者』。『资源』就是节点上所应该具有的内容，比如一个文件、一个用户；『提供者』表示怎样使这些『资源』存在于这个节点上，通常里面定义了一些动作，比如添加一个文件、一个用户。
+
+## Cookbook的编写
+
+编写Cookbook需要你懂一些ruby语言。
+
+## 吐嘈Chef
+
+Chef是一个让人很不爽的工具，还号称是基于使用Puppet的经验进行开发的。我严重怀疑开发Chef的这帮脑残的智商，或许用脑残来形容他们太污辱『脑残』这个词语了。
+
+## 参考资料
+
+注：以上一切都基于Chef 11。
