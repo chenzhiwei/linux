@@ -1,8 +1,8 @@
 [user]
-	name = Chen Zhiwei
-	email = zhiweik@gmail.com
+    name = Chen Zhiwei
+    email = zhiweik@gmail.com
 [core]
-	editor = vim
+    editor = vim
 [merge]
 	tool = vimdiff
 [color]
@@ -11,6 +11,8 @@
     interactive = auto
     diff = auto
 [alias]
-	co = checkout
-	ci = commit
-	st = status
+    co = checkout
+    ci = commit
+    st = status
+[push]
+    default = matching

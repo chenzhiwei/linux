@@ -58,6 +58,12 @@ $ git push backup
 ```
 然后在提交更新时使用`git push both`就可以将更新提交到两个远端仓库了。
 
+注意：在 Git 2.0 将会更改默认的`push`动作为『只 push 当前 branch 到远端仓库』。如果想继续使用`git push both`命令需要手动设置一下`git push`的默认动作`git config --global push.default matching`。
+
+`push.default`有两个动作，分别是`matching`和`simple`，二者[意思][push.default]分别是 push 本地所有的分支到远端仓库和 push 本地当前分支到远端仓库。
+
+[push.default]: http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0
+
 一个完整的.git/config文件示例如下：
 
 ```
