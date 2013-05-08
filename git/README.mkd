@@ -60,7 +60,7 @@ $ git push backup
 
 注意：在 Git 2.0 将会更改默认的`push`动作为『只 push 当前 branch 到远端仓库』。如果想继续使用`git push both`命令需要手动设置一下`git push`的默认动作`git config --global push.default matching`。
 
-`push.default`有两个动作，分别是`matching`和`simple`，二者[意思][push.default]分别是 push 本地所有的分支到远端仓库和 push 本地当前分支到远端仓库。
+`push.default`有几个简单动作，这里介绍`matching`和`simple`，二者[意思][push.default]分别是 push 本地所有的分支到远端仓库和 push 本地当前分支到上游分支。这个解释貌似还不够精确，可以`man git-config`来查看详细说明。
 
 [push.default]: http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0
 
@@ -104,3 +104,117 @@ $ git push origin new_branch
 
 ## 提交单个分支到远端git仓库
 `git push`命令默认是将所有分支(branch)都提交到git仓库，有时你只想提交某个分支到远端仓库，那么就就需要使用`git push origin HEAD`。当然也可以使用`git config --global push.default tracking`命令来改变`git push`的默认操作，意思是执行`git push`时默认只提交当前分支到远端git仓库。
+
+## git常用指令
+
+以下几个是git常用的指令，可以简单了解一下。
+
+### git config
+
+在使用git前最好先配置一下你的个人信息及使用偏好。以下命令的意思就不用解释了吧，执行完以下命令就会在你的家目录（~）下生成一个文件`~/.gitconfig`。
+
+```
+$ git config --global user.name "Chen Zhiwei"
+$ git config --global user.email zhiweik@gmail.com
+$ git config --global core.editor vim
+$ git config --global merge.tool vimdiff
+$ git config --global color.status auto
+$ git config --global color.branch auto
+$ git config --global color.interactive auto
+$ git config --global color.diff auto
+$ git config --global push.default simple
+$ git config --global alias.co checkout
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+```
+
+### git add
+
+添加文件内容到索引中去，几个简单示例：
+
+```
+$ git add .
+$ git add --all
+$ git add *.txt
+$ git add directory/*.sh
+```
+
+### git rm
+
+删除索引和当时工作目录中的文件。
+
+```
+$ git rm filename
+$ git rm *.txt
+$ git rm -r .
+```
+
+### git commit
+
+将当前改动记录到仓库中，即提交改动到本地仓库中。
+
+```
+$ git commit -m "add a file and remove a file"
+```
+
+### git status
+
+查看当前工作目录的状态，即修改、添加及删除了哪些文件。
+
+```
+$ git status
+```
+
+### git checkout
+
+检出一个分支和目录到当前工作目录中，可以简单理解为切换分支的命令。
+
+以下命令分别为切换到分支 branch1 和创建一个新的分支 new_branch 。
+
+```
+$ git checkout branch1
+$ git checkout -b new_branch
+```
+
+### git branch
+
+列出、创建和删除分支。
+
+以下指令分别为列出本地分支、所有分支、远端分支、创建和删除分支。
+
+```
+$ git branch --list
+$ git branch --all
+$ git branch --remotes
+$ git branch new_branch
+$ git branch --delete branch_name
+$ 
+```
+
+### git diff
+
+查看改动内容。
+
+```
+$ git diff filename
+$ git diff .
+$ git diff revision1 revision2
+```
+
+### git init
+
+### git log
+
+### git merge
+
+### git mv
+
+### git pull
+
+### git push
+
+### git revert
+
+## 其他
+
+我想睡觉，因此先不写了。
