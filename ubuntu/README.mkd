@@ -1,0 +1,16 @@
+# Ubuntu Tips
+
+## Disable Guest/Remote Login
+
+```
+# echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
+# echo "greeter-show-remote-login=false" >> /etc/lightdm/lightdm.conf
+```
+
+## Use OpenVPN on Ubuntu
+
+```
+$ sudo apt-get install openvpn network-manager-openvpn \
+        network-manager-openvpn-gnome network-manager-vpnc \
+        network-manager-vpnc-gnome
+```
