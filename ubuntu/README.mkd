@@ -14,3 +14,11 @@ $ sudo apt-get install openvpn network-manager-openvpn \
         network-manager-openvpn-gnome network-manager-vpnc \
         network-manager-vpnc-gnome
 ```
+
+## Edit the sound menu on the top panel
+
+```
+$ gsettings get com.canonical.indicator.sound interested-media-players
+['rhythmbox', 'deepin-music-player']
+$ gsettings set com.canonical.indicator.sound interested-media-players "['deepin-music-player']"
+```
