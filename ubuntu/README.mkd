@@ -22,3 +22,15 @@ $ gsettings get com.canonical.indicator.sound interested-media-players
 ['rhythmbox', 'deepin-music-player']
 $ gsettings set com.canonical.indicator.sound interested-media-players "['deepin-music-player']"
 ```
+
+## Ubuntu Crontab GUI Application
+
+It is possible to run gui applications via cronjobs. This can be done by telling cron which display to use.
+
+```
+* * * * * user env DISPLAY=:0 gui_appname
+```
+
+The `env DISPLAY=:0` portion will tell cron to use the current display (desktop) for the program "gui_appname".
+
+Link: <https://help.ubuntu.com/community/CronHowto>
