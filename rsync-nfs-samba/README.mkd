@@ -50,18 +50,19 @@ $ rsync source_file --password-file=/tmp/rsync.pwd test@host.name::ftp
 $ rsync host.name::www
 ```
 
-用rsync快速删除本地或无端文件（速度非常快）：
+用rsync快速删除本地或远端文件（速度非常快）：
 
-假如本地有个目录`/var/rsync`，里面的文件有N多G，非常大，如果用rm命令的话会非常慢，用rsync的话就会很快。
+假如本地有个目录`/var/files`，里面的文件有N多G，非常大，如果用rm命令的话会非常慢，用rsync的话就会很快。
 
 ```
-$ mkdir /tmp/rsync_null_dir
-$ rsync -a --delete-before /tmp/rsync_null_dir /var/rsync
+$ mkdir /tmp/empty
+$ rsync -a --delete /tmp/empty /var/files
 ```
 
 用rsync快速删除远端指定文件`test.file`：
 
 ```
+$ rsync -rv --delete --include=test.file --exclude=*  /tmp/empty dest/
 $ rsync -d --exclude=test.file --filter="R test.file" --filter="P *" \
         --delete-excluded --existing --ignore-existing . user@rsync_server::module
 ```
