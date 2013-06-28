@@ -34,3 +34,23 @@ It is possible to run gui applications via cronjobs. This can be done by telling
 The `env DISPLAY=:0` portion will tell cron to use the current display (desktop) for the program "gui_appname".
 
 Link: <https://help.ubuntu.com/community/CronHowto>
+
+## Create VM for Windows
+
+```
+# mkdir /var/instances/windows
+# cd /var/instances/windows
+# qemu-img create windows.img 10G
+# kvm -no-acpi -m 750 -cdrom ~/windows_xp_install.iso -boot d windows.img
+```
+
+OR
+
+```
+# apt-get install python-virtinst
+# virt-install --connect qemu:///system -n winxp -r 512 -f windows.img \
+    -s 12 -c windowsxpsp2.iso --vnc --noautoconsole --os-type windows \
+    --os-variant winxp --network=br0
+```
+
+Link: <http://ubuntuforums.org/showthread.php?t=970385>
