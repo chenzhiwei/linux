@@ -93,6 +93,96 @@ python-django-horizon    Django module providing web based interaction with Open
 python-openstack-auth    A django authentication backend for Openstack
 ```
 
+## OpenStack各组件说明
+
+### nova-api
+
+接收和回应终端用户的API请求，包括OpenStack Compute API, Amazon's EC2 API和一个特殊的管理API（给授权用户做一些管理操作的）。
+
+### nova-api-metadata
+
+接收虚拟机的metadata请求，仅用在多机模式。
+
+### nova-compute
+
+通过宿主机的API（KVM的libvirt，XenServer的XenAPi, VMware和VMwareAPI）用来创建和销毁虚拟机，说白了就是接收队列（AMQP）的操作请求，然后执行相应命令来完成该操作。
+
+### nova-scheduler
+
+从队列里接收创建虚拟机的请求，然后确定该虚拟机应该在哪台宿主机上运行。
+
+### nova-conductor
+
+Grizzly中新加入的一个模块，是夹在nova-compute和数据库之间的一层介质，用来避免nova-compute直接对数据库进行操作。
+
+### nova-network
+
+~~和nova-compute相似的一个东西，是用来接收队列里的网络请求，然后执行相应指令如添加一条iptables规则、启动一个网桥。这个东西已经从nova中分离出来，成为了OpenStack Network组件，学名Quantum。~~
+
+### nova-dhcpbridge
+
+~~是一个脚本，用来记录可以分配给虚拟机的IP地址，已经合并到了Quantum中。~~
+
+### nova-consoleauth
+
+用来认证控制台代理（Console Proxies）提供的用户token。
+
+### nova-novncproxy
+
+提供了一个通过VNC来访问正在运行的虚拟机的功能，它支持基于浏览器的VNC客户端。
+
+### nova-xvpnvncproxy (nova-console)
+
+提供通过VNC链接正在运行的虚拟机。
+
+### nova-cert
+
+用来管理x509证书，登录虚拟时所需要的私钥以及创建虚拟机时所使用的公钥。
+
+### nova-cells
+
+用来在不改变数据库和消息队列的情况下来伸缩OpenStack Compute，它的主要目标是使OpenStack支持大规模部署。如果不用cells的话，你想伸缩OpenStack Compute，你需要建数据库和消息队列集群等比较麻烦的事情。
+
+### nova-volume
+
+~~一个已经被Cinder取代的鸟~~
+
+### nova-objectstore
+
+提供了一个S3界面的镜像注册功能。
+
+### nova / nova-manage
+
+命令行管理工具。
+
+### glance-api
+
+接收镜像API的查询、抓取和存储请求。
+
+### glance-registry
+
+存储、执行和抓取镜像的metadata（大小，类型等）。
+
+### keystone
+
+认证的东东，处理API请求并提供可配置的策略、token及认证服务。
+
+### quantum-server
+
+接收网络的API请求并转发到适当的网络插件（openvswitch,linuxbridge等）上。
+
+### cinder-api
+
+接收块存储的API请求并转发到cinder-volume上去执行。
+
+### cinder-volume
+
+执行cinder-api转发来的请求，如向数据库写块存储的相关状态，通过MQ队列与其他进程进行交互，通过相关驱动来与块存储系统进行通信如IBM的存储系统、GlusterFS、Linux iSCSI等。
+
+### cinder-scheduler
+
+与nova-scheduler差不多，也是用来确定在哪个节点上创建Block Storage。
+
 ## 说明
 以上是在Ubuntu 12.10环境下进行部署的。看似简单，但是其中各种细节很让人纠结，我还没搞定网络这块。
 
