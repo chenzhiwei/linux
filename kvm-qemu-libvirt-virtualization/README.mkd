@@ -413,7 +413,7 @@ offset支持utc, localtime, timezone, variable等四个值，表示虚拟机实�
     </graphics>
     <graphics type='vnc' port='-1' autoport='yes' keymap='en-us' listen='0.0.0.0'/>
 </devices>
-  ...
+...
 ```
 
 type为管理类型，可以是VNC,rdp等。其中port可以自动分配（从5900开始分配）。
@@ -468,6 +468,69 @@ edit some sections of this XML file
 本文档同级目录下有一个XML文件模板，可以参考一下。
 
 这个文档是step by step，注重操作和使用。我当时就是这样一步步学习的，当使用熟练之后可以进行更深入的研究学习。
+
+## 新加内容
+
+主要是关于`raw`和`qcow2`格式的相互转换及文件大小压缩相关。
+
+### 扩大raw或qcow2格式文件
+
+改变raw或qcow2格式的文件大小。
+
+```
+# virt-filesystems --long -h --all -a old.file.raw
+Name       Type        VFS   Label  MBR  Size  Parent
+/dev/sda1  filesystem  ext4  -      -    10G   -
+/dev/sda1  partition   -     -      83   10G   /dev/sda
+/dev/sda   device      -     -      -    10G   -
+# truncate -r old.file.raw new.file.raw
+# truncate -s +5G new.file.raw
+# virt-resize --expand /dev/sda1 old.file.raw new.file.raw
+```
+
+the other way
+
+```
+# virt-filesystems --long -h --all -a old.file.raw
+Name       Type        VFS   Label  MBR  Size  Parent
+/dev/sda1  filesystem  ext4  -      -    10G   -
+/dev/sda1  partition   -     -      83   10G   /dev/sda
+/dev/sda   device      -     -      -    10G   -
+# cp -pf old.file.raw new.file.raw
+# qemu-img resize new.file.raw +2G
+# virt-resize --expand /dev/sda1 old.file.raw new.file.raw
+```
+
+### 挂载qcow2或raw格式文件
+
+用libguestfs挂载qcow2和raw格式的文件
+
+```
+# guestmount -a disk.file -i /mnt
+```
+
+### 压缩qcow2或raw格式文件的大小
+
+* 压缩`qcow2`格式的文件
+
+```
+# virt-sparsify --compress --convert qcow2 --format qcow2 input.qcow2 output.qcow2
+```
+
+* `raw`格式的文件不支持压缩，但是可以缩小
+
+`raw`格式文件整起来比较费劲，这里我只做当`raw`文件是一个`ext4`文件系统的情况。
+
+```
+# qemu-img create disk.final.raw 10G
+# // dd if=/dev/zero of=disk.final.raw bs=512 seek=1000000
+# mkfs.ext3 -Fq disk.final.raw
+# mount -o loop disk.origin.raw /origin
+# mount -o loop disk.final.raw /final
+# cp -arf /origin/* /final/*
+# umount /final
+# umount /origin
+```
 
 ## 参考资料
 

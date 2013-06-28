@@ -1,0 +1,24 @@
+# 制作 Windows 系统镜像模板
+
+虽然我非常不喜欢 Windows 系统，但是这个系统的镜像制作方法还是需要写出来的。
+
+## 创建 raw 文件
+
+```
+# qemu-img create -f raw windows.img 10G
+```
+
+## 启动安装 Windows 系统
+
+```
+# kvm -m 2048 -cdrom windowns_dvd.iso -drive file=windows.img,if=virtio \
+    -drive file=virtio-win-0.1-59.iso,index=3,media=cdrom -net nic,model=virtio -net user -nographic -vnc :0
+```
+
+其中`virtio-win-0.1-59.iso`是从<http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/>下载的。
+
+打开你的 VNC 客户端开始进行系统安装吧，安装完成之后，那个`windows.raw`就是你所需要的镜像文件。
+
+## 最后
+
+我做是做好了，但是一直没有使用。
