@@ -1,0 +1,60 @@
+# PXE+TFTP+DHCP
+
+安装操作系统一般都需要光驱，而PXE可以使你直接通过网络来安装操作系统。
+
+## PXE是什么
+
+PXE(Preboot Execute Environment)是Intel开发的，可以使得通过网络来启动并安装操作系统。
+
+TFTP(Trivial File Transfer Protocol)，这个协议是用来进行小文件传输的。
+
+DHCP(Dynamic Host Configuration Protocol)，动态主机配置协议，不详说了。
+
+## 安装软件包
+
+```
+# yum -y install tftp-server dhcp httpd
+```
+
+## 配置TFTP
+
+* /etc/xinetd.d/tftp
+
+将其中的`disable`改为`no`，详情请见本目录中的`tftp`文件
+
+* /var/lib/tftpboot
+
+其目录树如下
+
+```
+/var/lib/tftpboot
+|--/var/lib/tftpboot/boot.msg
+|--/var/lib/tftpboot/initrd.img
+|--/var/lib/tftpboot/pxelinux.0
+|--/var/lib/tftpboot/pxelinux.cfg
+|  `--/var/lib/tftpboot/pxelinux.cfg/default
+|--/var/lib/tftpboot/splash.xpm.gz
+`--/var/lib/tftpboot/vmlinuz
+```
+
+`boot.msg`, `default`见本目录下文件。
+
+`initrd.img`, `vmlinuz`在`rhel.iso/images/pxeboot/`目录中。
+
+`pxelinux.0`位置`rhel.iso/Packages/syslinux-4.02-8.el6.x86_64.rpm/usr/share/syslinux/pxelinux.0`。
+
+`splash.xpm.gz`位置`rhel.iso/EFI/BOOT/splash.xpm.gz`。
+
+## 配置DHCP
+
+* /etc/sysconfig/dhcpd
+
+将其中的`DHCPDARGS`设置成你的`DHCP Server`所使用的网卡名称。
+
+* /etc/dhcp/dhcpd.conf
+
+内容请见本目录中的文件。
+
+## 最后
+
+我是在上一次成功配置之后总结的，这次配置并没有验证。不过，应该不会有大问题，小问题自己可以调试一下解决。

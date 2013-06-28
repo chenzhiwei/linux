@@ -1,0 +1,25 @@
+default 1
+prompt 1
+timeout 200
+
+display boot.msg
+F1 boot.msg
+
+label 1
+    menu label ^Install or upgrade an existing system
+    kernel vmlinuz
+    append ksdevice=eth1 ks=http://9.115.78.28/kickstart/rhel.cfg initrd=initrd.img
+
+label 2
+    menu label ^Rescue installed system
+    kernel vmlinuz
+    append initrd=initrd.img rescue
+
+label 3
+    menu label ^Boot from local drive
+    localboot
+
+label 4
+    menu label ^Memory test
+    kernel memtest
+    append -
