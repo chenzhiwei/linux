@@ -1,0 +1,63 @@
+# GPG的使用
+
+GPG也称GnuPG，是Gnu Privacy Guard的简写。GPG是一个以GNU通用公共许可证释出的开放源码用于加密或签名的软件。目前很多人、很多领域都在使用GPG。
+
+## 生成钥匙
+
+根据提示选择适合自己的加密方式，一般默认的就行（RSA，2048位）。
+
+```
+$ gpg --gen-key
+```
+
+## 上传公钥到钥匙服务器
+
+`gpg --list-keys`命令会出现如下所示的内容，而你的key id就在其中。
+
+>pub   2048R/98564809 2013-05-26
+
+```
+$ gpg --send-keys 98564809
+```
+
+## 导出公钥
+
+公钥是对外公开的，别人可以使用你的公钥来加密内容，然后你用私钥解密。
+
+```
+$ gpg --export -a -o your-public-key.asc
+```
+
+## 导出私钥
+
+```
+$ gpg --export-secret-keys -o your-secret-key.gpg
+```
+
+## 导致公钥和私钥
+
+```
+$ gpg --import your-pulic-key/your-secret-key.gpg
+```
+
+## 用公钥加密文件
+
+```
+$ gpg -e file.txt
+```
+
+## 用私钥加密文件
+
+```
+$ gpg -s file.txt
+```
+
+## 解密文件
+
+```
+$ gpg -d file.txt.gpg
+```
+
+## 参考文档
+
+1. <http://www.gnupg.org/howtos/zh/GPGMiniHowto-1.html>
