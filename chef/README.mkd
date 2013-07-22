@@ -85,6 +85,15 @@ Knife工具有很多二级指令，如下：
 
 编写Cookbook需要你懂一些ruby语言。
 
+### Cookbook中执行SHELL指令并获取输出
+
+```ruby
+cmd = "mkdir /tmp/ruby && echo ok"
+sh = Mixlib::ShellOut.new(cmd)
+sh.run_command
+puts sh.stdout
+```
+
 ## 吐嘈Chef
 
 Chef是一个让人很不爽的工具，还号称是基于使用Puppet的经验进行开发的。我严重怀疑开发Chef的这帮脑残的智商，或许用脑残来形容他们太污辱『脑残』这个词语了。
