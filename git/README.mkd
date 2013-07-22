@@ -11,6 +11,14 @@ $ git config --global user.email zhiweik@gmail.com
 ```
 配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考[示例](https://github.com/chenzhiwei/linux/blob/master/git/.gitconfig)。
 
+### 自动补全
+
+如果你系统上安装git之后没有自动补全功能，可以按如下操作来添加补全功能，记得需要重新登录一下。
+
+```
+$ wget -O /etc/profile.d/git-completion.sh https://raw.github.com/git/git/master/contrib/completion/git-completion.bash
+```
+
 ### 开始使用
 * 创建新的git仓库
 
@@ -57,6 +65,15 @@ $ git push backup
     url = git@gitcafe.com:chenzhiwei/linux.git
 ```
 然后在提交更新时使用`git push both`就可以将更新提交到两个远端仓库了。
+
+或者直接把 backup 分支的地址写到 origin 分支这里：
+
+```
+[remote "origin"]
+    fetch = +refs/heads/*:refs/remotes/origin/*
+    url = git@github.com:chenzhiwei/linux.git
+    url = git@gitcafe.com:chenzhiwei/linux.git
+```
 
 注意：在 Git 2.0 将会更改默认的`push`动作为『只 push 当前 branch 到远端仓库』。如果想继续使用`git push both`命令需要手动设置一下`git push`的默认动作`git config --global push.default matching`。
 
@@ -126,11 +143,13 @@ $ git config --global push.default simple
 $ git config --global alias.co checkout
 $ git config --global alias.ci commit
 $ git config --global alias.st status
+$ git config --global alias.last 'log -1 HEAD'
+$ git config --global alias.unstage 'reset HEAD --'
 ```
 
 ### git add
 
-添加文件内容到索引中去，几个简单示例：
+添加文件内容到索引中去（暂存文件），几个简单示例：
 
 ```
 $ git add .
@@ -139,13 +158,21 @@ $ git add *.txt
 $ git add directory/*.sh
 ```
 
+突然你又不想`git add`了，那么执行以下命令：
+
+```
+$ git reset .
+$ git reset *.txt
+$ git reset directory/*.sh
+```
+
 ### git rm
 
 删除索引和当时工作目录中的文件。
 
 ```
 $ git rm filename
-$ git rm *.txt
+$ git rm -f *.txt
 $ git rm -r .
 ```
 
@@ -155,6 +182,20 @@ $ git rm -r .
 
 ```
 $ git commit -m "add a file and remove a file"
+```
+
+突然你又不想`git commit`了，那么执行以下命令:
+
+```
+$ git reset HEAD^
+```
+
+你`commit`之后发现少添加了一个文件：
+
+```
+$ git commit -m'msg'
+$ git add forget_file
+$ git commit --amend
 ```
 
 ### git status
@@ -174,6 +215,12 @@ $ git status
 ```
 $ git checkout branch1
 $ git checkout -b new_branch
+```
+
+取消本地改动：
+
+```
+$ git checkout -- file_name
 ```
 
 ### git branch
@@ -201,6 +248,20 @@ $ git diff .
 $ git diff revision1 revision2
 ```
 
+DIFF暂存（添加到索引中）的文件：
+
+```
+$ git add .
+$ git diff --staged
+```
+
+View the redundant Tab or Space in your codes:
+
+```
+$ git diff --check
+$ git diff --check --staged
+```
+
 ### git init
 
 ### git log
@@ -214,6 +275,14 @@ $ git diff revision1 revision2
 ### git push
 
 ### git revert
+
+### git reset
+
+一不小心执行了`git add .`，然后就可以用`git reset`命令来破了。
+
+### git stash
+
+当你修改了本地仓库的文件，但又想放弃修改时，可以用`git stash`来还原到仓库原来的状态。
 
 ## 其他
 
