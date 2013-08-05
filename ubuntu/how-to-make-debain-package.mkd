@@ -1,0 +1,11 @@
+# 怎样制作debian软件包
+
+## Python程序
+
+具体Python程序可以参考我写的`indicator-screenshot`。
+
+```
+$ git clone git://github.com/chenzhiwei/indicator-screenshot.git
+$ cd indicator-screenshot
+$ debuild -d
+```
