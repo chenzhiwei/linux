@@ -1,0 +1,138 @@
+# Pacemaker and Corosync
+
+## How to setup pacemake and corosync
+
+Two nodes, devr1n25/devr1n26. 
+
+### Install packages on two nodes
+
+```
+# yum -y install pacemaker pcs corosync
+```
+
+### Configure corosync on two nodes
+
+```
+# cp /etc/corosync/corosync.conf.example /etc/corosync/corosync.conf
+# vim /etc/corosync/corosync.conf
+```
+
+### Configure pacemaker on two nodes
+
+```
+# pcs cluster setup clusterName devr1n25 devr1n26
+```
+
+### Start pacemaker and corosync on two nodes
+
+```
+# pcs start
+```
+
+### Add resources to this cluster
+
+* Add IP resource
+
+```
+# pcs resource create vip ocf:heartbeat:IPaddr2 ip=172.16.1.240 cidr_netmask=16 op monitor interval=30s
+```
+
+* Add service resource (haproxy)
+
+```
+# pcs resource create haproxy lsb:haproxy op monitor interval=30s op start op stop
+```
+
+### Ensuring resources run on the same host
+
+```
+# pcs constraint colocation add vip haproxy INFINITY
+```
+
+### Controlling resources start/stop ordering
+
+```
+# pcs constraint order vip then haproxy
+```
+
+### Specifying a preferred location
+
+Sometimes one node maybe powerful than the other, so we need to run the resource on the power full node.
+
+```
+# pcs constraint location haproxy prefers devr1n25=50
+```
+
+### Manually moving resource around the cluster
+
+Sometimes we need to manually moving the resources, we can use this command.
+
+```
+# pcs constraint all
+# pcs constraint location haproxy prefers devr1n25=INFINITY
+# pcs constraint all
+```
+
+This will move the haproxy resource to devr1n25 node
+
+### Giving control back to cluster
+
+Once we have finished whatever activity that required us to move the resources to devr1n25, we can then allow the cluster to resume normal operation with the unmove command. Since we previously configured a default stickiness, the resources will remain on pcmk1.
+
+```
+# pcs constraint all
+# pcs constraint rm location-haproxy-devr1n25-INFINITY
+# pcs constraint all
+```
+
+## How to update the configuration file
+
+Edit the whole file
+
+```
+# cibadmin --query > tmp.xml
+# vim tmp.xml
+# cibadmin --replace --xml-file tmp.xml
+```
+
+Only edit part of the file (resources section)
+
+```
+# cibadmin --query --obj-type resources > tmp.xml
+# vim tmp.xml
+# cibadmin --replace --obj_type resources --xml-file tmp.xml
+# cibadmin --modify --crm_xml '<cib admin_epoch="42"/>'
+```
+
+Delete part of the configuration file
+
+```
+# cibadmin -Q | grep stonith
+# cibadmin --delete --crm_xml '<primitive id="child_DoFencing"/>'
+```
+
+## Update the configuration without using XML
+
+To enable stonith
+
+```
+# crm_attribute --attr-name stonith-enabled --attr-value true
+```
+
+To see if node1 is allowed to rung resources
+
+```
+# crm_standby --get-value --node-uname somenode
+```
+
+To find the current location of resource httpd
+
+```
+# crm_resource --locate --resource httpd
+```
+
+## Monitor the resources
+
+HA just does the failover operation, we should use other tools to recover the services.
+
+[resources-actions]: http://clusterlabs.org/doc/en-US/Pacemaker/1.1/html/Pacemaker_Explained/_resource_operations.html
