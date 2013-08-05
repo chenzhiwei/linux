@@ -225,9 +225,9 @@ $ git checkout -- file_name
 
 ### git branch
 
-列出、创建和删除分支。
+* 列出、创建和删除分支。
 
-以下指令分别为列出本地分支、所有分支、远端分支、创建和删除分支。
+以下指令分别为列出本地分支、所有分支、远端分支、创建、删除、强制删除分支。
 
 ```
 $ git branch --list
@@ -235,8 +235,28 @@ $ git branch --all
 $ git branch --remotes
 $ git branch new_branch
 $ git branch --delete branch_name
-$ 
+$ git branch -D branch_name
 ```
+
+* 合并分支
+
+如果出现冲突，那么手动解决冲突就可以了。
+
+```
+$ git checkout branch_name
+$ git checkout master
+$ git merge branch_name
+```
+
+* 删除远程分支
+
+合并分支之后如果不再需要以前的分支了，那么可以在本地及远程删除它。
+
+```
+$ git push origin :branch_name
+```
+
+这条命令耐人寻味啊，其中`origin`是你的远程仓库名字（`git remote -v`可以查看到）。
 
 ### git diff
 
