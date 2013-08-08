@@ -35,6 +35,22 @@ The `env DISPLAY=:0` portion will tell cron to use the current display (desktop)
 
 Link: <https://help.ubuntu.com/community/CronHowto>
 
+## Use Chrome PepperFlash in Chromium
+
+Install Google Chrome
+
+```
+$ sudo vim /etc/chromium-browser/default
+```
+
+Put this line to this file:
+
+```
+CHROMIUM_FLAGS="--ppapi-flash-path=/opt/google/chrome/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$PEPPER_FLASH_VERSION"
+```
+
+Link: <http://www.webupd8.org/2012/09/how-to-make-chromium-use-flash-player.html>
+
 ## Create VM for Windows
 
 ```
