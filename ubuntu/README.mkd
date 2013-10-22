@@ -51,6 +51,26 @@ CHROMIUM_FLAGS="--ppapi-flash-path=/opt/google/chrome/PepperFlash/libpepflashpla
 
 Link: <http://www.webupd8.org/2012/09/how-to-make-chromium-use-flash-player.html>
 
+## Install Google Earth
+
+```
+$ wget http://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
+$ sudo dpkg -i google-earth-stable_current_amd64.deb
+$ sudo apt-get -f install
+```
+
+Link: <http://askubuntu.com/questions/302135/google-earth-on-13-04-ubuntu>
+
+## Ibus Wubi Table can't input phrase
+
+1.Open Ibus Preference
+
+2.Select General
+
+3.Font and Style, set Show language panel to `When active` or `Always`
+
+4.Then, when you switch to ibus, it will show the language panel, so you can set what you want.
+
 ## Create VM for Windows
 
 ```
