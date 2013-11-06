@@ -71,6 +71,16 @@ Link: <http://askubuntu.com/questions/302135/google-earth-on-13-04-ubuntu>
 
 4.Then, when you switch to ibus, it will show the language panel, so you can set what you want.
 
+## Ubuntu screen recorder
+
+```
+$ sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
+$ sudo apt-get update
+$ sudo apt-get install simplescreenrecorder
+```
+
+Easy to use: <http://www.webupd8.org/2013/06/simplescreenrecorder-powerful-screen.html>
+
 ## Create VM for Windows
 
 ```
