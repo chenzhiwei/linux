@@ -100,3 +100,14 @@ OR
 ```
 
 Link: <http://ubuntuforums.org/showthread.php?t=970385>
+
+## Upload package to Ubuntu PPA
+
+```
+$ sudo apt-get install devscripts dput gnupg
+$ gpg --import gpg_public_key/gpg_secret_key
+$ gpg --list-keys
+$ cd ~/indicator_screenshot
+$ debuild -S -k98564809
+$ dput ppa:chenzhiwei/ppa indicator-screenshot_0.0.1.saucy.5-1ubuntu1_source.changes
+```
