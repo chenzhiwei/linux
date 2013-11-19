@@ -133,14 +133,14 @@ class MySQL:
         self.conn = conn
 
     def get_data(self, sql):
-        cur = self.conn.cursor()
+        cur = self.conn.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(sql)
         rows = cur.fetchall()
         cur.close()
         return rows
 
     def get_var(self, sql):
-        cur = self.conn.cursor()
+        cur = self.conn.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(sql)
         row = cur.fetchone()
         cur.close()
