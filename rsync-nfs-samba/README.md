@@ -77,3 +77,5 @@ nfs_server:/var/nfs /mnt  nfs   defaults    0 0
 ```
 
 NFS的配置文件在`/etc/exports`里面，当修改之后需要用`exportfs -ar`命令来重新加载一下。
+
+`no_root_squash` 一般在NFS文件系统上安装RPM包时会报`chown`之类的错误，添加这个参数之后就OK了。
