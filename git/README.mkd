@@ -198,6 +198,15 @@ $ git add forget_file
 $ git commit --amend
 ```
 
+你的 commit 已经 push 到远程分支(master)了，现在你想反悔了：
+
+```
+$ git clone git@github.com:chenzhiwei/test.git
+$ cd test
+$ git reset HEAD^
+$ git push -f master 
+```
+
 ### git status
 
 查看当前工作目录的状态，即修改、添加及删除了哪些文件。
@@ -253,6 +262,8 @@ $ git merge branch_name
 合并分支之后如果不再需要以前的分支了，那么可以在本地及远程删除它。
 
 ```
+$ git branch -d branch_name
+$ git branch -D branch_name
 $ git push origin :branch_name
 ```
 
@@ -266,20 +277,21 @@ $ git push origin :branch_name
 $ git diff filename
 $ git diff .
 $ git diff revision1 revision2
+$ git diff branch1 branch2
 ```
 
 DIFF暂存（添加到索引中）的文件：
 
 ```
 $ git add .
-$ git diff --staged
+$ git diff --cached
 ```
 
 View the redundant Tab or Space in your codes:
 
 ```
 $ git diff --check
-$ git diff --check --staged
+$ git diff --check --cached
 ```
 
 ### git init
@@ -294,11 +306,35 @@ $ git diff --check --staged
 
 ### git push
 
+### git rebase
+
+你检索出代码之后（假设是master分支），创建了一个分支，然后修改了这个分支。另一个人也检索出代码（假设是master分支），然后修改了这个分支并提交到远端了。这时你需要重新从远端检索一下（master）分支的代码，然后切换到你创建的那个分支，再执行`rebase`命令，因为你这个分支的 base 分支已经发生变化了，你要合并到 base 分支的话需要重新 rebase 一下。
+
+```
+$ git clone -b master git@github.com:chenzhiwei/test.git
+$ git checkout -b new_branch
+$ git checkout master
+$ git pull
+$ git checkout new_branch
+$ git rebase
+$ git rebase --continue
+```
+
+你执行`git rebase`之后可能会有文件冲突，这时你需要手动解决冲突，解决之后继续rebase。
+
 ### git revert
 
 ### git reset
 
 一不小心执行了`git add .`，然后就可以用`git reset`命令来破了。
+
+删除最近一次 commit ，但保留这次 commit 中修改的内容，即用`git status`来查看会显示有文件等待提交。
+
+```
+$ git reset --soft HEAD^
+```
+
+删除最近一次 commit ，并且不保留这次 commit 中的修改内容，即用`git status`来查看会显示没有改动。
 
 ### git stash
 
