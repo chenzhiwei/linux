@@ -340,6 +340,33 @@ $ git reset --soft HEAD^
 
 当你修改了本地仓库的文件，但又想放弃修改时，可以用`git stash`来还原到仓库原来的状态。
 
+### git submodule
+
+git 是分布式的，每次只能将整个 repo 全部下载下来进行更改提交，这样明显不太合理，因为很多时候你只想改动一点代码，只需要将这部分代码所在的目录 clone 下来就行了。为了解决这个问题，git 引入了 submodule ，即一个 git repo 里可以包含多个 child git repo 。
+
+一个比较大的项目，里面肯定会包含很多模块及子项目，可以将这些模块和子项目分别做成 git repo ，然后用大项目的 git repo 将其包含进来就可以了，举例如下：
+
+一个项目（foo）包含了一个子项目(bar)，主项目的 repo 是 `https://github.com/chenzhiwei/linux`，子项目的 repo 地址是 `https://github.com/chenzhiwei/vim`，需要做以下操作来完成 git submodule 的创建。
+
+```
+$ git clone https://github.com/chenzhiwei/linux
+$ cd linux
+$ git submodule add https://github.com/chenzhiwei/vim vim
+$ git status
+$ git commit -m"add a submodule vim"
+```
+
+`git submodule add`命令会生成一个`.gitmodules`文件，并且当前目录下也会出现`vim`这个 repo 。
+
+其他人 clone 时默认是不会将`vim`的代码clone下来的，并且`vim`这个 submodule 体现在本地文件系统上是个目录，而在 git repo 里其实是一个空的文本文件。如果想将 submodule 即子项目的代码也全部 clone 下来，你需要执行以下操作：
+
+```
+$ git clone https://github.com/chenzhiwei/linux
+$ cd linux
+$ git submodule init
+$ git submodule update
+```
+
 ## 其他
 
 我想睡觉，因此先不写了。
