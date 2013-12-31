@@ -108,7 +108,7 @@ $ sudo apt-get install devscripts dput gnupg
 $ gpg --import gpg_public_key/gpg_secret_key
 $ gpg --list-keys
 $ git clone https://github.com/chenzhiwei/indicator-screenshot
-$ cd indicator_screenshot
+$ cd indicator-screenshot
 $ debuild -S -k98564809
-$ dput ppa:chenzhiwei/ppa indicator-screenshot_0.0.1.saucy.5-1ubuntu1_source.changes
+$ dput ppa:chenzhiwei/ppa indicator-screenshot_0.0.2.saucy.1-1ubuntu1_source.changes
 ```
