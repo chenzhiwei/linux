@@ -247,6 +247,13 @@ $ git branch --delete branch_name
 $ git branch -D branch_name
 ```
 
+删除remote tracking branch，就是`git branch -r`命令列出的分支。
+
+```
+$ git branch -r
+$ git branch -d -r origin/develop
+```
+
 * 合并分支
 
 如果出现冲突，那么手动解决冲突就可以了。
