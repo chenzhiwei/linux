@@ -7,6 +7,10 @@
 # echo "greeter-show-remote-login=false" >> /etc/lightdm/lightdm.conf
 ```
 
+## Use Bluetooth Transfer File
+
+There will be errors like `GDbus.Error:org.openobex.Error.Failed: Unable to request session`, so you need to run `bluez-simple-agent` command in terminal before you transfer files.
+
 ## Use OpenVPN on Ubuntu
 
 ```
