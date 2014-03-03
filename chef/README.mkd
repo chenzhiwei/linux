@@ -100,6 +100,29 @@ Chef是一个让人很不爽的工具，还号称是基于使用Puppet的经验�
 
 刚开始使用时感觉很不爽，直到现在我也认为Chef在很多方面都需要改进。不过Chef将计算机所有内容都抽象为『资源』、『动作』和『执行』这个理念是挺不错的，一个『资源』可以是一个文件、一个用户、一个服务和一条指令，而『动作』可以是创建、更新、删除、添加、启动、关闭、重启、执行和nothing。我个人对Puppet的使用时间也不长，对Puppet的了解还不够深入，暂时收回之前对Chef说的话，因为Chef的最新版已经解决了一部分我不爽的事情。
 
+## 一个大坑
+
+我在使用Chef的过程中，recipes的执行顺序总是出问题，我明明是将创建yum repo的recipe放在了前面，但是执行时还是会出现先安装软件包再创建yum repo，可想而知这样软件包肯定是安装不上的。
+
+查阅资料后，我发现，在一个resource的end后面加上`end.run_action()`意思是强制最先执行这个resource。
+
+如下两个resource，无论你怎样放置他们的顺序，肯定会先执行`yum_respository`后执行`package`的。
+
+
+```
+package 'httpd' do
+    action :install
+end
+```
+
+```
+yum_repository 'base' do
+    action :nothing
+end.run_action(:create)
+```
+
+<http://abigant.wordpress.com/2011/08/31/chef-recipe-order/>
+
 ## 参考资料
 
 注：以上一切都基于Chef 11。
