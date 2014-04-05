@@ -1,17 +1,57 @@
 # Ubuntu Tips
 
-## Disable Guest/Remote Login
+## Things after install Ubuntu
+
+### Install essential packages
+
+```
+$ sudo apt-get install vim git subversion gnupg
+```
+
+### Configure VIM
+
+```
+$ cd ~
+$ mv .vim .vim.bak
+$ mv .vimrc .vimrc.bak
+$ git clone https://github.com/chenzhiwei/dot_vim .vim
+$ cp .vim/dot_vimrc .vimrc
+```
+
+### Font Settings
+
+Open `/etc/fonts/conf.avail/69-language-selector-zh-cn.conf`, and remove `test` block in this file.
+
+```
+<test name="lang">
+    <string>zh-cn</string>
+</test>
+```
+
+### Disable HUD
+
+`System Settings` -- `Keyboard` -- `Shortcuts` -- `Launchers` -- `Key to show the HUD`
+
+### Adjust screensaver timeout
+
+`System Settings` -- `Brightness` -- `Turn screen of when inactive for 30 minutes`
+
+### Disable online search result
+
+`System Settings` -- `Security & Privacy` -- `Search`
+
+### Disable Guest/Remote Login
 
 ```
 # echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
 # echo "greeter-show-remote-login=false" >> /etc/lightdm/lightdm.conf
 ```
 
-## Use Bluetooth Transfer File
+### Use Bluetooth Transfer File
 
 There will be errors like `GDbus.Error:org.openobex.Error.Failed: Unable to request session`, so you need to run `bluez-simple-agent` command in terminal before you transfer files.
 
-## Use OpenVPN on Ubuntu
+### Use OpenVPN on Ubuntu
 
 ```
 $ sudo apt-get install openvpn network-manager-openvpn \
@@ -19,7 +59,7 @@ $ sudo apt-get install openvpn network-manager-openvpn \
         network-manager-vpnc-gnome
 ```
 
-## Edit the sound menu on the top panel
+### Edit the sound menu on the top panel
 
 ```
 $ gsettings get com.canonical.indicator.sound interested-media-players
@@ -27,7 +67,7 @@ $ gsettings get com.canonical.indicator.sound interested-media-players
 $ gsettings set com.canonical.indicator.sound interested-media-players "['deepin-music-player']"
 ```
 
-## Ubuntu Crontab GUI Application
+### Ubuntu Crontab GUI Application
 
 It is possible to run gui applications via cronjobs. This can be done by telling cron which display to use.
 
@@ -39,9 +79,14 @@ The `env DISPLAY=:0` portion will tell cron to use the current display (desktop)
 
 Link: <https://help.ubuntu.com/community/CronHowto>
 
-## Use Chrome PepperFlash in Chromium
+### Use Chrome PepperFlash in Chromium
 
 Install Google Chrome
+
+```
+/etc/apt/sources.list.d/google-chrome-unstable.list
+deb http://dl.google.com/linux/chrome/deb/ stable main
+```
 
 ```
 $ sudo vim /etc/chromium-browser/default
@@ -55,7 +100,7 @@ CHROMIUM_FLAGS="--ppapi-flash-path=/opt/google/chrome/PepperFlash/libpepflashpla
 
 Link: <http://www.webupd8.org/2012/09/how-to-make-chromium-use-flash-player.html>
 
-## Install Google Earth
+### Install Google Earth
 
 ```
 $ wget http://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
@@ -65,7 +110,7 @@ $ sudo apt-get -f install
 
 Link: <http://askubuntu.com/questions/302135/google-earth-on-13-04-ubuntu>
 
-## Ibus Wubi Table can't input phrase
+### Ibus Wubi Table can't input phrase
 
 1.Open Ibus Preference
 
@@ -75,7 +120,7 @@ Link: <http://askubuntu.com/questions/302135/google-earth-on-13-04-ubuntu>
 
 4.Then, when you switch to ibus, it will show the language panel, so you can set what you want.
 
-## Ubuntu screen recorder
+### Ubuntu screen recorder
 
 ```
 $ sudo add-apt-repository ppa:maarten-baert/simplescreenrecorder
@@ -84,6 +129,14 @@ $ sudo apt-get install simplescreenrecorder
 ```
 
 Easy to use: <http://www.webupd8.org/2013/06/simplescreenrecorder-powerful-screen.html>
+
+### Install fcitx input method
+
+```
+$ sudo add-apt-repository ppa:fcitx-team/nightly
+$ sudo apt-get update
+$ sudo apt-get install fcitx-sogoupinyin fcitx-table-wubi
+```
 
 ## Create VM for Windows
 
