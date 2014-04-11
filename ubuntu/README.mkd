@@ -5,7 +5,7 @@
 ### Install essential packages
 
 ```
-$ sudo apt-get install vim git subversion gnupg
+$ sudo apt-get install vim git subversion gnupg sshpass whois account-plugin-irc compizconfig-settings-manager
 ```
 
 ### Configure VIM
@@ -18,9 +18,12 @@ $ git clone https://github.com/chenzhiwei/dot_vim .vim
 $ cp .vim/dot_vimrc .vimrc
 ```
 
-### Font Settings
+### Font configure
 
-Open `/etc/fonts/conf.avail/69-language-selector-zh-cn.conf`, and remove `test` block in this file.
+```
+$ sudo apt-get install fonts-wqy-zenhei fonts-wqy-microhei ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy
+$ sudo vim /etc/fonts/conf.avail/69-language-selector-zh-cn.conf # remove test zh-cn block
+```
 
 ```
 <test name="lang">
@@ -40,11 +43,20 @@ Open `/etc/fonts/conf.avail/69-language-selector-zh-cn.conf`, and remove `test` 
 
 `System Settings` -- `Security & Privacy` -- `Search`
 
+### Disable Super key
+
+Open ccsm, then
+
+`Ubuntu Unity Plugin` -- `General` -- `Key to show the menu bar` -- `disable`
+
+`Ubuntu Unity Plugin` -- `Launcher` -- `Key to show the Dash` -- `disable`
+
 ### Disable Guest/Remote Login
 
 ```
-# echo "allow-guest=false" >> /etc/lightdm/lightdm.conf
-# echo "greeter-show-remote-login=false" >> /etc/lightdm/lightdm.conf
+$ sudo vim /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
+[SeatDefaults]
+allow-guest=false
 ```
 
 ### Use Bluetooth Transfer File
@@ -84,11 +96,10 @@ Link: <https://help.ubuntu.com/community/CronHowto>
 Install Google Chrome
 
 ```
-/etc/apt/sources.list.d/google-chrome-unstable.list
+$ sudo vim /etc/apt/sources.list.d/google-chrome-unstable.list
 deb http://dl.google.com/linux/chrome/deb/ stable main
-```
-
-```
+$ sudo apt-get update
+$ sudo apt-get install google-chrome-stable chromium-browser
 $ sudo vim /etc/chromium-browser/default
 ```
 
