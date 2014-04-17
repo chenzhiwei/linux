@@ -149,6 +149,16 @@ $ sudo apt-get update
 $ sudo apt-get install fcitx-sogoupinyin fcitx-table-wubi
 ```
 
+### Install Deepin Screenshot
+
+```
+$ sudo add-apt-repository ppa:chenzhiwei/ppa
+$ sudo apt-get update
+$ sudo apt-get install python-deepin-gsettings indicator-screenshot
+$ mkdir -p ~/.config/autostart
+$ cp /usr/share/indicator-screenshot/indicator-screenshot.desktop ~/.config/autostart
+```
+
 ## Create VM for Windows
 
 ```
