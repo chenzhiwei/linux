@@ -17,5 +17,6 @@
     unstage = reset HEAD --
     last = log -1 HEAD
     diff = diff --check
+    show = show --shortstat
 [push]
     default = matching

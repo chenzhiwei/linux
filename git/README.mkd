@@ -20,6 +20,7 @@ $ wget -O /etc/profile.d/git-completion.sh https://raw.github.com/git/git/master
 ```
 
 ### 开始使用
+
 * 创建新的git仓库
 
 ```
@@ -104,6 +105,7 @@ $ git push backup
 ```
 
 ## 在现有仓库上创建孤儿分支
+
 孤儿分支意思为该分支中没有任何内容，与之前创建的其他分支没有任何关联。
 
 ```
@@ -120,6 +122,7 @@ $ git push origin new_branch
 ```
 
 ## 提交单个分支到远端git仓库
+
 `git push`命令默认是将所有分支(branch)都提交到git仓库，有时你只想提交某个分支到远端仓库，那么就就需要使用`git push origin HEAD`。当然也可以使用`git config --global push.default tracking`命令来改变`git push`的默认操作，意思是执行`git push`时默认只提交当前分支到远端git仓库。
 
 ## git常用指令
@@ -378,6 +381,19 @@ $ git submodule update
 
 ```
 $ git rm -r submodule
+```
+
+### git tag
+
+个人感觉功能比branch强大点，因为tag里可以加注释。
+
+```
+$ git tag -a tagname -m"tag message"
+$ git tag tagname -f -m"new tag message"
+$ git push origin tagname
+$ git push orgin :tagname
+$ git push --delete orgin tagname
+$ git push orgin :refs/tags/tagname
 ```
 
 ## 其他
