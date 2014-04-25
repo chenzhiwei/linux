@@ -501,6 +501,14 @@ Name       Type        VFS   Label  MBR  Size  Parent
 # virt-resize --expand /dev/sda1 old.file.raw new.file.raw
 ```
 
+or
+
+```
+# qemu-img resize disk.raw +2G
+# e2fsck -f disk.raw
+# resize2fs disk.raw
+```
+
 ### 挂载qcow2或raw格式文件
 
 用libguestfs挂载qcow2和raw格式的文件
@@ -530,6 +538,15 @@ Name       Type        VFS   Label  MBR  Size  Parent
 # cp -arf /origin/* /final/*
 # umount /final
 # umount /origin
+```
+
+## 卸载挂载点
+
+```
+# fuser -m /mnt
+# fuser -k /mnt
+# umount /mnt
+# umount -l /mnt
 ```
 
 ## 参考资料
