@@ -182,7 +182,7 @@ Link: <http://ubuntuforums.org/showthread.php?t=970385>
 ## Build Debian package and upload to Ubuntu PPA
 
 ```
-$ sudo apt-get install devscripts dput gnupg
+$ sudo apt-get install devscripts dput gnupg debhelper
 $ gpg --import gpg_public_key/gpg_secret_key
 $ gpg --list-keys
 $ git clone https://github.com/chenzhiwei/indicator-screenshot
