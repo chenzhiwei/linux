@@ -5,7 +5,7 @@
 ### Install essential packages
 
 ```
-$ sudo apt-get install vim git subversion gnupg sshpass whois account-plugin-irc compizconfig-settings-manager
+$ sudo apt-get install vim git tree subversion gnupg sshpass whois account-plugin-irc compizconfig-settings-manager
 ```
 
 ### Configure VIM
