@@ -1,5 +1,15 @@
 # Linux 常用命令
 
+### 修改Linux系统临时目录路径
+
+通常遇到系统`/tmp`目录太小时使用
+
+```
+$ export TMP=/xxx
+$ export TEMP=/xxx
+$ export TMPDIR=/xxx
+```
+
 ### 生成openstack tar包，供rpm sepc文件使用
 
 the tar package will be generated in dist dir
