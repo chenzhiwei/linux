@@ -1,83 +1,166 @@
-##SNMPÊÇÊ²Ã´?
-SNMPÊÇ»ùÓÚTCP/IPĞ­Òé×åµÄÍøÂç¹ÜÀí±ê×¼£¬ËüµÄÇ°ÉíÊÇ¼òµ¥Íø¹Ø¼à¿ØĞ­Òé(SGMP)£¬ÓÃÀ´¶ÔÍ¨ĞÅÏßÂ·½øĞĞ¹ÜÀí¡£
+##SNMPæ˜¯ä»€ä¹ˆ?
+
+SNMPæ˜¯åŸºäºTCP/IPåè®®æ—çš„ç½‘ç»œç®¡ç†æ ‡å‡†ï¼Œå®ƒçš„å‰èº«æ˜¯ç®€å•ç½‘å…³ç›‘æ§åè®®(SGMP)ï¼Œç”¨æ¥å¯¹é€šä¿¡çº¿è·¯è¿›è¡Œç®¡ç†ã€‚
+
 ##Net-SNMP
-Net-SNMPÊÇÒ»¸öÃâ·ÑµÄ¡¢¿ª·ÅÔ´ÂëµÄSNMPÊµÏÖ.[¹ÙÍø](http://www.net-snmp.org/)
-##ÏÂÔØ
+
+Net-SNMPæ˜¯ä¸€ä¸ªå…è´¹çš„ã€å¼€æ”¾æºç çš„SNMPå®ç°.[å®˜ç½‘](http://www.net-snmp.org/)
+
+##ä¸‹è½½
+
     wget http://sourceforge.net/projects/net-snmp/files/net-snmp/5.3.3/net-snmp-5.3.3.tar.gz
-##°²×°ÅäÖÃ
-°²×°Ö®Ç°È·ÈÏlibtool£¬openssl£¬zlibÈí¼şÒÑ¾­°²×°
+
+##å®‰è£…é…ç½®
+
+å®‰è£…ä¹‹å‰ç¡®è®¤libtoolï¼Œopensslï¼Œzlibè½¯ä»¶å·²ç»å®‰è£…
+
+
 
     gunzip net-snmp-5.3.3.tar.gz
-    tar -xvf net-snmp-5.3.3.tar
-    cd net-snmp-5.3.3
-    ./configure --prefix=/usr/local/net-snmp --enable-mfd-rewrites --with-default-snmp-version="2" --with-sys-location="China" --with-sys-contact="Email:xxxx@xxxx.com" --with-logfile="/usr/local/net-snmp/log/snmpd.log"  --with-persistent-directory="/var/net-snmp"
-×¢ÊÍ£º
 
-* prefix£ºnet-snmp½«Òª°²×°µÄÂ·¾¶¡£
-* enable-mfd-rewrites£ºÔÊĞíÓÃĞÂµÄMFDÖØĞ´¿ÉÓÃµÄmidÄ£¿é
-* with-default-snmp-version£ºÄ¬ÈÏµÄSNMP°æ±¾
-* with-sys-contact£º¿ÉÒÔÅäÖÃ¸ÃÉè±¸µÄÁªÏµÈË
-* with-sys-location£º¸ÃÉè±¸µÄÎ»ÖÃ
-* with-logfile£ºÈÕÖ¾ÎÄ¼şÂ·¾¶
-* with-persistent-directory£º²»±äÊı¾İ´æ´¢Ä¿Â¼
+    tar -xvf net-snmp-5.3.3.tar
+
+    cd net-snmp-5.3.3
+
+    ./configure --prefix=/usr/local/net-snmp --enable-mfd-rewrites --with-default-snmp-version="2" --with-sys-location="China" --with-sys-contact="Email:xxxx@xxxx.com" --with-logfile="/usr/local/net-snmp/log/snmpd.log"  --with-persistent-directory="/var/net-snmp"
+
+æ³¨é‡Šï¼š
+
+
+
+* prefixï¼šnet-snmpå°†è¦å®‰è£…çš„è·¯å¾„ã€‚
+
+* enable-mfd-rewritesï¼šå…è®¸ç”¨æ–°çš„MFDé‡å†™å¯ç”¨çš„midæ¨¡å—
+
+* with-default-snmp-versionï¼šé»˜è®¤çš„SNMPç‰ˆæœ¬
+
+* with-sys-contactï¼šå¯ä»¥é…ç½®è¯¥è®¾å¤‡çš„è”ç³»äºº
+
+* with-sys-locationï¼šè¯¥è®¾å¤‡çš„ä½ç½®
+
+* with-logfileï¼šæ—¥å¿—æ–‡ä»¶è·¯å¾„
+
+* with-persistent-directoryï¼šä¸å˜æ•°æ®å­˜å‚¨ç›®å½•
+
  
-##±àÒë°²×°
+
+##ç¼–è¯‘å®‰è£…
+
+
 
     make && make install
 
-##ÅäÖÃsnmpd.conf
 
-ÅäÖÃsnmpd.confÎÄ¼ş
-Ê×ÏÈÎÒÃÇ°ÑÔ´ÎÄ¼şÖĞµÄEXAMPLE.confÎÄ¼ş¸´ÖÆµ½/usr/local/net-snmp/share/snmpÄ¿Â¼ÏÂ²¢ÃüÃûÎªsnmp.conf
+
+##é…ç½®snmpd.conf
+
+
+
+é…ç½®snmpd.confæ–‡ä»¶
+
+é¦–å…ˆæˆ‘ä»¬æŠŠæºæ–‡ä»¶ä¸­çš„EXAMPLE.confæ–‡ä»¶å¤åˆ¶åˆ°/usr/local/net-snmp/share/snmpç›®å½•ä¸‹å¹¶å‘½åä¸ºsnmp.conf
+
+
 
     cp EXAMPLE.conf /usr/local/net-snmp/share/snmp/snmpd.conf
+
     
-±à¼­snmp.confÎÄ¼ş
+
+ç¼–è¾‘snmp.confæ–‡ä»¶
+
+
 
 ```
-#       sec.name  source          community Õâ¸öÅäÖÃÏî
-#(sec.name£º°²È«ÌåÃû³Æ 
-#source£º¶¨ÒåÇëÇóµÄÀ´Ô´£¬ÔÚIPĞ­ÒéÖĞ£¬Õâ¸öÊı¾İÊÇIPµØÖ·¡£ÔÚnet-snmpÖĞÓÃÀ´¶ÔÀ´Ô´IP¼ÓÒÔ¿ØÖÆ£¬µ«Õâ¸öÌØĞÔ²»ÊÇSNMP¹æ¶¨µÄ£¬ÊÇnet-snmpÀ©Õ¹µÄ .
-#community£º¹²Í¬ÌåÃû³Æ )
-#Ô­À´µÄ
+
+#       sec.name  source          community è¿™ä¸ªé…ç½®é¡¹
+
+#(sec.nameï¼šå®‰å…¨ä½“åç§° 
+
+#sourceï¼šå®šä¹‰è¯·æ±‚çš„æ¥æºï¼Œåœ¨IPåè®®ä¸­ï¼Œè¿™ä¸ªæ•°æ®æ˜¯IPåœ°å€ã€‚åœ¨net-snmpä¸­ç”¨æ¥å¯¹æ¥æºIPåŠ ä»¥æ§åˆ¶ï¼Œä½†è¿™ä¸ªç‰¹æ€§ä¸æ˜¯SNMPè§„å®šçš„ï¼Œæ˜¯net-snmpæ‰©å±•çš„ .
+
+#communityï¼šå…±åŒä½“åç§° )
+
+#åŸæ¥çš„
+
 com2sec local     localhost       COMMUNITY
+
 com2sec mynetwork NETWORK/24      COMMUNITY
 
-#ĞŞ¸ÄºóµÄ
+
+
+#ä¿®æ”¹åçš„
+
 com2sec local     localhost       public
+
 com2sec mynetwork 192.168.8.30   public
+
 com2sec mynetwork 192.168.11.29   public
+
 ```
-##ÉèÖÃnet-snmp×ÔÆô¶¯     
-ÔÚ/etc/rc.localÎÄ¼şÄ©Î²¼ÓÈëÒÔÏÂ´úÂë    -c´ú±íÒÔÒÔÏÂÅäÖÃÎÄ¼şÆô¶¯
+
+##è®¾ç½®net-snmpè‡ªå¯åŠ¨     
+
+åœ¨/etc/rc.localæ–‡ä»¶æœ«å°¾åŠ å…¥ä»¥ä¸‹ä»£ç     -cä»£è¡¨ä»¥ä»¥ä¸‹é…ç½®æ–‡ä»¶å¯åŠ¨
+
+
 
     /usr/local/net-snmp/sbin/snmpd -c /usr/local/net-snmp/share/snmp/snmpd.conf &  
-##ÉèÖÃ»·¾³±äÁ¿     
-ÔÚ/etc/profileÄ©Î²¼ÓÈëÒÔÏÂ´úÂë    
+
+##è®¾ç½®ç¯å¢ƒå˜é‡     
+
+åœ¨/etc/profileæœ«å°¾åŠ å…¥ä»¥ä¸‹ä»£ç     
+
+
 
     PATH=/usr/local/net-snmp/bin:/usr/local/net-snmp/sbin:$PATH
+
     
-Ê¹»·¾³±äÁ¿ÉèÖÃÉúĞ§  
+
+ä½¿ç¯å¢ƒå˜é‡è®¾ç½®ç”Ÿæ•ˆ  
+
+
 
     source /etc/profile    
-##Æô¶¯snmp
+
+##å¯åŠ¨snmp
+
+
 
     /usr/local/net-snmp/sbin/snmpd -d     
-    #²é¿´·şÎñÊÇ·ñÆô¶¯     
+
+    #æŸ¥çœ‹æœåŠ¡æ˜¯å¦å¯åŠ¨     
+
     Netstat -na | grep 161 
-    #snmpÊ¹ÓÃµÄ¶Ë¿Ú161
+
+    #snmpä½¿ç”¨çš„ç«¯å£161
+
     
-##²âÊÔ
+
+##æµ‹è¯•
+
+
 
     snmpwalk -v 2c -c public localhost if
-    #Èô³öÏÖÒÔÏÂĞÅÏ¢£¬ÔòÕıÈ·Æô¶¯snmpd·şÎñ
+
+    #è‹¥å‡ºç°ä»¥ä¸‹ä¿¡æ¯ï¼Œåˆ™æ­£ç¡®å¯åŠ¨snmpdæœåŠ¡
+
     IF-MIB::ifIndex.1 = INTEGER: 1
+
     IF-MIB::ifIndex.3 = INTEGER: 3
+
     IF-MIB::ifIndex.4 = INTEGER: 4
+
     IF-MIB::ifIndex.5 = INTEGER: 5
+
     IF-MIB::ifIndex.6 = INTEGER: 6
+
     IF-MIB::ifDescr.1 = STRING: lo
+
     IF-MIB::ifDescr.3 = STRING: eth0
+
     IF-MIB::ifDescr.4 = STRING: eth1
+
     IF-MIB::ifDescr.5 = STRING: sit0
+
     IF-MIB::ifDescr.6 = STRING: usb0
+
