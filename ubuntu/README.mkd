@@ -31,6 +31,14 @@ $ sudo vim /etc/fonts/conf.avail/69-language-selector-zh-cn.conf # remove test z
 </test>
 ```
 
+Download this [local fonts configure file](.fonts.conf) and put it to `~/.fonts.conf`.
+
+After this try to use this command to verify:
+
+```
+$ ls ~/.fonts.conf && echo 'Fonts configured!'
+```
+
 ### Disable HUD
 
 `System Settings` -- `Keyboard` -- `Shortcuts` -- `Launchers` -- `Key to show the HUD`
