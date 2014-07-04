@@ -5,11 +5,15 @@
 搭建gitserver： <https://github.com/chenzhiwei/linux/blob/master/git/build-git-server.mkd>
 
 ### 全局设置
+
 ```
 $ git config --global user.name "Chen Zhiwei"
 $ git config --global user.email zhiweik@gmail.com
 ```
+
 配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考[示例](https://github.com/chenzhiwei/linux/blob/master/git/.gitconfig)。
+
+`--local` 是将这些内容写入 project 下的 .git/config 文件中，每个project都可以有不同的配置。
 
 ### 自动补全
 
@@ -304,6 +308,12 @@ $ git diff --check
 $ git diff --check --cached
 ```
 
+只查看更改了哪些文件:
+
+```
+$ git diff --name-only
+```
+
 ### git init
 
 ### git log
@@ -395,6 +405,16 @@ $ git push orgin :tagname
 $ git push --delete orgin tagname
 $ git push orgin :refs/tags/tagname
 ```
+
+### git blame
+
+查看某个文件的某行代码是谁和在哪个commit里修改的。
+
+```
+$ git blame filename
+```
+
+会列出filename文件中所有行都是在什么时候被添加的、被谁添加的以及被谁在哪个commit里添加的。
 
 ## 其他
 
