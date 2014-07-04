@@ -1,5 +1,13 @@
 # 一些学习资源
 
+## Linux
+
+[Linux tips](linux.md)
+
+## Python
+
+[Python tips](python.md)
+
 ## Guide to IP Layer Network Administration with Linux
 
 可以当作字典来查询各种命令及应用场景，有事没事多看看。
