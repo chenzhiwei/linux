@@ -189,6 +189,27 @@ Grizzly中新加入的一个模块，是夹在nova-compute和数据库之间的�
 ## 吐槽
 OpenStack最开始的设计各种不规范，各种乱啊，之前的部分命令被重新定义了。官方的文档貌似都没人更新，里面存在的错误之处也没有得到更正。
 
+## 搭建OpenStack Unit Test环境(nova)
+
+```
+$ git clone https://github.com/openstack/nova
+$ cd nova
+$ ./run_tests.sh --update
+$ ./run_tests.sh nova.tests.virt.libvirt.test_libvirt
+$ source .venv/bin/activate
+$ pip install nose
+$ nosetests nova/tests/
+$ nosetests nova/tests/test_file.py
+$ nosetests nova.tests.virt.libvirt.test_libvirt
+$ nosetests -s -v nova/tests/virt/libvirt/test_libvirt.py:LibvirtDriverTestCase.test_finish_revert_migration_power_on
+```
+
+If you are using CentOS, you need to:
+
+```
+# yum install libffi-devel postgresql-devel gcc mysql python-pep8 openssl-devel libxml2-devel  libxslt-devel mysql-devel
+```
+
 ## 参考资料
 1.<http://docs.openstack.org/folsom/basic-install/content/>  
 2.<http://docs.openstack.org/trunk/openstack-compute/admin/content/>  
