@@ -1,5 +1,20 @@
 # Linux 常用命令
 
+### 备份与恢复MBR
+
+MBR(Master Boot Record) Total Size: 446 + 64 + 2 = 512
+
+446 bytes - Bootstrap.
+
+64 bytes - Partition table.
+
+2 bytes - Signature.
+
+```
+# dd if=/dev/sda of=mbr.img bs=512 count=1
+# dd if=mbr.img of=/dev/sda bs=512 count=1
+```
+
 ### 修改Linux系统临时目录路径
 
 通常遇到系统`/tmp`目录太小时使用

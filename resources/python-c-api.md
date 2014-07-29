@@ -146,6 +146,21 @@ $ python
 > calculate.add(3, 4)
 ```
 
+gdb默认优化了编译选项，这会导致你调试时出现行号不对的问题，这时你需要在gcc编译时加上`-O0`来禁用优化来保证调试时行号与源文件保持一致。
+
+## gdb调试python脚本及c module
+
+```
+# gdb python
+(gdb) b PyCal_add
+(gdb) dir /path/to/caculate_module_dir
+(gdb) run test.py
+(gdb) l
+(gdb) n
+(gdb) n
+(gdb) p xx
+```
+
 ## 参考链接
 
 1. <http://www.ibm.com/developerworks/cn/linux/l-pythc/>

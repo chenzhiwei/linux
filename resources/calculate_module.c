@@ -6,8 +6,9 @@ PyCal_add(PyObject *self, PyObject *args)
 {
     int m;
     int n;
+    int t;
     int ret;
-    if(!PyArg_ParseTuple(args, "ii", &m, &n))
+    if(!PyArg_ParseTuple(args, "iii", &m, &n, &t))
     {
         return NULL;
     }
