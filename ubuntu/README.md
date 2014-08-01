@@ -89,6 +89,7 @@ TerminalWindow.background {
 
 TerminalWindow .notebook {
     border: 0;
+    border-radius: 0;
     padding: 3px 0 0 0;
     background-color: shade(@active, 1);
 }
