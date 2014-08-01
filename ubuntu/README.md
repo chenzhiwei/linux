@@ -13,9 +13,8 @@ $ sudo apt-get install vim git tree subversion gnupg sshpass whois account-plugi
 ```
 $ cd ~
 $ mv .vim .vim.bak
-$ mv .vimrc .vimrc.bak
 $ git clone https://github.com/chenzhiwei/dot_vim .vim
-$ cp .vim/dot_vimrc .vimrc
+$ ln -sf .vim/dot_vimrc .vimrc
 ```
 
 ### Font configure
@@ -66,6 +65,49 @@ $ sudo vim /usr/share/lightdm/lightdm.conf.d/50-no-guest.conf
 [SeatDefaults]
 allow-guest=false
 ```
+
+### Change Terminal border and tab
+
+I don't like the terminal border when open multiple tabs.
+
+```
+$ mkdir -p ~/.config/gtk-3.0
+$ vim ~/.config/gtk-3.0/gtk.css
+```
+
+Content: `~/.config/gtk-3.0/gtk.css`
+
+```
+@define-color normal #CCC;
+@define-color active #EEE;
+@define-color background #999;
+
+TerminalWindow.background {
+    /* Top tab bar background*/
+    background-color: shade(@background, 1);
+}
+
+TerminalWindow .notebook {
+    border: 0;
+    padding: 3px 0 0 0;
+    background-color: shade(@active, 1);
+}
+
+TerminalWindow .notebook tab:active {
+    background-color: shade(@active, 1);
+}
+
+TerminalWindow .notebook tab {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 0 3px;
+    background-color: shade(@normal, 1);
+}
+
+/* reference: /usr/share/themes/Ambiance/gtk-3.0/apps/gnome-terminal.css */
+```
+
+URL: <http://askubuntu.com/questions/221291/remove-ugly-fat-bazel-from-gnome-terminal-with-multiple-tabs>
 
 ### Use Bluetooth Transfer File
 
