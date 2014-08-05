@@ -52,6 +52,7 @@ change password in safe:
     UPDATE ultra_event u JOIN event e ON (u.id = e.id) SET u.start_time = unix_timestamp(e.apply_end)
 
     复制一个表： CREATE TABLE ultra_event LIKE event; INSERT ultra_event SELECT * FROM event;
+    将A表数据插入到B表： insert B(title, content) select title, content from A where xx = xx.
 
     有时数据库表名和字段名可能会有mysql保留的关键字，因此需要用反引呈来转义，如下：
     CREATE TABLE `users` (
