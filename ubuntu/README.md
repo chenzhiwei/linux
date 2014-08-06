@@ -135,6 +135,8 @@ LC_TIME=en_US.UTF-8
 $ sudo locale-gen
 ```
 
+If you encounter warning when run `locale` command like this `locale: Cannot set LC_CTYPE to default locale: No such file or directory`, this means you did not generate en_US.UTF-8. Simply run `sudo locale-gen en_US.UTF-8` to solve this issue.
+
 URL: <https://help.ubuntu.com/community/Locale>
 
 ### Edit the sound menu on the top panel
