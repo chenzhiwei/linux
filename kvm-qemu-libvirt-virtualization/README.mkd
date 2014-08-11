@@ -517,6 +517,8 @@ or
 # guestmount -a disk.file -i /mnt
 ```
 
+注：Ubuntu下安装guestmount时会有个提示，如果选否的话会导致在挂载时出错`libguestfs: error: /usr/bin/supermin-helper exited with error status 1`，这时需要执行`sudo update-guestfs-appliance`来解决，其实在你选否的时候已经告诉你可以在安装完成之后手动执行这条命令了。
+
 ### 压缩qcow2或raw格式文件的大小
 
 * 压缩`qcow2`格式的文件
