@@ -104,7 +104,7 @@ Chef是一个让人很不爽的工具，还号称是基于使用Puppet的经验�
 
 我在使用Chef的过程中，recipes的执行顺序总是出问题，我明明是将创建yum repo的recipe放在了前面，但是执行时还是会出现先安装软件包再创建yum repo，可想而知这样软件包肯定是安装不上的。
 
-查阅资料后，我发现，在一个resource的end后面加上`end.run_action()`意思是强制最先执行这个resource。
+查阅资料后，我发现，在一个resource的end后面加上`end.run_action()`意思是在编译时就执行这个resource。
 
 如下两个resource，无论你怎样放置他们的顺序，肯定会先执行`yum_respository`后执行`package`的。
 
