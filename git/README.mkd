@@ -342,6 +342,21 @@ $ git rebase --continue
 
 你执行`git rebase`之后可能会有文件冲突，这时你需要手动解决冲突，解决之后继续rebase。
 
+### git cherry-pick
+
+把已经提交的commit从一个分支移动到另一个分支。使用场景如下：
+
+你有两个分支分别是master和stable，并且stable是master的一个历史commit。有一个bug存在于stable中，很明显这个bug也会存在于master中，你在stable里修复了这个bug，现在你也要在master里修复这个bug，这时你就需要使用cherry-pick把修复这个bug的commit移动到master分支里。
+
+```
+$ git checkout stable
+$ git commit -m"fix a bug" # commit id: 2ea0234b1fa6
+$ git checkout master
+$ git cherry-pick 2ea0234b1fa6
+$ vim xxx # solve conflicts
+$ git commit -c 2ea0234b1fa6
+```
+
 ### git revert
 
 ### git reset
