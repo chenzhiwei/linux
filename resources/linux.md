@@ -190,7 +190,7 @@ http://wiki.centos.org/FAQ/CentOS5#head-47912ebdae3b5ac10ff76053ef057c366b421dc4
     BOOTPROTO="static"
     IPADDR="192.168.110.10"
 
-### 修改SSH登录成功后的提示信息
+### 修改登录成功后的提示信息
 
 在此文件中添加内容即可：/etc/motd
 
