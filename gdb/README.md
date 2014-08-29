@@ -14,6 +14,25 @@
 > xxx
 ```
 
+## 用GDB调试可执行程序
+
+这里的可执行程序可以是用C语言写的简单的二进制程序。
+
+```
+# gdb executable-file
+# gdb --args ./executable-file 1 2 3
+(gdb) break function_name
+```
+
+以上第一条命令的意思是这个二进制可执行程序没有输入参数，第二条命令意思是这个二进制可执行程序接收三个参数分别是`1 2 3`。
+
+## 用GDB调试后台进程
+
+```
+# gdb -- pid
+(gdb) break function_name
+```
+
 ## 用GDB调试core dump文件
 
 ```
