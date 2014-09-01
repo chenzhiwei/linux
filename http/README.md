@@ -142,6 +142,16 @@ WebDAV的方法比较多，有PROPFIND、PROPPATCH、MKCOL、COPY、MOVE、LOCK�
 
 有好多东西，改天再写上来。
 
+## 代理
+
+代理分为转发代理（forward proxy）和反向代理（reverse proxy），他们的区别如下：
+
+转发代理和反向代理都是A通过B去访问C，转发代理是A知道B的存在并且A上面可能还需要做一些特殊配置才能去访问C，而反向代理则是A不需要做任何配置也不知道B的存在或者说A认为B就是C。
+
+转发代理通常是A不能访问C，反向代理则是出于安全、稳定或C的自身业务需求而不让A来直接访问C。
+
+更详细的说明可以查看最后参考资料中的内容。
+
 ## Reference
 
 1. HTTP/1.0的响应状态码文档： <http://www.w3.org/Protocols/HTTP/1.0/spec.html#Status-Codes>
