@@ -86,3 +86,30 @@ Banner /etc/ssh/message_file
 ```
 
 然后`/etc/ssh/message_file`里的内容就是登录ssh server时的提示内容。
+
+## Issues
+
+### debug1: expecting SSH2_MSG_KEX_DH_GEX_GROUP
+
+当使用SSH登录时，一直停留在这里，最后出现了个`connection reset by peer`。查询了一下google，找到了解决方法：
+
+`/etc/ssh/ssh_config`里需要去掉以下两行的注释。
+
+```
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
+MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
+```
+
+参考这里： <http://www.held.org.il/blog/2011/05/the-myterious-case-of-broken-ssh-client-connection-reset-by-peer/>
+
+和这里： <http://superuser.com/questions/568891/ssh-works-in-putty-but-not-terminal>
+
+### 在Server端设置了公钥但是Client用私钥登录时依旧让输入密码
+
+SELinux导致的，执行如下命令就可以解决了：
+
+```
+restorecon -R -v /root/.ssh
+```
+
+参考： <http://www.unix.com/unix-advanced-expert-users/174645-openssh-5-3-needs-password-vs-4-3-using-private-keys.html>
