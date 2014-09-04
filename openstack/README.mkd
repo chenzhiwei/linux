@@ -204,6 +204,10 @@ $ nosetests nova.tests.virt.libvirt.test_libvirt
 $ nosetests -s -v nova/tests/virt/libvirt/test_libvirt.py:LibvirtDriverTestCase.test_finish_revert_migration_power_on
 ```
 
+## 调试Test Case
+
+在testcase.py脚本里进行调试里需要在nosetests后面加上`-s`参数。
+
 If you are using CentOS, you need to:
 
 ```
