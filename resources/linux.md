@@ -1,5 +1,31 @@
 # Linux 常用命令
 
+### 进入单用户模式修改root密码
+
+开机时在kervel的那一行后面添加`1`或`single`，然后boot系统。（也可以顺便加上`selinux=0`）
+
+重启之后进入系统直接输入`passwd`命令来修改密码，如果输入`passwd`命令没有任何输出，一般原因是没有关闭SELinux。
+
+可以使用`getenforce`来查看是否关闭了SELinux，如果没有那么可以使用`setenforce 0`来临时关闭SELinux，然后再修改密码。
+
+如果以上还不行，那么就清除`/etc/shadow`第一个`:`后面的密码加密后的字符串。
+
+### 开机时进入了repair filesystem模式（即文件系统修复模式）
+
+出现这个问题一般有两个原因：
+
+1.非正常关机导致，解决方法如下：
+
+可以用`fsck`命令来修复一个磁盘，直接输入`fsck`或`fsck /dev/hdX`。
+
+2.`/etc/fstab`文件里格式错误，修正之后重启机器就可以了。
+
+在repair filesystem模式下，文件系统是只读的，需要先将`/`挂载为读写模式，然后再修改，方法如下：`mount -o remount,rw /`。
+
+### 程序编译时及运行时所调用的库
+
+查看程序运行时所调用的so库文件顺序并不完全和`ldconfig -p`出来的一致，因为程序可能会有一个`rpath`选项来指定默认的调用路径，用以下命令可以查看： `readelf -d /usr/lib64/xxx.so`
+
 ### 备份与恢复MBR
 
 MBR(Master Boot Record) Total Size: 446 + 64 + 2 = 512
