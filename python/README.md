@@ -12,6 +12,12 @@ I hate to wrap a line when it exceeds 79 characters.
 
 [pep8-doc]: http://pep8.readthedocs.org/en/latest/
 
+可以顺便了解一下`flake8`。
+
+## Python internationalization
+
+[Babel](https://pypi.python.org/pypi/Babel/)用着不错。
+
 ## Debug python code
 
 ```python
