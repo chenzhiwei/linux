@@ -1,5 +1,11 @@
 # Linux 常用命令
 
+### 格式化Json文件
+
+```
+$ cat xxx.json | python -m json.tool
+```
+
 ### 进入单用户模式修改root密码
 
 开机时在kervel的那一行后面添加`1`或`single`，然后boot系统。（也可以顺便加上`selinux=0`）
