@@ -227,6 +227,14 @@ $ mkdir -p ~/.config/autostart
 $ cp /usr/share/indicator-screenshot/indicator-screenshot.desktop ~/.config/autostart
 ```
 
+### Install package using proxy
+
+```
+$ sudo apt-get -o "Acquire::http::Proxy=http://10.10.10.104:8088" install tree
+```
+
+Reference: <https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy>
+
 ## Create VM for Windows
 
 ```
