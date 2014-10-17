@@ -1,5 +1,15 @@
 # Linux 常用命令
 
+### VIM检查文件类型
+
+```
+:set filetype?
+:set ft?
+:set ft=php
+:echo &ft
+:echo &tabstop
+```
+
 ### 格式化Json文件
 
 ```
