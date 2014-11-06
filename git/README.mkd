@@ -318,6 +318,16 @@ $ git diff --name-only
 
 ### git log
 
+查看修改日志。
+
+**git log -- filename**
+
+查看某个文件（包括已删除的文件）的修改历史，输出为commit info。
+
+**git log -p -- filename**
+
+查看某个文件（包括已删除的文件）的修改历史，输出为commit info和diff。
+
 ### git merge
 
 ### git mv
@@ -423,7 +433,7 @@ $ git push orgin :refs/tags/tagname
 
 ### git blame
 
-查看某个文件的某行代码是谁和在哪个commit里修改的。
+查看某个文件当前内容的修改记录，即都在哪个commit中被谁修改的。
 
 ```
 $ git blame filename
