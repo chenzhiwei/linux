@@ -529,6 +529,8 @@ Name       Type        VFS   Label  MBR  Size  Parent
 
 or
 
+仅当这个镜像`disk.raw`是个没有偏移量的镜像时：
+
 ```
 # qemu-img resize disk.raw +2G
 # e2fsck -f disk.raw
