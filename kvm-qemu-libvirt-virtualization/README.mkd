@@ -45,21 +45,23 @@ virt-install命令在virtinst包里，在CentOS下该包名为python-virtinst，
 
 打开VNC客户端，进入安装界面，然后一步步的完成安装。安装完成之后会在相应目录下生成镜像文件及xml配置文件（/etc/libvirt/qemu/ubuntu.xml）。
 
-### 对虚拟机镜像进行定制
+注意：安装过程中请只分一个分区（通常叫sda1），并将所有空间都分配给这个分区，安装完成之后会生成一个大小为5G的镜像文件`/var/instances/ubuntu.img`。
 
-用以下命令挂载并操作镜像：
+### 制作qcow2格式镜像
+
+安装完成之后生成的`ubuntu.img`是可以启动（bootable）的`raw`格式文件，这个比较占用空间，你可以用以下命令将其压缩并转换成`qcow2`格式。
 
 ```
-# cd /var/instances
-# mount -o loop ubuntu.img /mnt
-# chroot /mnt
+# virt-sparsify --compress --convert qcow2 ubuntu.img ubuntu.qcow2
 ```
 
-接下来怎么操作就不用我说了吧。。。如果chroot之后系统提示`Cannot open /dev/urandom for reading: No such file or directory`，那么你在chroot之前需要执行以下命令`mount --bind /dev /mnt/dev`，其他相似问题类似处理方法。
+最终会得到一个可以启动（bootable）的`qcow2`格式镜像`ubuntu.qcow2`。
 
-### 提取文件系统
+### 制作raw格式镜像
 
-在上一步你挂载镜像时是否遇到了问题？（mount: you must specify the filesystem type），原因很简单，你当时用这个镜像安装操作系统时肯定分了其他分区，并且还有偏移量。你必须将根分区（/）提取出来，然后就可以直接挂载了。
+* 挂载镜像
+
+由于你在安装操作系统时分了一个分区（sda1），所以你是无法直接挂载镜像的。如果你用命令`mount -o loop ubuntu.img /mnt`挂载镜像时会提示`mount: you must specify the filesystem type`，这是因为你这个镜像有偏移量，即并是不所有空间都分配给了`sda1`，这时你就需要来将操作系统根分区（/）提取出来。
 
 * 挂载有偏移量的镜像
 
@@ -84,7 +86,7 @@ ubuntu.img5       9439232  10483711    1044480  82  Linux swap / Solaris
 
 从以上输出可以看到这个镜像其实包含了5个分区！！！
 
-我们要想挂载第一个分区，需要知道它的偏移量为512\*2048=1048576，然后挂载`mount -o loop,offset=1048576 ubuntu.img /mnt/`。
+我们要想挂载第一个分区，需要知道它的偏移量为`512*2048=1048576`，然后挂载`mount -o loop,offset=1048576 ubuntu.img /mnt/`。
 
 注： 偏移量是柱面的偏移数，实际偏移的字节数等于512\*柱面偏移数，sfdisk命令输出的第三列即为柱面偏移数。
 
@@ -118,8 +120,6 @@ Units = sectors of 512 bytes, counting from 0
 # losetup -a
 /dev/loop0: [0811]:56885251 (/var/instances/ubuntu.img), offset 1048576
 # dd if=/dev/loop0 of=ubuntu.final.img
-# mount -o loop ubuntu.final.img /mnt
-# chroot /mnt
 ```
 
 以上这些操作就是提取根（/）文件系统的步骤。首先找到ubuntu.img镜像的根所在的分区的偏移量，并用losetup命令挂载成loop设备，然后使用dd命令将该loop设备（/dev/loop0）转换成文件，而这个文件就是最终的镜像文件。
@@ -132,6 +132,30 @@ Units = sectors of 512 bytes, counting from 0
 # cp /mnt/boot/vmlinuz-3.2.0-23-generic kernel
 # cp /mnt/boot/initrd.img-3.2.0-23-generic ramdisk
 ```
+
+最终你会得到一个没有偏移量的可以直接挂载的`raw`格式的镜像`ubuntu.final.img`，一个`kernel`和一个`ramdisk`文件。
+
+### 对虚拟机镜像进行定制
+
+用以下命令挂载并操作镜像（qcow2）：
+
+```
+# mount -o loop ubuntu.final.img /mnt
+# mount --bind /dev /mnt/dev
+# mount --bind /proc /mnt/proc
+# chroot /mnt
+```
+
+用以下命令挂载并操作镜像（raw）：
+
+```
+# mount -o loop ubuntu.final.img /mnt
+# mount --bind /dev /mnt/dev
+# mount --bind /proc /mnt/proc
+# chroot /mnt
+```
+
+接下来你就可以对镜像就可以各种操作了，比如安装软件包、修改相关配置等等。
 
 ## 镜像制作2
 
@@ -153,6 +177,8 @@ LABEL=new-lable /               ext4    defaults 0 0
 ```
 
 以上几条命令的意思是将系统安装在整个磁盘上，即磁盘不分区，也就意味着这需要你自己指定内核来启动系统，详情请参见`instance-hostname.xml`文件中的配置。
+
+注意：这种制作方式我只在Ubuntu系统上成功实验过，CentOS貌似不能将操作系统安装在一个没有分区的镜像上面。
 
 ## 挂载qcow2格式的文件
 
@@ -550,6 +576,12 @@ or
 # umount /mnt
 # umount -l /mnt
 ```
+
+## 问题
+
+* Cannot open /dev/urandom for reading: No such file or directory
+
+执行 `mount --bind /dev /mnt/dev` 来解决，其他相似问题用类似处理方法。
 
 ## 参考资料
 
