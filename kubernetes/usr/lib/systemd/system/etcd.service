@@ -1,0 +1,14 @@
+[Unit]
+Description=Etcd Server
+After=network.target
+
+[Service]
+Type=simple
+# etc logs to the journal directly, suppress double logging
+StandardOutput=null
+WorkingDirectory=/var/lib/etcd
+User=etcd
+ExecStart=/usr/bin/etcd
+
+[Install]
+WantedBy=multi-user.target
