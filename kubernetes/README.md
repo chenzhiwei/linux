@@ -429,12 +429,10 @@ KUBE_ALLOW_PRIV="--allow_privileged=false"
 
 * create configure file `/etc/kubernetes/kubelet` with content below:
 
-Update the `--hostname_override=192.168.122.21` to your minion nodes' IP address.
-
 ```
 KUBELET_ADDRESS="--address=0.0.0.0"
 KUBELET_PORT="--port=10250"
-KUBELET_HOSTNAME="--hostname_override=192.168.122.21"
+KUBELET_HOSTNAME=""
 KUBELET_ARGS=""
 ```
 
