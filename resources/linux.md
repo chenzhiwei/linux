@@ -1,5 +1,47 @@
 # Linux 常用命令
 
+### /etc/shadow 文件各字段说明
+
+```
+zhiwei:$6$jQxzk6zH$.mTIBeVixdlJ7kOgad6wci:16412:0:99999:7:::
+```
+
+As with the passwd file, each field in the shadow file is also separated with ":" colon characters, and are as follows:
+
+* Username, up to 8 characters. Case-sensitive, usually all lowercase. A direct match to the username in the /etc/passwd file.
+* Password, 13 character encrypted. A blank entry (eg. ::) indicates a password is not required to log in (usually a bad idea), and a `*` entry (eg. :*:) indicates the account has been disabled.
+* The number of days (since January 1, 1970) since the password was last changed.
+* The number of days before password may be changed (0 indicates it may be changed at any time)
+* The number of days after which password must be changed (99999 indicates user can keep his or her password unchanged for many, many years)
+* The number of days to warn user of an expiring password (7 for a full week)
+* The number of days after password expires that account is disabled
+* The number of days since January 1, 1970 that an account has been disabled
+* A reserved field for possible future use
+
+查看密码过期时间及相关信息：
+
+```
+# chage -l zhiwei
+Last password change                    : Dec 08, 2014
+Password expires                    : never
+Password inactive                   : never
+Account expires                     : never
+Minimum number of days between password change      : 0
+Maximum number of days between password change      : 90
+Number of days of warning before password expires   : 7
+```
+
+以上意思是密码至少需要每90天修改一次。
+
+你可以使用如下命令来修改密码不过期：
+
+```
+# chage -M 99999 zhiwei
+# chage zhiwei
+```
+
+或者直接编辑`/etc/shadow`文件，将第五列修改为`99999`，意思是这个密码274年之后才会过期，也就是说永不过期了。
+
 ### VIM检查文件类型
 
 ```
