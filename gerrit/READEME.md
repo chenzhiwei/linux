@@ -30,3 +30,7 @@ link  = https://bugzilla.xxx.com/?id=$2
 * Reference
 
 <http://www.lowlevelmanager.com/2012/09/modify-submit-type-for-gerrit-project.html>
+
+## Integration
+
+Gerrit + Bugzilla = Perfect!
