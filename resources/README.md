@@ -35,3 +35,5 @@ GPG的中文使用文档，安全通信的必备神器。<http://www.gnupg.org/h
 1. <http://systoilet.wordpress.com/2010/08/09/redis-vs-memcached/>
 2. <http://oldblog.antirez.com/post/redis-memcached-benchmark.html>
 3. <http://www.quora.com/What-are-the-differences-between-memcached-and-redis>
+4. <https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm>
+5. <https://github.com/chenzhiwei/linux/raw/master/resources/switchy.txt>
