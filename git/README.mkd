@@ -461,4 +461,22 @@ rm -rf repo.git
 # Remove temporary local repository
 ```
 
-我想睡觉，因此先不写了。
+### git 上游源更新合并
+
+查看本地远程库
+
+```
+$ git remote -v
+```
+添加上游仓库源
+
+```
+$ git remote add upstream https://github.com/....git
+$ git remote -v         #再次查看
+$ git fetch upstream    #更新上游仓库代码
+$ git checkout master    #转到 master库中
+$ git merge upstream/master    #合并上游库代码
+$ git commit            #提交到自己的
+$ git push
+```
+
