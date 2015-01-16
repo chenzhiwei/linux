@@ -78,13 +78,13 @@ net.ipv4.ip_forward = 1
 * Ubuntu
 
 ```
-# apt-get install ppp
+# apt-get install ppp pptp
 ```
 
 * CentOS/RHEL
 
 ```
-# yum install ppp
+# yum install ppp pptp
 ```
 
 ### Edit configuration file
