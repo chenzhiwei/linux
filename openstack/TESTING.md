@@ -7,13 +7,14 @@
 * Ubuntu
 
 ```
-$ sudo apt-get install python-dev libssl-dev python-pip git-core libxml2-dev libxslt-dev pkg-config libffi-dev libpq-dev libmysqlclient-dev
+$ sudo apt-get install python-dev libssl-dev python-pip git-core libxml2-dev libxslt-dev pkg-config libffi-dev libpq-dev libmysqlclient-dev libvirt-dev graphviz libsqlite3-dev python-tox
 ```
 
 * CentOS/RHEL/Fedora
 
 ```
-# yum install libffi-devel postgresql-devel gcc mysql python-pep8 openssl-devel libxml2-devel  libxslt-devel mysql-devel
+# yum install python-devel openssl-devel python-pip git gcc libxslt-devel mysql-devel postgresql-devel libffi-devel libvirt-devel graphviz sqlite-devel libxml2-devel mysql
+# pip-python install tox
 ```
 
 ### 创建虚拟环境（venv）
