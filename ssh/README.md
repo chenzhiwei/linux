@@ -1,5 +1,23 @@
 # SSH
 
+## SSH Import
+
+突然发现Ubuntu下有个包`ssh-import-id`，可以自动导入用户在Launchpad或Github上的ssh key，于是打开脚本看一下发现如下：
+
+Github API:
+
+```
+https://api.github.com/users/username/keys
+```
+
+Launchpd API:
+
+```
+https://launchpad.net/~username/+sshkeys
+```
+
+将里面的`username`替换一下就能得到别人的ssh key了，想对别人授权时更容易了。
+
 ## SSH Client
 
 配置文件路径：`/etc/ssh/ssh_config` 和 `~/.ssh/ssh_config`。
