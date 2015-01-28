@@ -1,22 +1,24 @@
 [user]
-    name = Chen Zhiwei
-    email = zhiweik@gmail.com
+    name    = Chen Zhiwei
+    email   = zhiweik@gmail.com
 [core]
-    editor = vim
+    editor  = vim
 [merge]
-	tool = vimdiff
+    tool    = vimdiff
 [color]
-    status = auto
-    branch = auto
+    diff    = auto
+    status  = auto
+    branch  = auto
     interactive = auto
-    diff = auto
 [alias]
-    co = checkout
-    ci = commit
-    st = status
-    unstage = reset HEAD --
+    co  = checkout
+    ci  = commit
+    st  = status
+    add = add --ignore-removal
     last = log -1 HEAD
     diff = diff --check
     show = show --shortstat
+    unstage = reset HEAD --
+    history = log -p --
 [push]
     default = matching
