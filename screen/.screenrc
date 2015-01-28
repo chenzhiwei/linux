@@ -1,0 +1,12 @@
+# scrollback buff, 50000 lines
+defscrollback 50000
+
+# no delay when entering copy mode
+msgminwait 0
+
+# no copyright notice during startup
+startup_message off
+
+# allow Shift+Page Up/Down
+termcapinfo xterm ti@:te@
+termcapinfo xterm-color ti@:te@

@@ -37,10 +37,28 @@ $ exit
 $ CTRL + D
 ```
 
+## 查看一个screen里的输出
+
+当你进入一个screen时你只能看到一屏内容，如果想看之前的内容可以如下：
+
+```
+$ Ctrl + a ESC
+```
+
+以上意思是进入Copy mode，拷贝模式，然后你就可以像操作VIM一样查看screen session里的内容了。
+
+可以 Page Up 也可以 Page Down。
+
 ## screen进阶
 
 对我来说，以上就足够了，有特定需求时再说。
 
+## screenrc
+
+[.screenrc](.screenrc)
+
 ## End
 
 screen命令很好用，但是最让人头痛的是`CTRL+A`命令和BASH里的快捷键重复了，我不觉得替换一下快捷键是个很好的解决方案，所以这个问题一直存在我这里。
+
+这里有更详细的说明：<http://www.ibm.com/developerworks/cn/linux/l-cn-screen/>
