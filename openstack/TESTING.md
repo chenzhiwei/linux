@@ -48,6 +48,26 @@ $ nosetests -s -v nova/tests/virt/libvirt/test_libvirt.py:LibvirtDriverTestCase.
 
 `nosetests`是一个执行Python Unit Test的工具。
 
+## Using tox
+
+* Run code-style Test
+
+```
+$ tox -e pep8
+```
+
+* Run Unit Test
+
+```
+$ tox -e py27
+```
+
+* Run Unit Test `under tests/api/v2`
+
+```
+$ tox -e py27 -- api.v2
+```
+
 ## Reference
 
 <http://docs.openstack.org/developer/nova/devref/development.environment.html>
