@@ -20,5 +20,3 @@
     show = show --shortstat
     unstage = reset HEAD --
     history = log -p --
-[push]
-    default = matching

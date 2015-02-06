@@ -48,6 +48,7 @@ $ git push -u origin master
 注意，如果提示`fatal: remote origin already exists.`，那么说明该本地仓库已经有远端地址了。你可以先使用`git remote rm origin`删除origin，或者使用`git remote add other_name git@github.com:username/test.git`来添加（提交时记得使用`git push -u other_name master`）。
 
 ## 为本地仓库创建两个镜像
+
 假设现有仓库地址为： git@github.com:chenzhiwei/linux.git
 
 ```
@@ -442,6 +443,14 @@ $ git blame filename
 会列出filename文件中所有行都是在什么时候被添加的、被谁添加的以及被谁在哪个commit里添加的。
 
 ## 其他
+
+### 给GIT SSH添加参数
+
+默认情况下，使用`git clone`时会使用默认的ssh key连接，你现在可以自定义ssh key的位置了。
+
+```
+$ GIT_SSH_COMMAND='ssh -i /path/to/ssh_private_key' git clone git@github.com:chenzhiwei/linux.git
+```
 
 ### 给自己项目在github上创建一个mirror
 
