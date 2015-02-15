@@ -21,8 +21,16 @@ File: /etc/resolv.dnsmasq.conf
 
 ```
 options timeout:1
+nameserver 223.5.5.5
 nameserver 8.8.8.8
-nameserver 8.8.4.4
+```
+
+## Ingore resolvconf
+
+File: /etc/default/dnsmasq
+
+```
+# sed -i 's/^#IGNORE_RESOLVCONF=yes/IGNORE_RESOLVCONF=yes/g' /etc/default/dnsmasq
 ```
 
 ## Start dnsmasq
