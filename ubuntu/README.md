@@ -164,10 +164,10 @@ Link: <https://help.ubuntu.com/community/CronHowto>
 Install Google Chrome
 
 ```
-$ sudo vim /etc/apt/sources.list.d/google-chrome-unstable.list
-deb http://dl.google.com/linux/chrome/deb/ stable main
+$ sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+$ sudo echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
 $ sudo apt-get update
-$ sudo apt-get install google-chrome-stable chromium-browser
+$ sudo apt-get -y install google-chrome-stable chromium-browser
 $ sudo vim /etc/chromium-browser/default
 ```
 
