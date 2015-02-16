@@ -11,7 +11,7 @@ $ git config --global user.name "Chen Zhiwei"
 $ git config --global user.email zhiweik@gmail.com
 ```
 
-配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考[示例](https://github.com/chenzhiwei/linux/blob/master/git/.gitconfig)。
+配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考[示例](.gitconfig)。
 
 `--local` 是将这些内容写入 project 下的 .git/config 文件中，每个project都可以有不同的配置。
 
@@ -45,69 +45,39 @@ $ cd git_repo
 $ git remote add origin git@github.com:username/test.git
 $ git push -u origin master
 ```
+
 注意，如果提示`fatal: remote origin already exists.`，那么说明该本地仓库已经有远端地址了。你可以先使用`git remote rm origin`删除origin，或者使用`git remote add other_name git@github.com:username/test.git`来添加（提交时记得使用`git push -u other_name master`）。
 
-## 为本地仓库创建两个镜像
+### 一次提交到多个远端仓库
 
 假设现有仓库地址为： git@github.com:chenzhiwei/linux.git
 
 ```
 $ git clone git@github.com:chenzhiwei/linux.git
 $ cd linux
-$ git remote add backup git@gitcafe.com:chenzhiwei/linux.git
-$ git push -u backup master
-```
-之后每次修改时，在最后push的时候需要执行两条命令：
-
-```
-$ git push origin
-$ git push backup
-```
-如果要只执行一次push就提交到两个远端仓库，那么需要修改仓库根目录下的.git/config文件，添加以下内容：
-
-```
-[remote "both"]
-    url = git@github.com:chenzhiwei/linux.git
-    url = git@gitcafe.com:chenzhiwei/linux.git
-```
-然后在提交更新时使用`git push both`就可以将更新提交到两个远端仓库了。
-
-或者直接把 backup 分支的地址写到 origin 分支这里：
-
-```
-[remote "origin"]
-    fetch = +refs/heads/*:refs/remotes/origin/*
-    url = git@github.com:chenzhiwei/linux.git
-    url = git@gitcafe.com:chenzhiwei/linux.git
-```
-
-注意：在 Git 2.0 将会更改默认的`push`动作为『只 push 当前 branch 到远端仓库』。如果想继续使用`git push both`命令需要手动设置一下`git push`的默认动作`git config --global push.default matching`。
-
-`push.default`有几个简单动作，这里介绍`matching`和`simple`，二者[意思][push.default]分别是 push 本地所有的分支到远端仓库和 push 本地当前分支到上游分支。这个解释貌似还不够精确，可以`man git-config`来查看详细说明。
-
-[push.default]: http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0
-
-一个完整的.git/config文件示例如下：
-
-```
+$ vim .git/config
 [core]
     repositoryformatversion = 0
     filemode = true
     bare = false
     logallrefupdates = true
 [remote "origin"]
-    fetch = +refs/heads/*:refs/remotes/origin/*
     url = git@github.com:chenzhiwei/linux.git
+    url = git@gitshell.com:chenzhiwei/linux.git
+    url = git@bitbucket.org:chenzhiwei/linux.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
 [branch "master"]
     remote = origin
     merge = refs/heads/master
-[remote "backup"]
-    url = git@gitcafe.com:chenzhiwei/linux.git
-    fetch = +refs/heads/*:refs/remotes/backup/*
-[remote "both"]
-    url = git@github.com:chenzhiwei/linux.git
-    url = git@gitcafe.com:chenzhiwei/linux.git
 ```
+
+然后第一次提交时需要执行`git push -u origin master`，再往后就只需要执行`git push`就能把修改提交到上述三个远端仓库了。
+
+注意：在 Git 2.0 将会更改默认的`push`动作为『只 push 当前 branch 到远端仓库』。如果想继续使用`git push both`命令需要手动设置一下`git push`的默认动作`git config --global push.default matching`。
+
+`push.default`有几个简单动作，这里介绍`matching`和`simple`，二者[意思][push.default]分别是 push 本地所有的分支到远端仓库和 push 本地当前分支到上游分支。这个解释貌似还不够精确，可以`man git-config`来查看详细说明。
+
+[push.default]: http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0
 
 ## 在现有仓库上创建孤儿分支
 
