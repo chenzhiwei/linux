@@ -138,6 +138,22 @@ xforwardedfor=yes
 
 注：很变态的是这些参数的位置不能随意更改。
 
+## Haproxy 1.5
+
+从1.5版开始，haproxy支持原生的配置ssl证书了，不需要再和stunnel配合使用了。并且TCP还支持sni，做代理翻墙很方便。
+
+
+```
+listen google-services
+    bind *:443
+    mode tcp
+    option  tcplog
+    use-server www.google.com if { req_ssl_sni -i www.google.com }
+    use-server mail.google.com if { req_ssl_sni -i mail.google.com }
+    server www.google.com www.google.com:443
+    server mail.google.com mail.google.com:443
+```
+
 ## 相关资料
 1\. HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>  
 2\. 第一次接触HAProxy与Stunnel时的参考资料： <http://www.cnblogs.com/wsky/archive/2011/04/06/2007095.html>
