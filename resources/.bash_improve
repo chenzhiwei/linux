@@ -1,1 +1,12 @@
+# Export GO path
 export GOPATH=$HOME/go
+
+# Add Chef embed ruby
+if [ -d /opt/chef/embedded/bin ]; then
+    export PATH=$PATH:/opt/chef/embedded/bin
+fi
+
+# Add custum path
+if [ -d $HOME/.bin ]; then
+    export PATH=$PATH:$HOME/.bin
+fi
