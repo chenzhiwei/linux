@@ -154,6 +154,27 @@ listen google-services
     server mail.google.com mail.google.com:443
 ```
 
+## Haproxy enable SSL
+
+```
+frontend https
+    bind :443 ssl crt /etc/haproxy/server.pem
+    default_backend mybackend
+
+backend mybackend
+    server s1 127.0.0.1:80
+```
+
+OR
+
+```
+server s2 jizhihuwai.com:443 crt /etc/haproxy/server.pem
+```
+
+`server.pem`是用`cat server.crt server.key > /etc/haproxy/server.pem`生成的。
+
+`server.crt`一般是CA机构给颁发的，而`server.key`是你自己生成的private key。
+
 ## 相关资料
 1\. HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>  
 2\. 第一次接触HAProxy与Stunnel时的参考资料： <http://www.cnblogs.com/wsky/archive/2011/04/06/2007095.html>
