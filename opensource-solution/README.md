@@ -23,3 +23,7 @@ The github code can use Travis CI.
 ## Bug & Tracking
 
 Bugzilla, which is a "Defect Tracking System" or "Bug-Tracking System". Defect Tracking Systems allow individual or groups of developers to keep track of outstanding bugs in their product effectively.
+
+## Git hosting
+
+Gitlab is a good opensource solution for Git hosting, it is very like Github. I am very like it.
