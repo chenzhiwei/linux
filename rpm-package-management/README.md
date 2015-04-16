@@ -13,6 +13,7 @@ RPM包相关工具有rpm,rpmbuild,rpmsign,rpm2cpio等。
 # rpm -qa
 # rpm -qa php
 # rpm -qa php*
+# rpm --showrc
 ```
 
 ### rpmbuld命令
@@ -33,6 +34,15 @@ RPM包相关工具有rpm,rpmbuild,rpmsign,rpm2cpio等。
 # rpmsign -E %_lib
 # rpmsign -E %_libdir
 # rpmsign -E %_prefix
+```
+
+也可以用`rpm`命令：
+
+```
+# rpm -E %configure
+# rpm -E %_lib
+# rpm -E %_libdir
+# rpm -E %_prefix
 ```
 
 先记住一个查看SPEC文件宏定义值的命令，然后再去记和签名相关的命令。另外，这些宏都定义在/usr/lib/rpm/macros文件中。
