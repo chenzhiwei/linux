@@ -579,6 +579,28 @@ or
 # umount -l /mnt
 ```
 
+## 让虚拟机可以访问宿主机的网络
+
+很多时候，你创建的虚拟机网段和宿主机是完全不一样的，而这时你想让你创建的虚拟机可以访问宿主机能访问到的网络。
+
+假如宿主机上的 Bridge 是 br0 ，其上的 IP 地址是 `192.168.0.1`，虚拟机网段是 `192.168.0.0/24`。
+
+```
+# iptables -t nat -A POSTROUTING -s 192.168.0.0/24 ! -d 192.168.0.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
+# iptables -t nat -A POSTROUTING -s 192.168.0.0/24 ! -d 192.168.0.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
+# iptables -t nat -A POSTROUTING -s 192.168.0.0/24 ! -d 192.168.0.0/24 -j MASQUERADE
+# iptables -t mangle -A POSTROUTING -o br0 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
+# iptables -t filter -A INPUT -i br0 -p udp -m udp --dport 53 -j ACCEPT
+# iptables -t filter -A INPUT -i br0 -p tcp -m tcp --dport 53 -j ACCEPT
+# iptables -t filter -A INPUT -i br0 -p udp -m udp --dport 67 -j ACCEPT
+# iptables -t filter -A INPUT -i br0 -p tcp -m tcp --dport 67 -j ACCEPT
+# iptables -t filter -A FORWARD -d 192.168.0.0/24 -o br0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+# iptables -t filter -A FORWARD -s 192.168.0.0/24 -i br0 -j ACCEPT
+# iptables -t filter -A FORWARD -i br0 -o br0 -j ACCEPT
+# iptables -t filter -A FORWARD -o br0 -j REJECT --reject-with icmp-port-unreachable
+# iptables -t filter -A FORWARD -i br0 -j REJECT --reject-with icmp-port-unreachable
+```
+
 ## 问题
 
 * Cannot open /dev/urandom for reading: No such file or directory
