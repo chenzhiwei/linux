@@ -118,13 +118,13 @@ mysql.conn_close()
 '''
 import MySQLdb
 class MySQL:
-    def __init__(self, db_host, db_user, db_pass, db_name, 
-            db_port=3306, db_sock='/tmp/mysql.sock', db_charset='latin1', 
+    def __init__(self, db_host, db_user, db_pass, db_name,
+            db_port=3306, db_sock='/tmp/mysql.sock', db_charset='latin1',
             db_connect_timeout=5):
 
         conn = None
         try:
-            conn = MySQLdb.connect(db_host, db_user, db_pass, db_name, db_port, 
+            conn = MySQLdb.connect(db_host, db_user, db_pass, db_name, db_port,
                     db_sock, charset=db_charset, connect_timeout=db_connect_timeout)
         except Exception, e:
             print e

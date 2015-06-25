@@ -15,12 +15,12 @@ function get($url, $param = null) {
     if($param != null) {
         $query = http_build_query($param);
         $url = $url . '?' . $query;
-    }   
+    }
     $ch = curl_init();
     if(stripos($url, "https://") !== false){
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    }   
+    }
 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -32,7 +32,7 @@ function get($url, $param = null) {
     }else{
         echo $status["http_code"];
         return false;
-    }   
+    }
 }
 
 /*
