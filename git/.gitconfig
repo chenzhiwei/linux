@@ -14,9 +14,8 @@
     co  = checkout
     ci  = commit
     st  = status
-    add = add --ignore-removal
     last = log -1 HEAD
-    diff = diff --check
-    show = show --shortstat
     unstage = reset HEAD --
     history = log -p --
+[push]
+    default = matching
