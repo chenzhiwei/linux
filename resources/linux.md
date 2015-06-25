@@ -1,5 +1,15 @@
 # Linux 常用命令
 
+### 删除tar包解压后的文件
+
+有时你解压一下tar包时，这个tar包并没有一个主目录，结果把自己当前的目录搞混乱了，你都不知道哪个文件是从这个tar包里解压出来的了。
+
+```
+rm -rf "$(tar ztf filename.tar.gz)"
+```
+
+不过，还是有个问题，就是这个压缩包里的目录并不会被删除。
+
 ### /etc/shadow 文件各字段说明
 
 ```
@@ -325,7 +335,7 @@ ls -l /proc/process_pid/cwd 命令就可以看到了
 
 lsof 是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。
 
-    lsof输出各列信息的意义如下： 
+    lsof输出各列信息的意义如下：
     COMMAND：进程的名称
     PID：进程标识符
     USER：进程所有者
@@ -403,29 +413,29 @@ gzip,gunzip,uncompress,unzip
 
 第一种方法
 
-1.执行rpm -i your-package.src.rpm 
-2. cd /usr/src/redhat/SPECS 
-3. rpmbuild -bp your-package.specs 一个和你的软件包同名的specs文件 
-4. cd /usr/src/redhat/BUILD/your-package/ 一个和你的软件包同名的目录 
-5. ./configure 这一步和编译普通的源码软件一样，可以加上参数 
-6. make 
-7. make install 
+1.执行rpm -i your-package.src.rpm
+2. cd /usr/src/redhat/SPECS
+3. rpmbuild -bp your-package.specs 一个和你的软件包同名的specs文件
+4. cd /usr/src/redhat/BUILD/your-package/ 一个和你的软件包同名的目录
+5. ./configure 这一步和编译普通的源码软件一样，可以加上参数
+6. make
+7. make install
 
 第二种方法
 
-1.执行rpm -i you-package.src.rpm 
-2. cd /usr/src/redhat/SPECS 
-3. rpmbuild -bb your-package.specs 一个和你的软件包同名的specs文件 
+1.执行rpm -i you-package.src.rpm
+2. cd /usr/src/redhat/SPECS
+3. rpmbuild -bb your-package.specs 一个和你的软件包同名的specs文件
 
-这时，在/usr/src/redhat/RPM/i386/ （根据具体包的不同，也可能是x86_64,noarch等等) 
+这时，在/usr/src/redhat/RPM/i386/ （根据具体包的不同，也可能是x86_64,noarch等等)
 
-在这个目录下，有一个新的rpm包，这个是编译好的二进制文件。 
+在这个目录下，有一个新的rpm包，这个是编译好的二进制文件。
 
-执行rpm -i new-package.rpm即可安装完成。 
+执行rpm -i new-package.rpm即可安装完成。
 
 ### 打印文件树（打印目录树的话只需加上选项 -type d）
 
-    find . -print 2>/dev/null|awk '!/\.$/ {for (i=1;i<NF;i++){d=length($i);if ( d < 5 && i != 1 )d=5;printf("%"d"s","|")}print "---"$NF}' FS='/' 
+    find . -print 2>/dev/null|awk '!/\.$/ {for (i=1;i<NF;i++){d=length($i);if ( d < 5 && i != 1 )d=5;printf("%"d"s","|")}print "---"$NF}' FS='/'
 
 ### 创建指定大小的文件
 
@@ -529,12 +539,12 @@ Both of these [types of links] provide a certain measure of dual reference -- if
 
 ### 设置随机启动：
 
-    chkconfig --levels 3 httpd on 
-    chkconfig --list httpd 
-    httpd 0:off 1:off 2:off 3:on 4:off 5:off 6:off 
-    chkconfig --levels 3 mysqld on 
-    chkconfig --list mysqld 
-    mysqld 0:off 1:off 2:off 3:on 4:off 5:off 6:off 
+    chkconfig --levels 3 httpd on
+    chkconfig --list httpd
+    httpd 0:off 1:off 2:off 3:on 4:off 5:off 6:off
+    chkconfig --levels 3 mysqld on
+    chkconfig --list mysqld
+    mysqld 0:off 1:off 2:off 3:on 4:off 5:off 6:off
 
 ### 文件权限
 
@@ -622,7 +632,7 @@ Both of these [types of links] provide a certain measure of dual reference -- if
 
 修改密码命令（mysqladmin -uroot -p123456 password newpasswd）
 
-change password in safe: 
+change password in safe:
 
     # /etc/init.d/mysqld stop
     # mysqld_safe --user=mysql --skip-grant-tables --skip-networking &
