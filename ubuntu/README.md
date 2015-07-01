@@ -199,6 +199,20 @@ Link: <http://askubuntu.com/questions/302135/google-earth-on-13-04-ubuntu>
 
 4.Then, when you switch to ibus, it will show the language panel, so you can set what you want.
 
+
+### Fcitx can't use in Java applications
+
+Like IBM Notes, eclipse...
+
+Create a file `~/.xprofile` with following content:
+
+```
+export LC_ALL=zh_CN.utf8
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=xim
+export GTK_IM_MODULE=xim
+```
+
 ### Ubuntu screen recorder
 
 ```
