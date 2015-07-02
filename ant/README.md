@@ -41,6 +41,20 @@ Ant 是一个用来构建 Java 程序的工具，和 make 与 C 语言的关系�
    <jar jarfile="${restapi_jar}" basedir="${dest}"/>
 </target>
 
+<target name="copy_libs">
+  <copy todir="${lib.dir}" overwrite="true">
+    <fileset dir="${common_lib}">
+      <include name="*.jar"/>
+    </fileset>
+  </copy>
+</target>
+
+<target name="archive" depends="compile, copy_libs">
+    <war destfile="restapi.war">
+        <fileset dir="${dst.dir}"/>
+    </war>
+</target>
+
 <target name="run" depends="build">
    <java classname="com.project.restapi.Run" classpath="${restapi_jar}"/>
 </target>
