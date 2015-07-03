@@ -207,7 +207,7 @@ Like IBM Notes, eclipse...
 Create a file `~/.xprofile` with following content:
 
 ```
-export LC_ALL=zh_CN.utf8
+# export LC_ALL=zh_CN.utf8
 export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=xim
 export GTK_IM_MODULE=xim
