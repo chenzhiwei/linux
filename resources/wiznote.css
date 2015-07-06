@@ -54,6 +54,8 @@ h6 tt, h6 code {
 
 h1 {
   font-size: 28px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
   color: black; }
 
 h2 {
