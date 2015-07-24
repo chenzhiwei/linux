@@ -1,8 +1,12 @@
-# Linux Related Stuff
+# Linux Related Notes
 
-I wrote these stuff for later use.
+I like to use Git and Markdown to write notes.
 
-These are configuration file and how-to document of many linux softwares.
+Git can give me all the history of the notes.
+
+I can use Markdown to easily edit and view the notes.
+
+## Notes Repositories
 
 * Origin repo: <https://github.com/chenzhiwei/linux>
 * Backup repo: <https://gitshell.com/chenzhiwei/linux>
