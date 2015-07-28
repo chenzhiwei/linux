@@ -26,6 +26,17 @@
 
 以上第一条命令的意思是这个二进制可执行程序没有输入参数，第二条命令意思是这个二进制可执行程序接收三个参数分别是`1 2 3`。
 
+## 删除断点
+
+```
+# gdb
+(gdb) info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000004566b3 in func1 at test.c:6
+2       breakpoint     keep y   0x00000000004d8e63 in func2 at test.c:15
+(gdb) del 2
+```
+
 ## 用GDB调试后台进程
 
 ```
@@ -103,7 +114,7 @@ Missing separate debuginfos, use: debuginfo-install binfile.x86_64
 #1  0x0000003dd8c34085 in abort () from /lib64/libc.so.6
 #2  0x0000003dd8c707b7 in __libc_message () from /lib64/libc.so.6
 #3  0x0000003dd8c760e6 in malloc_printerr () from /lib64/libc.so.6
-#4  0x0000000000475ad4 in setResourcePlan (path=0x4868410 "/", 
+#4  0x0000000000475ad4 in setResourcePlan (path=0x4868410 "/",
     xmlstr=0x4868870 "xxxx"..., cluster=1, detail=0x7fffa7bf3768) at xxx.consumer.c:4354
 #5  0x00000000004754a3 in setresplan (ch=0x3366e80, xdrs=0x3366fb8, hdr=0x7fffa7bf4870) at xxx.consumer.c:4173
 #6  0x00000000004170d7 in switch_ (chan=0x3366e80, xdrs=0x3366fb8, hdr=0x7fffa7bf4870) at xxx.c:1856
