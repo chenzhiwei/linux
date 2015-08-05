@@ -39,6 +39,8 @@ Num     Type           Disp Enb Address            What
 
 ## GDB 打印完整的字符串
 
+默认长度是`200`。
+
 ```
 > set print elements 0
 > p long_string
