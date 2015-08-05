@@ -37,6 +37,13 @@ Num     Type           Disp Enb Address            What
 (gdb) del 2
 ```
 
+## GDB 打印完整的字符串
+
+```
+> set print elements 0
+> p long_string
+```
+
 ## 用GDB调试后台进程
 
 ```
