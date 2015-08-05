@@ -133,3 +133,9 @@ Missing separate debuginfos, use: debuginfo-install binfile.x86_64
 (gdb) dir /path/to/source_dir
 (gdb) p xxx
 ```
+
+## GDB Issue
+
+### Attempt to dereference a generic pointer.
+
+有时用`p var`会报以上信息，这时需要加上类型，比如`p (char *) var`。
