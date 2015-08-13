@@ -239,12 +239,16 @@ $ sudo apt-get install simplescreenrecorder
 
 Easy to use: <http://www.webupd8.org/2013/06/simplescreenrecorder-powerful-screen.html>
 
-### Install fcitx input method
+### Install Rime for IBus
 
 ```
-$ sudo add-apt-repository ppa:fcitx-team/nightly
-$ sudo apt-get update
-$ sudo apt-get install fcitx-sogoupinyin fcitx-table-wubi
+$ sudo apt-get install ibus-rime librime-data-wubi librime-data-pinyin-simp librime-data-stroke-simp
+$ cp /usr/share/rime-data/wubi86.* ~/.conf/ibus/rime/
+$ cp /usr/share/rime-data/pinyin_simp.* ~/.config/ibus/rime/
+$ vim ~/.config/ibus/rime/default.yaml
+schema_list:
+  - schema: luna_pinyin
+  - schema: wubi86
 ```
 
 ### Install package using proxy
