@@ -122,6 +122,22 @@ $ sudo apt-get install openvpn network-manager-openvpn \
         network-manager-vpnc-gnome
 ```
 
+### Allow root login
+
+```
+$ sudo passwd -u root # or remove the `!` in /etc/shadow
+$ sudo passwd root
+$ sudo vim /etc/ssh/sshd_config
+PermitRootLogin yes
+```
+
+### sudo without password
+
+```
+$ sudo vim /etc/sudoers
+zhiwei  ALL=(ALL:ALL) NOPASSWD: ALL
+```
+
 ### Change locale
 
 ```
@@ -229,16 +245,6 @@ Easy to use: <http://www.webupd8.org/2013/06/simplescreenrecorder-powerful-scree
 $ sudo add-apt-repository ppa:fcitx-team/nightly
 $ sudo apt-get update
 $ sudo apt-get install fcitx-sogoupinyin fcitx-table-wubi
-```
-
-### Install Deepin Screenshot
-
-```
-$ sudo add-apt-repository ppa:chenzhiwei/ppa
-$ sudo apt-get update
-$ sudo apt-get install python-deepin-gsettings indicator-screenshot
-$ mkdir -p ~/.config/autostart
-$ cp /usr/share/indicator-screenshot/indicator-screenshot.desktop ~/.config/autostart
 ```
 
 ### Install package using proxy
