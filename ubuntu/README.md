@@ -242,14 +242,10 @@ Easy to use: <http://www.webupd8.org/2013/06/simplescreenrecorder-powerful-scree
 ### Install Rime for IBus
 
 ```
-$ sudo apt-get install ibus-rime librime-data-wubi librime-data-pinyin-simp librime-data-stroke-simp
-$ cp /usr/share/rime-data/wubi86.* ~/.conf/ibus/rime/
-$ cp /usr/share/rime-data/pinyin_simp.* ~/.config/ibus/rime/
-$ vim ~/.config/ibus/rime/default.yaml
-schema_list:
-  - schema: luna_pinyin
-  - schema: wubi86
+$ sudo apt-get install ibus-rime librime-data-wubi librime-data-pinyin-simp
 ```
+
+For details, check [rime](../rime/).
 
 ### Install package using proxy
 
