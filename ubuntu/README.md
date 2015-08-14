@@ -5,7 +5,11 @@
 ### Install essential packages
 
 ```
-$ sudo apt-get install vim git tree subversion gnupg sshpass nfs-common whois dns-utils account-plugin-irc compizconfig-settings-manager
+$ sudo apt-get install account-plugin-irc bash-completion build-essential \
+        chromium-browser command-not-found compizconfig-settings-manager curl \
+        dns-utils git gnupg dns-utils account-plugin-irc sshpass subversion tree vim whois \
+        fonts-wqy-zenhei fonts-wqy-microhei ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy \
+        ibus-rime librime-data-wubi librime-data-pinyin-simp
 ```
 
 ### Configure VIM
