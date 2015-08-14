@@ -1,0 +1,6 @@
+# Rime wubi86 custom settings
+# encoding: utf-8
+
+patch:
+  # Disable user dict and auto adjust
+  translator/enable_user_dict: false

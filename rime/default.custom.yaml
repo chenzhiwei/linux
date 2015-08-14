@@ -1,0 +1,12 @@
+# Rime default custom settings
+# encoding: utf-8
+
+patch:
+  schema_list:
+    - schema: wubi86
+    - schema: luna_pinyin
+
+  switcher/hotkeys:
+    - Control+grave
+
+  switcher/caption: "〔切换〕"
