@@ -1,0 +1,50 @@
+# GDB .gdbinit file
+
+# disable clumsy paging (use terminal scrollback buffer instead)
+set height 0
+
+# log gdb output (defaults to gdb.txt in current directory)
+# set logging on
+# set logging file ~/.gdb/gdb_logging
+
+# gdb history
+set history save
+set history filename ~/.gdb/gdb_history
+set history size 10000
+
+# C++ related beautifiers (optional)
+set print pretty on
+set print object on
+set print static-members on
+set print vtbl on
+set print demangle on
+set demangle-style gnu-v3
+set print sevenbit-strings off
+
+set follow-fork-mode child
+set detach-on-fork off
+
+# Custom commands
+def pw
+  if $argc == 0
+    help pw
+  else
+    set print elements 0
+    p $arg0
+    set print elements 200
+  end
+end
+
+document pw
+    Print wide string
+end
+
+# Enable Pretty Printer
+python
+  import os
+  import sys
+  home = os.path.expanduser("~")
+  sys.path.insert(0, home + '/.gdb/libstdcxx')
+  from v6.printers import register_libstdcxx_printers
+  register_libstdcxx_printers(None)
+end
