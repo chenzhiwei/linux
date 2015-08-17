@@ -41,10 +41,10 @@ end
 
 # Enable Pretty Printer
 python
-  import os
-  import sys
-  home = os.path.expanduser("~")
-  sys.path.insert(0, home + '/.gdb/libstdcxx')
-  from v6.printers import register_libstdcxx_printers
-  register_libstdcxx_printers(None)
+import os
+import sys
+home = os.path.expanduser("~")
+sys.path.insert(0, home + '/.gdb/libstdcxx')
+from v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers(None)
 end
