@@ -143,6 +143,13 @@ Missing separate debuginfos, use: debuginfo-install binfile.x86_64
 (gdb) p xxx
 ```
 
+## C++ 添加断点
+
+```
+(gdb) break namespace1::ClassName1::function1
+(gdb) break namespace2::ClassName1<namespace2::ClassName2, namespace3::ClassName3>::function2
+```
+
 ## GDB Issue
 
 ### Attempt to dereference a generic pointer.
