@@ -10,3 +10,21 @@ patch:
     - Control+grave
 
   switcher/caption: "〔切换〕"
+
+  punctuator/half_shape:
+    ',' : { commit: ， }
+    '.' : { commit: 。 }
+    '<' : { commit: 《 }
+    '>' : { commit: 》 }
+    '?' : { commit: ？ }
+    ';' : { commit: ； }
+    ':' : { commit: ： }
+    '"' : { pair: [ '「', '」' ] }
+    '\' : { commit: 、 }
+    '!' : { commit: ！ }
+    '(' : （
+    ')' : ）
+    '[' : 【
+    ']' : 】
+    '{' : 『
+    '}' : 』
