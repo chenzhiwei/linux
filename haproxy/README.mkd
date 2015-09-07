@@ -2,15 +2,19 @@ HAProxy配置相关
 ==============
 
 ## HAProxy是什么
+
 HAProxy(High Available Proxy)是基于四层和七层的高可用负载均衡代理服务器，配置简单、支持多达上万条并发请求。HAProxy的运行模型使得它集成到现在的架构上非常容易和无风险，并且它还免去了将web服务器公开到网络上的风险，很多web站点都用HAProxy来作为七层负载均衡解决方案。
 
 ## HAProxy工作原理
+
 HAProxy由前端（frontend）和后端（backend），前端和后端都可以有多个。也可以只有一个listen块来同时实现前端和后端。这里主要讲一下frontend和backend工作模式。
 
 前端（frontend）区域可以根据HTTP请求的header信息来定义一些规则，然后将符合某规则的请求转发到相应后端（backend）进行处理。
 
 ## HAProxy配置文件
+
 包含前端和后端的配置文件示例：
+
 ```
 global
     daemon
@@ -40,7 +44,7 @@ frontend http-front
     acl host_xyz     hdr_beg(host)  -i xzy.
     acl url_xxx      url_reg        -i ^/xxx
 
-    use_backend host-abc-com if host_abc_com 
+    use_backend host-abc-com if host_abc_com
     use_backend host-cn      if host_cn
     use_backend host-xyz-url-xxx if host_xyz url_xxx
     default_backend default-servers
@@ -79,7 +83,9 @@ backend host-xyz-url-xxx
     server abc-com1 192.168.1.100:80 check inter 2000 rise 2 fall 3 maxconn 32
     server abc-com2 192.168.1.101:80 check inter 2000 rise 2 fall 3 maxconn 32
 ```
+
 包含listen区域的配置文件示例：
+
 ```
 global
     daemon
@@ -105,7 +111,9 @@ listen http-in
 HAProxy做七层代理的话，一般需要和stunnel结合起来使用，stunnel把接收的HTTPS请求转发到HAProxy，然后再由HAProxy转发到后端服务器。
 
 ## stunnel相关配置介绍
+
 stunnel配置比较简单，只有一个stunnel.conf配置文件，内容如下：
+
 ```
 sslVersion=all
 fips=no
@@ -124,6 +132,7 @@ connect=*:80
 TIMEOUTclose=0
 xforwardedfor=yes
 ```
+
 就这样配置，stunnel就可以代理https请求的abc.com了。在stunnel4.44版本之前与HAProxy结合使用时都需要打一个HAProxy提供的[补丁][stunnel_patch]，但之后的版本就不需要打HAProxy的补丁了。
 
 [stunnel_patch]: http://haproxy.1wt.eu/download/patches/
@@ -176,5 +185,9 @@ server s2 jizhihuwai.com:443 crt /etc/haproxy/server.pem
 `server.crt`一般是CA机构给颁发的，而`server.key`是你自己生成的private key。
 
 ## 相关资料
-1\. HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>  
-2\. 第一次接触HAProxy与Stunnel时的参考资料： <http://www.cnblogs.com/wsky/archive/2011/04/06/2007095.html>
+
+1.HAProxy文档（英文，1.4版）： <http://haproxy.1wt.eu/download/1.4/doc/configuration.txt>
+
+2.第一次接触HAProxy与Stunnel时的参考资料： <http://www.cnblogs.com/wsky/archive/2011/04/06/2007095.html>
+
+3.生成自签名SSL证书： <https://github.com/chenzhiwei/linux/tree/master/ssl-cert>
