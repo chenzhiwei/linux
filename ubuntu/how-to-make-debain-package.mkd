@@ -11,3 +11,7 @@ $ debuild -d -k98564809
 ```
 
 `-k` 为指定 gpg secret-key 的意思，如果不指定可能会出现`secret key not available`错误。
+
+## 参考这里
+
+<https://github.com/chenzhiwei/linux/tree/master/debian>

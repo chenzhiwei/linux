@@ -11,18 +11,17 @@ export DH_VERBOSE=1
 
 override_dh_auto_configure:
 	./bootstrap
-	mkdir -p build
-	cd build && ../configure --prefix=/usr/apache/mesos
+	dh_auto_configure -- --prefix=/usr/apache/mesos
 
 override_dh_auto_build:
-	cd build && $(MAKE)
+	dh_auto_build -- -j4 V=0
 
 # Do not make check
 override_dh_auto_test:
 	echo Skip make check
 
 override_dh_auto_install:
-	cd build && $(MAKE) install DESTDIR=`pwd`/../debian/mesos
+	dh_auto_install
 
 %:
 	dh $@
