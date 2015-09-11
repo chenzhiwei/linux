@@ -1,0 +1,16 @@
+Source: mesos
+Section: misc
+Priority: extra
+Maintainer: Chen Zhiwei <zhiweik@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 0.25.0
+Homepage: http://mesos.apache.org
+
+Package: mesos
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, java-runtime-headless, libcurl3, libsvn1, libsasl2-modules
+Description: Cluster resource manager with efficient resource isolation
+ Apache Mesos is a cluster manager that offers efficient resource isolation
+ and sharing across distributed applications, or frameworks. It can run
+ Hadoop, MPI, Hypertable, Spark (a new framework for low-latency interactive
+ and iterative jobs), and other applications.

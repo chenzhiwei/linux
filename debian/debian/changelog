@@ -1,0 +1,5 @@
+mesos (0.24.0-1) unstable; urgency=low
+
+  * Initial build of Mesos debian package
+
+ -- Chen Zhiwei <zhiweik@gmail.com>  Fri, 11 Sep 2015 16:44:44 +0800
