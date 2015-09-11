@@ -11,6 +11,9 @@ patch:
 
   switcher/caption: "〔切换〕"
 
+  ascii_composer/switch_key:
+    Shift_L: commit_code
+
   punctuator/half_shape:
     ',' : { commit: ， }
     '.' : { commit: 。 }
