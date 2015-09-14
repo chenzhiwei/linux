@@ -6,10 +6,9 @@ Debian 包分两类，一类是源码包，另一类是二进制包。分别是�
 
 从源码打包时，目录名叫作`debian`，里面主要的文件有`control`，`copyright`，`changelog`，`rules`等。
 
-最终编译出来的二进制文件是通过`make install DESTDIR=/path/to/source_code_dir/debian`来移动到`debian`目录里的，然后再将`debian`目录打成`deb`包。
+最终编译出来的二进制文件是通过`make install DESTDIR=$(CURDIR)/debian/pkgname`来移动到`debian`目录里的，然后再将`debian`目录打成`deb`包，其中`$(CURDIR)`是一个特殊变量是`debian`目录的父目录，而不是运行这条命令(`make install`)的当前目录。
 
 相关内容参考该目录下的相关文件。
-
 ```
 $ git clone https://github.com/apache/mesos
 $ cd mesos
@@ -57,6 +56,10 @@ mesos
 $ dpkg -b . mesos_0.25.0-1_amd64.deb
 ```
 
+## {pre,post}{inst,rm}
+
+These postinst, preinst, postrm, and prerm files are called maintainer scripts. They are scripts which are put in the control area of the package and run by dpkg when your package is installed, upgraded, or removed.
+
 ## 问题
 
 ### dh_usrlocal: xxx is not a directory
@@ -82,3 +85,4 @@ override_dh_usrlocal：
 
 * <https://www.debian.org/doc/manuals/maint-guide/index.en.html>
 * <https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules>
+* <https://www.debian.org/doc/manuals/maint-guide/dother.en.html#maintscripts>
