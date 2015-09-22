@@ -5,6 +5,7 @@
 * Checkout code and edit project configure file
 
 ```
+# git clone ssh://username@gerrit.system.com:29418/group/project
 # git fetch origin refs/meta/config:refs/remotes/origin/meta/config
 # git checkout meta/config
 # vim project.config
