@@ -14,6 +14,8 @@ if [ -d $HOME/.bin ]; then
     export PATH=$PATH:$HOME/.bin
 fi
 
-# Alias tree command
+# Command alias
 alias tree='tree --charset=ascii'
 alias pstree='pstree -A'
+alias be='bundle exec'
+alias bi='bundle install'
