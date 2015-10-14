@@ -109,6 +109,10 @@ override_dh_usrlocal：
     echo Skip
 ```
 
+## 创建本地 deb 仓库
+
+这个我准备放在另一个文档里来写：[怎样创建 deb 仓库](how_to_build_deb_repo.md)
+
 ## 引用
 
 * <https://www.debian.org/doc/manuals/maint-guide/index.en.html>
