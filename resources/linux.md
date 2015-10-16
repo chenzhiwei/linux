@@ -1,5 +1,12 @@
 # Linux 常用命令
 
+## 配置 RHEL 路由
+
+```
+# vim /etc/sysconfig/network-scripts/route-eth0
+9.0.0.0/9 via 9.111.250.1
+```
+
 ### 删除tar包解压后的文件
 
 有时你解压一下tar包时，这个tar包并没有一个主目录，结果把自己当前的目录搞混乱了，你都不知道哪个文件是从这个tar包里解压出来的了。
