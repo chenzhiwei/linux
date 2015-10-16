@@ -54,6 +54,14 @@ StrictHostKeyChecking no
 ssh -o StrictHostKeyChecking=no root@127.0.0.1
 ```
 
+还有就是当机器重建之后登录时会提示`WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`，我非常不喜欢这个提示。所以直接修改配置文件：
+
+```
+UserKnownHostsFile /dev/null
+```
+
+世界清静了！！！
+
 ## SSH 做安全隧道
 
 ### SSH做socket代理
