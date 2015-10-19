@@ -1,5 +1,11 @@
 # Linux 常用命令
 
+## 修改文件名大小写
+
+```
+$ mv $file $(echo $file | tr 'A-Z' 'a-z')
+```
+
 ## 配置 RHEL 路由
 
 ```
