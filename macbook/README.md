@@ -61,3 +61,22 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 . $HOME/works/linux/resources/.bash_improve
 ```
+
+## Setup Ubuntu env
+
+```
+$ brew install Caskroom/cask/vagrant
+$ brew install Caskroom/cask/virtualbox
+$ mkdir vagrant
+$ vagrant init ubuntu/trusty64
+$ ls .vagrant/machines/default/virtualbox/private_key
+$ vim Vagrantfile
+config.vm.network "private_network", ip: "192.168.33.10"
+config.vm.provider "virtualbox" do |vb|
+  vb.gui = false
+  vb.memory = "4096"
+  vb.cpus = "4"
+end
+$ vagrant up
+$ vagrant ssh
+```
