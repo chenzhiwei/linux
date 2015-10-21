@@ -67,8 +67,8 @@ UserKnownHostsFile /dev/null
 ### SSH做socket代理
 
 ```
-$ ssh -D 7070 -fnN root@x.x.x.x
-$ ssh -D 172.0.0.1:7070 -fnN root@x.x.x.x
+$ ssh -D 7070 -fnN -o ServerAliveInterval=60 root@x.x.x.x
+$ ssh -D 172.0.0.1:7070 -fnN -o ServerAliveInterval=60 root@x.x.x.x
 ```
 
 执行如上命令之后你就可以用主机`127.0.0.1`和端口`7070`做socket代理了。
