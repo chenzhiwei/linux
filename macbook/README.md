@@ -64,6 +64,8 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 ## Setup Ubuntu env
 
+Find a vagrant box from <https://vagrantcloud.com>, suppose the box is `ubuntu/trusty64`.
+
 ```
 $ brew install Caskroom/cask/vagrant
 $ brew install Caskroom/cask/virtualbox
