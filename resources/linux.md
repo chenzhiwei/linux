@@ -1,5 +1,13 @@
 # Linux 常用命令
 
+## 运行 screen 命令出错
+
+```
+Cannot open your terminal '/dev/pts/0' - please check.
+```
+
+通常是由于你`su - user`导致的，可以用标准的用户`user`登录进去运行，或者`script /dev/null`。
+
 ## 将字符串分割成单个字符
 
 ```
