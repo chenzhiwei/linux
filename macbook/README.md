@@ -29,7 +29,7 @@ $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/maste
 ## Install packages
 
 ```
-$ brew install bash-completion coreutils git git-review gnupg tree wget
+$ brew install bash-completion coreutils git git-review gnupg gnu-sed tree wget
 $ brew tap brona/iproute2mac
 $ brew install iproute2mac
 $ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
@@ -56,8 +56,8 @@ alias la='ls -A'
 alias l='ls -CF'
 
 ## PATH
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 
 . $HOME/works/linux/resources/.bash_improve
 ```
