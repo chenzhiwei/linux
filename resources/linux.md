@@ -1,5 +1,21 @@
 # Linux 常用命令
 
+## ls 时文件名后跟了个特殊符号
+
+```
+$ ls -F /usr/bin/diff
+/usr/bin/diff*
+$ ls -F /var/run/docker.sock
+/var/run/docker.sock=
+```
+
+当`ls`命令跟参数`-F`时会在文件名后面加上个特殊符号
+
+* directories /
+* sockets =
+* symbolic links @
+* executables *
+
 ## 运行 screen 命令出错
 
 ```
