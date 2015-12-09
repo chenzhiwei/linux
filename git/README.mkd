@@ -182,7 +182,7 @@ $ git commit --amend
 $ git clone git@github.com:chenzhiwei/test.git
 $ cd test
 $ git reset HEAD^
-$ git push -f master 
+$ git push -f master
 ```
 
 ### git status
@@ -397,6 +397,7 @@ $ git rm -r submodule
 $ git tag -a tagname -m"tag message"
 $ git tag tagname -f -m"new tag message"
 $ git push origin tagname
+$ git push --tags origin tagname
 $ git push orgin :tagname
 $ git push --delete orgin tagname
 $ git push orgin :refs/tags/tagname
@@ -411,6 +412,19 @@ $ git blame filename
 ```
 
 会列出filename文件中所有行都是在什么时候被添加的、被谁添加的以及被谁在哪个commit里添加的。
+
+```
+```
+
+### git ls-remote
+
+查看远端仓库里的信息，比如`tag`之类的东东：
+
+```
+$ git ls-remote --tags orign
+```
+
+Why duplicate tag in remotes: <http://stackoverflow.com/q/5346060/1536735>
 
 ## 其他
 
