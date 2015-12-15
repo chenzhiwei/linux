@@ -130,6 +130,44 @@
     ^blah^foo：将上一条命令中的 blah 替换为 foo
     ^blah^foo^：将上一条命令中所有的 blah 都替换为 foo
 
+## 创建文件（Here Documents）
+
+```
+key=value
+
+# codeblock 1
+cat <<EOF > /tmp/filename
+This is the value of key: $key
+EOF
+
+# codeblock 2
+cat <<'EOF' > /tmp/filename
+Quotes prevent parameter expansion: $key
+EOF
+
+# codeblock 3
+cat <<-EOF > /tmp/filename
+Hyphen removes leading tabs
+<tab>$key
+EOF
+
+# codeblock 4
+tee /tmp/filename <<EOF
+This is the value of key: $key
+EOF
+
+# codeblock 5
+cat <<EOF
+This is the value of key: $key
+EOF
+```
+
+其实`EOF`也可以改成任意字符串。
+
+1.<http://tldp.org/LDP/abs/html/here-docs.html>
+
+2.<http://stackoverflow.com/questions/2500436/how-does-cat-eof-work-in-bash>
+
 ## References
 
 学习Shell有一本必读的书《ABS Guide》
