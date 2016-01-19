@@ -82,3 +82,7 @@ end
 $ vagrant up
 $ vagrant ssh
 ```
+
+## Finally
+
+Fuck all Apple products, including MacBook, iPhone, iPad. Because the filesystem is not case sensitive.
