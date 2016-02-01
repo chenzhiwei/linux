@@ -9,3 +9,6 @@ qihoo.com
 csdn.net
 !---------------
 !lofter.com
+lofter.com###sidebara4darea
+lofter.com##.m-mlist.f-trans2
+lofter.com##.m-mlist.js-promote-itm
