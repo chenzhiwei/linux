@@ -210,6 +210,16 @@ $ git checkout -b new_branch
 $ git checkout -- file_name
 ```
 
+### git clean
+
+清理当前工作目录。
+
+```
+$ git clean -nd
+$ git clean -fd
+$ git clean -fX
+```
+
 ### git branch
 
 * 列出、创建和删除分支。
@@ -354,7 +364,13 @@ $ git reset --soft HEAD^
 
 ### git stash
 
-当你修改了本地仓库的文件，但又想放弃修改时，可以用`git stash`来还原到仓库原来的状态。
+暂时保存工作目录里的东东，随后可以再还原回来。
+
+```
+# git stash -a
+# git stash list
+# git stash pop
+```
 
 ### git submodule
 
