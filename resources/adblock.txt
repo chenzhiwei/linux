@@ -12,3 +12,5 @@ csdn.net
 lofter.com###sidebara4darea
 lofter.com##.m-mlist.f-trans2
 lofter.com##.m-mlist.js-promote-itm
+tumblr.com##.video-ad-container
+tumblr.com##.is_recommended
