@@ -1,5 +1,19 @@
 # Linux 常用命令
 
+## SSHD 允许以 root 用户登录
+
+```
+$ cat /etc/ssh/sshd_config
+PermitRootLogin yes
+```
+
+## sudo username 无需密码
+
+```
+$ cat /etc/sudoers
+username ALL=(ALL) NOPASSWD:ALL
+```
+
 ## ls 时文件名后跟了个特殊符号
 
 ```
