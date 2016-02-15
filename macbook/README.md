@@ -83,6 +83,17 @@ $ vagrant up
 $ vagrant ssh
 ```
 
+## Clear All DNS Servers
+
+If you update the `/etc/resolv.conf` file or use the GUI to update your DNS servers, it will persist.
+
+The following command can be helpful if you're wanting to fall back to DHCP provided DNS from a router, modem, or similar situation:
+
+```
+# networksetup -setdnsservers Wi-Fi empty
+# networksetup -setsearchdomains Wi-Fi empty
+```
+
 ## Finally
 
 Fuck all Apple products, including MacBook, iPhone, iPad. Because the filesystem is not case sensitive.
