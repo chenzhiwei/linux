@@ -111,3 +111,9 @@ $ sudo chown root /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 $ sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist # use unload to stop
 ```
 -->
+
+## Others
+
+<https://www.stgraber.org/2012/02/24/dns-in-ubuntu-12-04/>
+
+<https://cweiske.de/tagebuch/networkmanager-dnsmasq.htm>
