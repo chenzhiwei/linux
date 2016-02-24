@@ -7,6 +7,7 @@
 Github API:
 
 ```
+https://github.com/username.keys
 https://api.github.com/users/username/keys
 ```
 
