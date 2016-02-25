@@ -118,3 +118,4 @@ override_dh_usrlocal：
 * <https://www.debian.org/doc/manuals/maint-guide/index.en.html>
 * <https://www.debian.org/doc/manuals/maint-guide/dreq.en.html#rules>
 * <https://wiki.debian.org/MaintainerScripts>
+* <https://www.debian.org/doc/manuals/developers-reference/best-pkging-practices.html>
