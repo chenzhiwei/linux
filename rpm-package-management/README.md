@@ -13,7 +13,11 @@ RPM包相关工具有rpm,rpmbuild,rpmsign,rpm2cpio等。
 # rpm -qa
 # rpm -qa php
 # rpm -qa php*
-# rpm --showrc
+# rpm --showrc # 查看所有RPM预设值
+# rpm -E %configure # 查看RPM flag的值
+# rpm -E %_lib
+# rpm -E %_libdir
+# rpm -E %_prefix
 ```
 
 ### rpmbuld命令
@@ -26,24 +30,6 @@ RPM包相关工具有rpm,rpmbuild,rpmsign,rpm2cpio等。
 ```
 
 第一条命令只生成RPM包，第二条命令还会生成SRPM包，第三条命令将SRPM包生成RPM包，第四条是生成未打包的二进制文件。
-
-### rpmsign命令
-
-```
-# rpmsign -E %configure
-# rpmsign -E %_lib
-# rpmsign -E %_libdir
-# rpmsign -E %_prefix
-```
-
-也可以用`rpm`命令：
-
-```
-# rpm -E %configure
-# rpm -E %_lib
-# rpm -E %_libdir
-# rpm -E %_prefix
-```
 
 先记住一个查看SPEC文件宏定义值的命令，然后再去记和签名相关的命令。另外，这些宏都定义在/usr/lib/rpm/macros文件中。
 
@@ -123,7 +109,7 @@ SPEC文件有以下几个段落：头部（Header），准备（Prep），构建
 
 * %patch 示例`%patch -p 1 -b .bak`，不解释，自己看`patch`命令用法去。
 
-* %build 构建段落的开始。一般常用`%configure`和`%{__make}`，可以用`rpmsign`来查看二者的值，可以用Shell命令来完成。
+* %build 构建段落的开始。一般常用`%configure`和`%{__make}`，可以用`rpm -E`来查看二者的值，可以用Shell命令来完成。
 
 * %install 安装段落的开始。一般是安装二进制程序（`%{__make} install DESTDIR=%{buildroot}`）及其他相关工作（如先清空目的目录防止有脏文件）。
 
@@ -172,15 +158,22 @@ SPEC文件有以下几个段落：头部（Header），准备（Prep），构建
 
 以上几行命令的意思是：
 
-1.以gpg方式来生成RPM包签名  
-2.指定用zhiweik@gmail.com这个密钥来签名打包  
-3.告诉rpmsign怎样定位你的gpg密钥  
-4.为keepalived包添加签名  
-5.导出你的gpg公钥  
-6.将你的公钥给安装keepalived的用户并让其导入  
-7.让用户来验证软件包签名是否正常  
+1.以gpg方式来生成RPM包签名
+
+2.指定用zhiweik@gmail.com这个密钥来签名打包
+
+3.告诉rpmsign怎样定位你的gpg密钥
+
+4.为keepalived包添加签名
+
+5.导出你的gpg公钥
+
+6.将你的公钥给安装keepalived的用户并让其导入
+
+7.让用户来验证软件包签名是否正常
 
 ## 吐槽
+
 rpmbuild工具会自动帮你完成很多工作，而很多时候这些工作会影响你的打包，因此你可以关闭他们。
 
 ```
@@ -197,3 +190,7 @@ AutoReqProv: 0
 看了以上这些之后，我相信你肯定已经学会了RPM打包。当然了，在打包过程中你会遇到各种各样让人蛋疼的事情，不过你都可以解决这些问题的。
 
 打包时可以看一下每一步的输出，有助于你深入理解RPM打包原理及解决你在打包时遇到的问题。
+
+## 引用
+
+* <http://www.rpm.org/max-rpm/>
