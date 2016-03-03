@@ -5,7 +5,7 @@
 ### Install essential packages
 
 ```
-$ sudo apt-get install account-plugin-irc bash-completion build-essential \
+$ sudo apt-get install account-plugin-irc bash-completion curl build-essential \
         chromium-browser command-not-found compizconfig-settings-manager curl \
         dns-utils git gnupg dns-utils account-plugin-irc sshpass subversion tree vim whois \
         fonts-wqy-zenhei fonts-wqy-microhei ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy \
@@ -258,6 +258,21 @@ $ sudo apt-get -o "Acquire::http::Proxy=http://10.10.10.104:8088" install tree
 ```
 
 Reference: <https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy>
+
+
+## Issues
+
+* Unable to find expected entry 'main/binary-i386/Packages'
+
+    1. solution one
+
+        # dpkg --print-architecture
+        # dpkg --print-foreign-architectures
+        # dpkg --remove-architecture i386
+
+    2. solution two
+
+        deb [ arch=amd64 ] http://dl.google.com/linux/chrome/deb/ stable main
 
 ## Create VM for Windows
 
