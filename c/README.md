@@ -31,3 +31,50 @@ C 语言
 ```
 
 由此可见姓名中的 9999 溢出到了借款栏里并且把 500 中的 5 给覆盖掉了，结果成了李四五借款 999900 元。
+
+## 变态 define
+
+```
+#define CALLBACK_DATA_(FOR, LEN, ER)                                 \
+do {                                                                 \
+  assert(HTTP_PARSER_ERRNO(parser) == HPE_OK);                       \
+                                                                     \
+  if (FOR##_mark) {                                                  \
+    if (LIKELY(settings->on_##FOR)) {                                \
+      parser->state = CURRENT_STATE();                               \
+      if (UNLIKELY(0 !=                                              \
+                   settings->on_##FOR(parser, FOR##_mark, (LEN)))) { \
+        SET_ERRNO(HPE_CB_##FOR);                                     \
+      }                                                              \
+      UPDATE_STATE(parser->state);                                   \
+                                                                     \
+      /* We either errored above or got paused; get out */           \
+      if (UNLIKELY(HTTP_PARSER_ERRNO(parser) != HPE_OK)) {           \
+        return (ER);                                                 \
+      }                                                              \
+    }                                                                \
+    FOR##_mark = NULL;                                               \
+  }                                                                  \
+} while (0)
+
+/* Run the data callback FOR and consume the current byte */
+#define CALLBACK_DATA(FOR)                                           \
+    CALLBACK_DATA_(FOR, p - FOR##_mark, p - data + 1)
+
+int function_name()
+{
+    case s_res_status:
+    if (ch == CR) {
+      UPDATE_STATE(s_res_line_almost_done);
+      CALLBACK_DATA(status);
+      break;
+    }
+}
+```
+
+以上代码出自
+
+* <https://github.com/nodejs/http-parser/blob/fd65b0fbbdb405425a14d0e49f5366667550b1c2/http_parser.c#L104-L129>
+* <https://github.com/nodejs/http-parser/blob/fd65b0fbbdb405425a14d0e49f5366667550b1c2/http_parser.c#L934-L945>
+
+在宏定义里面`##`貌似会被忽略，比如此处的`status`在宏定义里面`FOR##_mark`会被解析成`status_mark`，第一次遇到这种用法。
