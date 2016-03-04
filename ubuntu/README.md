@@ -259,6 +259,14 @@ $ sudo apt-get -o "Acquire::http::Proxy=http://10.10.10.104:8088" install tree
 
 Reference: <https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy>
 
+### Update system proxy via command line
+
+```
+$ gsettings set org.gnome.system.proxy.socks host '127.0.0.1'
+$ gsettings set org.gnome.system.proxy.socks port 1080
+$ gsettings set org.gnome.system.proxy mode 'manual'
+$ gsettings set org.gnome.system.proxy mode 'none'
+```
 
 ## Issues
 
