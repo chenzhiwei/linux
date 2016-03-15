@@ -1,5 +1,14 @@
 # Linux 常用命令
 
+## Apache Server 大文件 403 forbidden
+
+一般都是由于开启 SELinux 导致的，并且我只在 RHEL 上遇到过。关闭 SELinux 并重启 httpd 即可。
+
+```
+# setenforce 0
+# service httpd restart
+```
+
 ## SSHD 允许以 root 用户登录
 
 ```
