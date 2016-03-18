@@ -29,7 +29,7 @@ $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/maste
 ## Install packages
 
 ```
-$ brew install bash-completion coreutils git git-review gnupg gnu-sed tree wget
+$ brew install bash-completion coreutils git git-review gnupg gnu-sed nmap tree wget
 $ brew tap brona/iproute2mac
 $ brew install iproute2mac
 $ brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
