@@ -442,6 +442,18 @@ $ git ls-remote --tags orign
 
 Why duplicate tag in remotes: <http://stackoverflow.com/q/5346060/1536735>
 
+## 从历史记录时删除大文件
+
+```
+$ git filter-branch --force --index-filter \
+    'git rm --cached --ignore-unmatch PATH-TO-YOUR-BIG-FILES' \
+    --prune-empty --tag-name-filter cat -- --all
+$ git push origin --force --all
+$ git push origin --force --tags
+```
+
+这样会导致所有和`PATH-TO-YOUR-BIG-FILES`相关的 commit 都会被修改，感觉压根就不应该提交大文件的。
+
 ## 其他
 
 ### 给GIT SSH添加参数
