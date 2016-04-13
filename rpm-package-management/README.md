@@ -172,6 +172,12 @@ SPEC文件有以下几个段落：头部（Header），准备（Prep），构建
 
 7.让用户来验证软件包签名是否正常
 
+## 问题
+
+* Found ‘${BUILDROOT}’ in installed files; aborting
+
+    在`%install`部分最上面添加`rm -rf %{buildroot}`来解决。
+
 ## 吐槽
 
 rpmbuild工具会自动帮你完成很多工作，而很多时候这些工作会影响你的打包，因此你可以关闭他们。
