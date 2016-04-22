@@ -1,0 +1,22 @@
+/*
+ * GTK 3.0 CSS file for gnome-terminal
+ * Path: ~/.config/gtk-3.0/gtk.css
+ * */
+
+TerminalWindow .button {
+  /* Make the notebook tab have a smaller height */
+  padding: 2px 0;
+}
+
+TerminalWindow .notebook {
+  /* Make the notebook tab a little darker */
+  padding: 0;
+  background-color: #CCC;
+}
+
+TerminalWindow .notebook tab:active {
+  /* Highlight the active tab */
+  background-color: #EEE;
+}
+
+/* reference: /usr/share/themes/Ambiance/gtk-3.0/apps/gnome-terminal.css */
