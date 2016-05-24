@@ -1,6 +1,0 @@
-[submodule "docker"]
-	path = docker
-	url = https://github.com/chenzhiwei/hello-docker.git
-[submodule "vim"]
-	path = vim
-	url = https://github.com/chenzhiwei/dot_vim.git
