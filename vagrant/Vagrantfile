@@ -11,6 +11,12 @@ Vagrant.configure(2) do |config|
   # https://docs.vagrantup.com.
 
   config.vm.define "dcos1" do |node|
+
+    # The following is not supported in libvirt
+    # node.ssh.username = "root"
+    # node.ssh.password = "password"
+    # node.ssh.insert_key = true
+
     node.vm.hostname = "dcos1"
 
     # Every Vagrant development environment requires a box. You can search for
@@ -33,7 +39,7 @@ Vagrant.configure(2) do |config|
 
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    node.vm.network "private_network", ip: "10.0.0.11"
+    node.vm.network "private_network", ip: "192.168.122.11"
 
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
@@ -82,7 +88,7 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = "dcos2"
     node.vm.box = "centos/7"
     node.vm.box_check_update = false
-    node.vm.network "private_network", ip: "10.0.0.12"
+    node.vm.network "private_network", ip: "192.168.122.12"
 
     node.vm.provider "libvirt" do |libvirt|
       # libvirt.driver = "qemu"
@@ -95,7 +101,7 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = "dcos3"
     node.vm.box = "centos/7"
     node.vm.box_check_update = false
-    node.vm.network "private_network", ip: "10.0.0.13"
+    node.vm.network "private_network", ip: "192.168.122.13"
 
     node.vm.provider "libvirt" do |libvirt|
       # libvirt.driver = "qemu"
