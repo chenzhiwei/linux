@@ -9,4 +9,4 @@ I can use Markdown to easily edit and view the notes.
 ## Notes Repositories
 
 * Origin repo: <https://github.com/chenzhiwei/linux>
-* Backup repo: <https://gitshell.com/chenzhiwei/linux>
+* Backup repo: <https://code.aliyun.com/chenzhiwei/linux>
