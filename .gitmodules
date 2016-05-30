@@ -1,3 +1,4 @@
 [submodule "home"]
-	path = home
-	url = https://github.com/chenzhiwei/home
+    path = home
+    branch = master
+    url = https://github.com/chenzhiwei/home
