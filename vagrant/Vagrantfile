@@ -81,7 +81,7 @@ Vagrant.configure(2) do |config|
     node.vm.provision "shell", inline: <<-SHELL
       passwd -u root
       mkdir -p /root/.ssh
-      curl -sS https://github.com/chenzhiwei.keys > /root/.ssh/authorized_keys
+      curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
     SHELL
   end
 
@@ -100,7 +100,7 @@ Vagrant.configure(2) do |config|
     node.vm.provision "shell", inline: <<-SHELL
       passwd -u root
       mkdir -p /root/.ssh
-      curl -sS https://github.com/chenzhiwei.keys > /root/.ssh/authorized_keys
+      curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
     SHELL
   end
 
@@ -119,7 +119,7 @@ Vagrant.configure(2) do |config|
     node.vm.provision "shell", inline: <<-SHELL
       passwd -u root
       mkdir -p /root/.ssh
-      curl -sS https://github.com/chenzhiwei.keys > /root/.ssh/authorized_keys
+      curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
     SHELL
   end
 
