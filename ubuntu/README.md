@@ -9,11 +9,17 @@ Don't install recommended and suggested packages.
 # apt --no-install-recommends install nmap
 ```
 
-Don't prompt while installing package.
+Don't prompt while installing package, the following is usually enough, run `dpkg --force-help` to see more if not enough.
 
 ```
-# apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install keepalived
+# DEBIAN_FRONTEND=noninteractive apt -y --force-yes --allow-unauthenticated -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install keepalived
 # dpkg --force-help
+```
+
+Ask dpkg to install configuration file if it is currently missing.
+
+```
+# apt -o Dpkg::Options::="--force-confmiss" install keepalived
 ```
 
 ## Things to do after install Ubuntu
