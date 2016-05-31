@@ -1,5 +1,21 @@
 # Ubuntu Tips
 
+## apt
+
+Don't install recommended and suggested packages.
+
+```
+# apt -o APT::Install-Recommends="false" -o APT::Install-Suggests="false" install nmap
+# apt --no-install-recommends install nmap
+```
+
+Don't prompt while installing package.
+
+```
+# apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install keepalived
+# dpkg --force-help
+```
+
 ## Things to do after install Ubuntu
 
 ### Install essential packages
@@ -7,7 +23,7 @@
 ```
 $ sudo apt install account-plugin-irc bash-completion build-essential \
         chromium-browser command-not-found compizconfig-settings-manager curl \
-        dns-utils git gnupg sshpass subversion tree vim whois
+        dns-utils git gnupg jq sshpass subversion tree vim whois
 ```
 
 
