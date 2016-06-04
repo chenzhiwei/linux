@@ -18,6 +18,7 @@ etcd is a distributed, consistent key value store for shared configuration and s
 ### Docker
 
 ```
+# export HostIP=192.168.122.11
 # docker run -d -v /usr/share/ca-certificates/:/etc/ssl/certs -p 4001:4001 -p 2380:2380 -p 2379:2379 \
     --name etcd quay.io/coreos/etcd \
     -name etcd0 \
