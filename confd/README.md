@@ -46,7 +46,7 @@ server {
     listen {{ getv "/nginx/port" }};
     location / {
         index index.html;
-        root  /usr/share/nginx/html/index.html;
+        root  /usr/share/nginx/html/;
     }
 }
 ```
