@@ -442,6 +442,73 @@ $ git ls-remote --tags orign
 
 Why duplicate tag in remotes: <http://stackoverflow.com/q/5346060/1536735>
 
+## Squash 多个 commits 为一个
+
+`git log` 输出如下：
+
+```
+commit f1f0f4629ee714533799cbad131d89e70ed53100
+Author: Chen Zhiwei <zhiweik@gmail.com>
+Date:   Wed Jun 22 12:08:21 2016 +0800
+
+    New Feature: step 3
+
+commit 2da26d85988aae5bef68498b66a2298e655b3a67
+Author: Chen Zhiwei <zhiweik@gmail.com>
+Date:   Wed Jun 22 12:08:10 2016 +0800
+
+    New Feature: step 2
+
+commit 5acf4b84a435535d679b1777bfc9fc4a7750ee11
+Author: Chen Zhiwei <zhiweik@gmail.com>
+Date:   Wed Jun 22 12:08:03 2016 +0800
+
+    New Feature: step 1
+
+commit 5b33fc2ddaa152e9ce10a4371e6cad6148eb974c
+Author: Chen Zhiwei <zhiweik@gmail.com>
+Date:   Wed Jun 22 12:07:45 2016 +0800
+
+    first commit
+```
+
+你添加了一个`New Feature`，用了 3 个 Commits，现在你需要把这三个 Commits 合并成一个。
+
+```
+$ git rebase -i 5b33fc2ddaa152e9ce10a4371e6cad6148eb974c
+pick 5acf4b8 New Feature: step 1
+pick 2da26d8 New Feature: step 2
+pick f1f0f46 New Feature: step 3
+```
+
+然后修改一下，仅保留一个`pick`，其他都改成`squash`，意思是将所有的 Commit 都压缩成保留的这一个`pick` Commit 上，然后保存。
+
+```
+pick 5acf4b8 New Feature: step 1
+squash 2da26d8 New Feature: step 2
+squash f1f0f46 New Feature: step 3
+```
+
+再次查看`git log`就会变成如下的样子：
+
+```
+commit b4d5a507a722d83c611108204a4100a5152f5fe5
+Author: Chen Zhiwei <zhiweik@gmail.com>
+Date:   Wed Jun 22 12:08:03 2016 +0800
+
+    New Feature: step 1
+
+    New Feature: step 2
+
+    New Feature: step 3
+
+commit 5b33fc2ddaa152e9ce10a4371e6cad6148eb974c
+Author: Chen Zhiwei <zhiweik@gmail.com>
+Date:   Wed Jun 22 12:07:45 2016 +0800
+
+    first commit
+```
+
 ## 从历史记录时删除大文件
 
 ```
