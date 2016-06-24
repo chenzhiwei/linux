@@ -521,6 +521,29 @@ $ git push origin --force --tags
 
 这样会导致所有和`PATH-TO-YOUR-BIG-FILES`相关的 commit 都会被修改，感觉压根就不应该提交大文件的。
 
+## 给 Git 挂代理
+
+对于 Git over http/https，可以这样做：
+
+```
+$ export all_proxy=http://1.2.3.4:3128
+$ export all_proxy=socks5://1.2.3.4:1080
+$ git clone http://github.com/user/repo.git
+$ git clone https://github.com/user/repo.git
+```
+
+对于 Git over SSH，可以这样做：
+
+```
+vim ~/.ssh/config
+Host github.com
+    User git
+    ProxyCommand nc -X 5 -x localhost:1080 %h %p
+```
+
+原理是给 SSH 配置代理，其中`-X 5`的意思是使用 socks5 协议，`-x localhost:1080`就是 socks5 的代理地址了，这两个都是 nc 的参数。
+
+
 ## 其他
 
 ### 给GIT SSH添加参数
