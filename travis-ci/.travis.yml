@@ -1,0 +1,14 @@
+---
+
+language: python
+os: linux
+dist: trusty
+
+python: "2.7"
+
+install:
+  - pip install yamllint ansible
+
+script:
+  - yamllint $(git ls-files '*.yaml' '*.yml')
+  - ansible-playbook -e cluster/config.yaml site.yaml --syntax-check
