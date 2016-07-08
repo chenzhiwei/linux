@@ -68,3 +68,6 @@ change password in safe:
             KEY `user_login_key` (`qq_openid`)
             ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
     以上这条语句中KEY意思是对qq_openid做索引，AUTO_INCREMENT=5代表id从5开始自增。
+
+    MySQL 批量替换字符串：将字段content里的所有source字符串替换成dest
+    UPDATE table_name SET content = REPLACE(content, 'source', 'dest');
