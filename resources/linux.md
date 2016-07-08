@@ -1,5 +1,16 @@
 # Linux 常用命令
 
+## top 命令
+
+无交互模式输出
+
+```
+$ top -b -n1 -p 18945
+$ top -b n60 -p 18945
+```
+
+第一条命令是输出一次结果，第二条是输出 60 次的结果。
+
 ## Apache Server 大文件 403 forbidden
 
 一般都是由于开启 SELinux 导致的，并且我只在 RHEL 上遇到过。关闭 SELinux 并重启 httpd 即可。
