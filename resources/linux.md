@@ -231,6 +231,8 @@ the tar package will be generated in dist dir
 
 其中5为文件描述符，`n<>filename.txt`表示以文件描述符n来打开filename.txt这个文件进行读写操作，建立连接之后可以在`/proc/self/fd`目录下面看到。
 
+也可以使用`</dev/tcp/localhost/80`来判断是否开启了 80 端口。
+
 ### SHELL随机生成MAC地址
 
     MACADDR="fa:16:$(dd if=/dev/urandom count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\).*$/\1:\2:\3:\4/')"
