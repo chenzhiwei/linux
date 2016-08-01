@@ -1,5 +1,15 @@
 # Linux 常用命令
 
+## 计算大小
+
+```
+a=1.5
+b=1.3
+if awk 'BEGIN {if('$a' > '$b'){exit 0;}else{exit 1;}}'; then
+    echo $a is greater than $b
+fi
+```
+
 ## top 命令
 
 无交互模式输出
