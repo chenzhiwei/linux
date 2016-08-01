@@ -1,5 +1,11 @@
 # Linux 常用命令
 
+## 查看 python 模块版本
+
+```
+python -c 'import docker; print docker.__version__'
+```
+
 ## 计算大小
 
 ```
