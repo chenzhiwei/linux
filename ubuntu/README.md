@@ -22,6 +22,8 @@ Ask dpkg to install configuration file if it is currently missing.
 # apt -o Dpkg::Options::="--force-confmiss" install keepalived
 ```
 
+**NOTE:** APT tools do not support `all_proxy` environment variable, you need to specify `http_proxy`, `https_proxy` and `ftp_proxy` to use them behind proxy.
+
 ## Things to do after install Ubuntu
 
 ### Install essential packages
