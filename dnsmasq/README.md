@@ -89,7 +89,11 @@ address=/.qihoo.com/127.0.0.1
 
 ## 我只想改系统的 nameservers
 
-**注意：**请不要在图形界面修改任何 DNS 配置，因为通过图形界面修改的 DNS 配置优先级最低。
+* 方法一：
+
+点击网络图标，然后`Edit Connections...`，选择网卡点击`Edit`，然后切换到`IPv4 Settings`，将 Method 改为`Automatic(DHCP) addresses only`，然后填写 DNS Servers 为`223.5.5.5,223.6.6.6`，保存退出即可。
+
+* 方法二：
 
 ```
 # sed -i 's/^dns=dnsmasq/# dns=dnsmasq/g' /etc/NetworkManager/NetworkManager.conf
