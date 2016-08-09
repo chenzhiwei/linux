@@ -629,6 +629,7 @@ Both of these [types of links] provide a certain measure of dual reference -- if
 ### 无交互式修改用户密码
 
     echo "123456 " | passwd --stdin root
+    echo root:123456 | chpasswd
 
 还可以直接修改shadow文件，不建议哦。
 
