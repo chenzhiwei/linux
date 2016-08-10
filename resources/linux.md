@@ -411,8 +411,8 @@ ls -l /proc/process_pid/cwd 命令就可以看到了
 
 ### 给机器添加SWAP
 
-    # dd if=/dev/zero of=/var/swap bs=200M count=10 # bs是block size的意思，创建的文件大小=bs*10
-    # /sbin/mkswap/var/swap/sbin/swapon/var/swap
+    # dd if=/dev/zero of=/var/swap.memory bs=200M count=10 # bs是block size的意思，创建的文件大小=bs*10
+    # /sbin/mkswap /var/swap.memory
 
 ### 禁用Selinux
 
