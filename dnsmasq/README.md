@@ -39,8 +39,17 @@ search domain.root
 
 ## Ubuntu 下的配置
 
-Ubuntu 下面乱七八糟的东东太多了，需要一步步配置。
+第一步就是设置系统 DNS Server ，下面章节有详细设置方法，设置好之后可以直接在`/etc/dnsmasq.d`目录里添加配置文件，然后就自动生效了。
 
+通常我们都是将 DNS Server 设置成公共的，然后把公司的内网域名解析写到`/etc/dnsmasq.d`目录的配置文件里，比如：
+
+```
+# vim /etc/dnsmasq.d/mycompany
+server=/mycompany.com/10.0.0.1
+server=/mycompany.net/10.0.0.1
+```
+
+<!--
 ### 忽略 resolvconf 这个东东
 
 File: /etc/default/dnsmasq
@@ -79,6 +88,7 @@ address=/.360.com/127.0.0.1
 address=/.360safe.com/127.0.0.1
 address=/.qihoo.com/127.0.0.1
 ```
+-->
 
 ## 重启各个服务
 
