@@ -1,126 +1,50 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
+nodes = [
+  {:hostname => 'host0', :ip => '192.168.122.10', :box => 'centos/7', :cpu => 2, :memory => 4096},
+  {:hostname => 'host1', :ip => '192.168.122.11', :box => 'centos/7', :cpu => 2, :memory => 4096},
+]
+
+vagrant_hosts = "127.0.0.1 localhost\n"
+nodes.each do |node|
+  vagrant_hosts = vagrant_hosts + "#{node[:ip]} #{node[:hostname]}\n"
+end
+
 Vagrant.configure(2) do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
 
-  config.vm.define "dcos1" do |node|
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "#{vagrant_hosts}" > /etc/hosts
+    passwd -u root
+    mkdir -p /root/.ssh
+    curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
+  SHELL
 
-    # The following is not supported in libvirt
-    # node.ssh.username = "root"
-    # node.ssh.password = "password"
-    # node.ssh.insert_key = true
+  nodes.each do |node|
+    config.vm.define node[:hostname] do |nodeconfig|
+      nodeconfig.vm.hostname = node[:hostname]
+      nodeconfig.vm.box = node[:box]
+      nodeconfig.vm.box_check_update = false
+      # The URL can be "file:///tmp/test.box"
+      # nodeconfig.vm.box_url = "https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/libvirt.box"
+      # nodeconfig.vm.box_url = "http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1603_01.LibVirt.box"
+      nodeconfig.vm.network "private_network", ip: node[:ip]
 
-    node.vm.hostname = "dcos1"
+      # virtualbox provider
+      # nodeconfig.vm.provider "virtualbox" do |virtualbox|
+      #   virtualbox.gui = false
+      #  virtualbox.cpus = node[:cpu]
+      #  virtualbox.memory = node[:memory]
+      # end
 
-    # Every Vagrant development environment requires a box. You can search for
-    # boxes at https://atlas.hashicorp.com/search.
-    node.vm.box = "centos/7"
+      node.vm.provider "libvirt" do |libvirt|
+        # Use qemu instead of kvm in virtual machine
+        # libvirt.driver = "qemu"
+        # Customize the amount of memory on the VM:
+        libvirt.cpus = node[:cpu]
+        libvirt.memory = node[:memory]
+      end
 
-    # The URL can be "file:///tmp/test.box"
-    # node.vm.box_url = "https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/libvirt.box"
-    # node.vm.box_url = "http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1603_01.LibVirt.box"
-
-    # Disable automatic box update checking. If you disable this, then
-    # boxes will only be checked for updates when the user runs
-    # `vagrant box outdated`. This is not recommended.
-    node.vm.box_check_update = false
-
-    # Create a forwarded port mapping which allows access to a specific port
-    # within the machine from a port on the host machine. In the example below,
-    # accessing "localhost:8080" will access port 80 on the guest machine.
-    # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-    # Create a private network, which allows host-only access to the machine
-    # using a specific IP.
-    node.vm.network "private_network", ip: "192.168.122.11"
-
-    # Create a public network, which generally matched to bridged network.
-    # Bridged networks make the machine appear as another physical device on
-    # your network.
-    # node.vm.network "public_network", dev: "virbr0", mode: "bridge", type: "bridge", ip: "192.168.122.11"
-
-    # Share an additional folder to the guest VM. The first argument is
-    # the path on the host to the actual folder. The second argument is
-    # the path on the guest to mount the folder. And the optional third
-    # argument is a set of non-required options.
-    # config.vm.synced_folder "../data", "/vagrant_data"
-
-    # Provider-specific configuration so you can fine-tune various
-    # backing providers for Vagrant. These expose provider-specific options.
-    # Example for Libvirt:
-    #
-    node.vm.provider "libvirt" do |libvirt|
-
-      # Use qemu instead of kvm in virtual machine
-      # libvirt.driver = "qemu"
-      # Customize the amount of memory on the VM:
-      libvirt.memory = "4096"
-      libvirt.cpus = "4"
     end
-    #
-    # View the documentation for the provider you are using for more
-    # information on available options.
-
-    # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
-    # such as FTP and Heroku are also available. See the documentation at
-    # https://docs.vagrantup.com/v2/push/atlas.html for more information.
-    # config.push.define "atlas" do |push|
-    #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
-    # end
-
-    # Enable provisioning with a shell script. Additional provisioners such as
-    # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-    # documentation for more information about their specific syntax and use.
-    node.vm.provision "shell", inline: <<-SHELL
-      passwd -u root
-      mkdir -p /root/.ssh
-      curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
-    SHELL
   end
-
-  config.vm.define "dcos2" do |node|
-    node.vm.hostname = "dcos2"
-    node.vm.box = "centos/7"
-    node.vm.box_check_update = false
-    node.vm.network "private_network", ip: "192.168.122.12"
-
-    node.vm.provider "libvirt" do |libvirt|
-      # libvirt.driver = "qemu"
-      libvirt.memory = "4096"
-      libvirt.cpus = "4"
-    end
-
-    node.vm.provision "shell", inline: <<-SHELL
-      passwd -u root
-      mkdir -p /root/.ssh
-      curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
-    SHELL
-  end
-
-  config.vm.define "dcos3" do |node|
-    node.vm.hostname = "dcos3"
-    node.vm.box = "centos/7"
-    node.vm.box_check_update = false
-    node.vm.network "private_network", ip: "192.168.122.13"
-
-    node.vm.provider "libvirt" do |libvirt|
-      # libvirt.driver = "qemu"
-      libvirt.memory = "4096"
-      libvirt.cpus = "4"
-    end
-
-    node.vm.provision "shell", inline: <<-SHELL
-      passwd -u root
-      mkdir -p /root/.ssh
-      curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
-    SHELL
-  end
-
 end
