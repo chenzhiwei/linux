@@ -17,6 +17,14 @@ change password in safe:
     mysql> FLUSH PRIVILEGES;
     mysql> quit
 
+## 备份及导入数据库
+
+```
+mysqldump -u db_user -p -h 127.0.0.1 db_name > db_name.sql
+mysql -u db_user -p -D db_name < db_name.sql
+```
+
+
 ## MySQL常用语句
 
     show  global variables like '%engine%'; 查看MySQL默认引擎
