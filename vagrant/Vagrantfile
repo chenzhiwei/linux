@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
       #  virtualbox.memory = node[:memory]
       # end
 
-      node.vm.provider "libvirt" do |libvirt|
+      nodeconfig.vm.provider "libvirt" do |libvirt|
         # Use qemu instead of kvm in virtual machine
         # libvirt.driver = "qemu"
         # Customize the amount of memory on the VM:
