@@ -20,6 +20,8 @@ Vagrant.configure(2) do |config|
     curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
   SHELL
 
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
   nodes.each do |node|
     config.vm.define node[:hostname] do |nodeconfig|
       nodeconfig.vm.hostname = node[:hostname]
