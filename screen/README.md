@@ -57,15 +57,17 @@ $ Ctrl + a ESC
 
 [.screenrc](.screenrc)
 
-添加一行
+如果没有就在~下新建该文件
+
+然后添加一行配置
 
 ```
 escape ^Bt
 ```
 
-表示其他(例如ctrl+B替换掉默认的ctrl+A), 
+表示其他(例如ctrl+B)替换掉默认的ctrl+A, 
 
-因为ctrl+A往往是快速回到命令的头部，非常常用
+因为ctrl+A往往是快速回到命令的头部的快捷键，非常常用和方便
 
 ## End
 
