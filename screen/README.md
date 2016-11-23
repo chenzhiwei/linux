@@ -57,6 +57,16 @@ $ Ctrl + a ESC
 
 [.screenrc](.screenrc)
 
+添加一行
+
+```
+escape ^Bt
+```
+
+表示其他(例如ctrl+B替换掉默认的ctrl+A), 
+
+因为ctrl+A往往是快速回到命令的头部，非常常用
+
 ## End
 
 screen命令很好用，但是最让人头痛的是`CTRL+A`命令和BASH里的快捷键重复了，我不觉得替换一下快捷键是个很好的解决方案，所以这个问题一直存在我这里。
