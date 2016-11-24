@@ -10,5 +10,6 @@ install:
   - pip install yamllint ansible
 
 script:
+  - git diff-tree --check $(git hash-object -t tree /dev/null) HEAD !(exclude-dir|*.patch)
   - yamllint $(git ls-files '*.yaml' '*.yml')
   - ansible-playbook -e cluster/config.yaml site.yaml --syntax-check
