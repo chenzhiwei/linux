@@ -6,3 +6,7 @@ These are configuration file and how-to document of many linux softwares.
 
 * Origin repo: <https://github.com/chenzhiwei/linux>
 * Backup repo: <https://gitshell.com/chenzhiwei/linux>
+
+
+
+* OS: http://itellyou.cn/
