@@ -381,6 +381,12 @@ $ git reset --soft HEAD^
 
 删除最近一次 commit ，并且不保留这次 commit 中的修改内容，即用`git status`来查看会显示没有改动。
 
+```
+$ git push --force
+```
+
+更新到远程仓库
+
 ### git stash
 
 当你修改了本地仓库的文件，但又想放弃修改时，可以用`git stash`来还原到仓库原来的状态。
