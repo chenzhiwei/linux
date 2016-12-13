@@ -548,7 +548,7 @@ Host github.com
 
 ### 给GIT SSH添加参数
 
-默认情况下，使用`git clone`时会使用默认的ssh key连接，你现在可以自定义ssh key的位置了。
+默认情况下，使用`git clone`时会使用默认的ssh key连接，你现在（git 2.3）可以自定义ssh key的位置了。
 
 ```
 $ GIT_SSH_COMMAND='ssh -i /path/to/ssh_private_key' git clone git@github.com:chenzhiwei/linux.git

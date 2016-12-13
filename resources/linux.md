@@ -255,6 +255,8 @@ the tar package will be generated in dist dir
 
 也可以使用`</dev/tcp/localhost/80`来判断是否开启了 80 端口。
 
+有些时候一直会 Hang 住，这时就要加 timeout 了，比如`timeout 1 bash -c 'cat < /dev/null > /dev/tcp/1.2.3.4/80'`。
+
 ### SHELL随机生成MAC地址
 
     MACADDR="fa:16:$(dd if=/dev/urandom count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\)\(..\).*$/\1:\2:\3:\4/')"
