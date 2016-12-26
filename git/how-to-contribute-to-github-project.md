@@ -50,6 +50,16 @@ Please take a look at: <https://github.com/chenzhiwei/linux/blob/master/git/how-
 
 Please take a look at: <https://github.com/chenzhiwei/linux/blob/master/git/how-to-contribute-to-openstack-project.md>
 
+## Checkout GitHub Pull Request locally
+
+```
+$ git clone git@github.com:chenzhiwei/thinkphp.git
+$ cd thinkphp
+$ git remote add upstream https://github.com/liu21st/thinkphp
+$ git fetch upstream
+$ git fetch origin pull/123/head:pr-123
+```
+
 ## Sources
 
 1. <https://help.github.com/articles/generating-ssh-keys>
