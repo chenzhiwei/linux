@@ -69,6 +69,17 @@ escape ^Bt
 
 因为ctrl+A往往是快速回到命令的头部的快捷键，非常常用和方便
 
+## screen色彩
+
+[.bashrc](.bashrc)
+
+在~/.bashrc下添加一行配置
+
+```
+export TERM=xterm-256color
+```
+表示screen终端采用256color(默认8-color灰白)
+
 ## End
 
 screen命令很好用，但是最让人头痛的是`CTRL+A`命令和BASH里的快捷键重复了，我不觉得替换一下快捷键是个很好的解决方案，所以这个问题一直存在我这里。
