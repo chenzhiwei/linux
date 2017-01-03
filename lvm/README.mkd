@@ -45,5 +45,9 @@ LE全称Logical Extend，逻辑扩展块。
 以后补充。
 
 ## 参考资料
-1.<http://aixecc.blog.51cto.com/3931677/822865>  
+
+1.<http://aixecc.blog.51cto.com/3931677/822865>
+
 2.<http://bbs.chinaunix.net/thread-2258612-1-1.html>
+
+3.Create thin provisioned LV: <http://www.linuxtechi.com/thin-provisioned-logical-volumes-centos-7-rhel-7/>
