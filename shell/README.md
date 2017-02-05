@@ -128,7 +128,6 @@
     !*:p：打印输出 !* 的内容
     ^blah：删除上一条命令中的 blah
     ^blah^foo：将上一条命令中的 blah 替换为 foo
-    ^blah^foo^：将上一条命令中所有的 blah 都替换为 foo
 
 ## 字符串操作
 
