@@ -21,6 +21,10 @@ $ CTRL + A + D
 ```
 $ screen -r screen_session_name
 ```
+##强制唤起一个Screen Session
+```
+$ screen -r screen_session_name
+```
 
 ## 分享一个Screen Session
 
