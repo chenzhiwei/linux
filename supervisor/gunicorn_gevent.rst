@@ -90,3 +90,5 @@ x_forwarded_for_header = 'X-FORWARDED-FOR'
 gunicorn -c gun.py hello:app
 
 单纯的flask 自带的web服务器做下测试，会看到压力大的时候出现socket的问题，因为他是单进程单线程的。使用gunicorn来启动，响应速度和能力提升显著。 配置中workers指定启动的进程数。cpu的损耗是平均到各个进程。workers的值一定不要过大，毕竟多进程对于系统的调度消耗比较大。
+
+来源：http://www.voidcn.com/blog/dutsoft/article/p-5977525.html
