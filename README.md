@@ -10,3 +10,6 @@ These are configuration file and how-to document of many linux softwares.
 
 
 * OS: http://itellyou.cn/
+
+# SPhinx 中文手册
+* http://zh-sphinx-doc.readthedocs.io/en/latest/contents.html
