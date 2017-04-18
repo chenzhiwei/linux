@@ -1,5 +1,20 @@
 # Linux 常用命令
 
+## 切断当前的 TCP 链接
+
+有时测试需要，必须模拟断网，一般都是把网卡停掉，但是如果机器只有一块网卡的话就不好办了（其实通过计划任务CronJob也能完成）。
+
+这时一般就是先用 iptables 把相关端口封掉，然后切断现有的 TCP 链接：
+
+```
+yum install dsniff
+iptables -I INPUT -p tcp -m tcp --dport 8888 -j DROP
+iptables -I OUTPUT -p tcp -m tcp --dport 8888 -j DROP
+iptables -I FORWARD -p tcp -m tcp --dport 8888 -j DROP
+tcpkill -i eth0 -9 port 8888
+```
+
+
 ## 查看端口是否开放
 
 ```
