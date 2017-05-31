@@ -162,3 +162,18 @@ restorecon -R -v /root/.ssh
 ```
 
 参考： <http://www.unix.com/unix-advanced-expert-users/174645-openssh-5-3-needs-password-vs-4-3-using-private-keys.html>
+
+### SSH 无法使用 key 方式来登录
+
+有个原因是因为用户的 HOME 目录权限或属主被谁修改了，拿`root`用户来说，正常情况应该是
+
+```
+[root@rhel1 ~]# ls -dl /root
+dr-xr-x---. 21 root root 4096 May 30 23:03 /root
+```
+
+很多时候不能用私钥登录的原因就是`/root`的属主被修改成其他用户了，只需要用如下命令简单修改回来：
+
+```
+chown -R root:root /root
+```
