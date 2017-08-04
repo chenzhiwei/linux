@@ -32,6 +32,17 @@ $ vagrant up
 $ vagrant ssh dcos1
 ```
 
+## Set the box size
+
+```
+cd ~/.vagrant.d/boxes/ubuntu-VAGRANTSLASH-xenial64/20170803.0.0/virtualbox
+VBoxManage clonehd ubuntu-xenial-16.04-cloudimg.vmdk tmp.vdi --format vdi
+VBoxManage modifyhd tmp.vdi --resize 102400
+clonehd tmp.vdi tmp.vmdk --format vmdk
+mv tmp.vmdk ubuntu-xenial-16.04-cloudimg.vmdk
+rm -f tmp.vdi
+```
+
 ## More
 
 I don't like GUI, so there is no VirtualBox here.
