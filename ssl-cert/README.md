@@ -1,5 +1,14 @@
 # 生成 SSL 证书
 
+## Single command to generate self-signed certifcate
+
+```
+openssl req -newkey rsa:4096 -sha256 -nodes -keyout your-domain.com.key -x509 -days 36500 -out your-domain.com.crt -subj "/C=US/ST=California/L=Los Angeles/O=Your Domain Inc/CN=your-domain.com"
+```
+
+You can ignore the following steps.
+
+
 ## Create the Server Key file
 
 > Remove `-des3` if you do not want a password
