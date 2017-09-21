@@ -442,6 +442,21 @@ $ git ls-remote --tags orign
 
 Why duplicate tag in remotes: <http://stackoverflow.com/q/5346060/1536735>
 
+## Sparse Checkout
+
+意思就是只 Checkout 某个文件或某些文件。
+
+```
+git init linux
+cd linux
+git config core.sparsecheckout true
+git remote add origin https://github.com/chenzhiwei/linux.git
+echo 'git' >> .git/info/sparse-checkout
+git pull origin master
+```
+
+以上的意思就是只 Checkout 仓库 Master 分支上的根目录下的`git`目录里的内容，其实还是会从远端仓库拉下所有代码，只是在本地把除了`git`目录以外的东西都隐藏掉了。
+
 ## Squash 多个 commits 为一个
 
 `git log` 输出如下：
