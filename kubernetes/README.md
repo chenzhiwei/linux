@@ -38,10 +38,19 @@ export KUBE_GIT_VERSION_FILE=.dockerized-kube-version-defs
 ```
 build/run.sh make
 build/run.sh make cross
+build/run.sh make cross KUBE_BUILD_PLATFORMS="linux/amd64 linux/ppc64le linux/s390x"
 ```
 
 ```
 make quick-release
+```
+
+### Build hyperkube image
+
+```
+export REGISTRY=registry.server.com/namespace
+cd cluster/images/hyperkube
+make VERSION=v1.8.2 ARCH=amd64
 ```
 
 More: https://github.com/kubernetes/kubernetes/tree/master/build
