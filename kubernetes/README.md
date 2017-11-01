@@ -1,5 +1,52 @@
 # Kubernetes
 
+## Build Kubernetes
+
+### Build static linked binary
+
+Open the file `hack/lib/golang.sh`, add the static linked binaries you want to build to array `KUBE_STATIC_LIBRARIES`, then build.
+
+
+### Build Kubernetes with specific version
+
+```
+export KUBE_GIT_COMMIT=f12ef974abf2a68d736484212fadc17d8821cb16
+export KUBE_GIT_TREE_STATE=clean
+export KUBE_GIT_VERSION=v1.8.2
+export KUBE_GIT_MAJOR=1
+export KUBE_GIT_MINOR=8
+```
+
+or create a version file, such as `.dockerized-kube-version-defs`
+
+```
+KUBE_GIT_COMMIT='f12ef974abf2a68d736484212fadc17d8821cb16'
+KUBE_GIT_TREE_STATE='clean'
+KUBE_GIT_VERSION='v1.8.2'
+KUBE_GIT_MAJOR='1'
+KUBE_GIT_MINOR='8'
+```
+
+then
+
+```
+export KUBE_GIT_VERSION_FILE=.dockerized-kube-version-defs
+```
+
+### Build
+
+```
+build/run.sh make
+build/run.sh make cross
+```
+
+```
+make quick-release
+```
+
+More: https://github.com/kubernetes/kubernetes/tree/master/build
+
+
 ## Install Kubernetes
 
 ### Environments
