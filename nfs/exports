@@ -8,4 +8,5 @@
 # /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
 # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
 
-/var/nfs    10.0.0.0/8(rw,sync,no_subtree_check,no_root_squash) 172.16.212.13(ro,no_subtree_check,no_root_squash)
+/var/nfs/dir1    10.0.0.0/8(rw,sync,no_subtree_check,no_root_squash) 172.16.212.13(ro,no_subtree_check,no_root_squash)
+/var/nfs/dir2    *(rw,sync,no_subtree_check,no_root_squash)
