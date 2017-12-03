@@ -1,32 +1,31 @@
 # nodejs
 
+nodejs development environment setup.
+
 ## Setup a mirror registry
 
 ```
 $ vim ~/.npmrc
+progress = true
 registry = https://registry.npm.taobao.org/
 ```
 
-## Install a node package globally
+## Install nvm
+
+nvm is Node Version Manager.
 
 ```
-$ sudo npm install -g hexo-cli
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
 ```
 
-## Update the package.json file
+## Install nodejs
 
 ```
-$ sudo npm install -g npm-check-updates
-$ cd hexo
-$ ls package.json
-$ npm-check-updates -u
-$ npm install
+$ nvm install 8
+$ nvm list
+$ nvm use 8
 ```
 
-Sometimes, using `npm-check-updates -u -a`.
+## Reference
 
-## Issues
-
-When using `sudo npm install` will make some packages under `~/.npm/some-package` to be root owner, so run `sudo chown -R $USER:$USER` to change them.
-
-In Ubuntu system, when you `sudo user`, the `$HOME` still `/home/user`.
+nvm: https://github.com/creationix/nvm
