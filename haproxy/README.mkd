@@ -11,6 +11,12 @@ HAProxy由前端（frontend）和后端（backend），前端和后端都可以�
 
 前端（frontend）区域可以根据HTTP请求的header信息来定义一些规则，然后将符合某规则的请求转发到相应后端（backend）进行处理。
 
+## HAProxy 不能绑定端口
+
+通常是因为 SELinux 打开导致了，运行以下命令即可：`setsebool -P haproxy_connect_any=1`
+
+还有个原因是要绑定的 IP 地址不在本机，可以在 sysctl.conf 里添加如下内容解决：`net.ipv4.ip_nonlocal_bind=1`
+
 ## HAProxy配置文件
 
 包含前端和后端的配置文件示例：
