@@ -10,6 +10,14 @@ KVM（Kernel-based Virtual Machine）是基于内核的虚拟化解决方案，�
 
 libvirt是一套免费、开源的支持Linux下主流虚拟化工具的C函数库，这个函数库是一种实现Linux虚拟化功能的API，它支持虚拟机监控程序，比如Xen, KVM, Qemu等。
 
+## 创建 libvirt network
+
+```
+virsh net-define virbr0.xml
+virsh net-start default
+virsh net-autostart default
+```
+
 ## KVM虚拟化镜像制作
 
 ### 创建img镜像文件（快照）
@@ -36,7 +44,7 @@ libvirt是一套免费、开源的支持Linux下主流虚拟化工具的C函数�
     --disk path=/var/instances/ubuntu.img,size=5 \
     --cdrom=/var/images/ubuntu-12.04-server-amd64.iso \
     --graphics=vnc,listen=0.0.0.0
-# 
+#
 ```
 
 virt-install命令在virtinst包里，在CentOS下该包名为python-virtinst，其实最终调用的命令还是qemu-img和qemu-kvm。
@@ -99,7 +107,7 @@ ubuntu.img5       9439232  10483711    1044480  82  Linux swap / Solaris
 
 /dev/loop0: [0811]:56885251 (/var/instances/ubuntu.img)
 
-# sfdisk -l -uS /dev/loop0 
+# sfdisk -l -uS /dev/loop0
 
 Disk /dev/loop0: cannot get geometry
 
@@ -402,23 +410,23 @@ device 表示该磁盘以什么形式暴露给虚拟机实例，可以是disk, f
 
 其属性值为遇到这三项时进行的操作，可以是以下操作：
 
-destroy 虚拟机实例完全终止并且释放所占资源。  
-restart 虚拟机实例终止并以相同配置重新启动。  
-preserve 虚拟机实例终止，但其所占资源保留来做进一步的分析。  
+destroy 虚拟机实例完全终止并且释放所占资源。
+restart 虚拟机实例终止并以相同配置重新启动。
+preserve 虚拟机实例终止，但其所占资源保留来做进一步的分析。
 rename-restart 虚拟机实例终止并且以一个新名字来重新启动。
 
 on\_crash 还支持以下操作：
 
-coredump-destroy crash的虚拟机实例会发生coredump，然后该实例完全终止并释放所占资源。  
+coredump-destroy crash的虚拟机实例会发生coredump，然后该实例完全终止并释放所占资源。
 coredump-restart crash的虚拟机实例会发生coredump，然后该实例会重新启动。
 
 * on\_lockfailure（我对这个不了解）
 
 当锁管理器（lock manager）失去对资源的控制时（lose resource locks）所采取的操作：
 
-poweroff 虚拟机实例被强制停止。  
-restart 虚拟机实例被停止后再启动来重新获取它的锁（locks）。  
-pause 虚拟机实例会被暂停，并且当你解决了锁（lock）问题后可以将其手动恢复运行。  
+poweroff 虚拟机实例被强制停止。
+restart 虚拟机实例被停止后再启动来重新获取它的锁（locks）。
+pause 虚拟机实例会被暂停，并且当你解决了锁（lock）问题后可以将其手动恢复运行。
 ignore 让虚拟机实例继续运行，仿佛一切都没发生过。
 
 ### 时间区域
@@ -609,5 +617,5 @@ or
 
 ## 参考资料
 
-1.Libvirt Domain XML format: <http://libvirt.org/formatdomain.html>  
+1.Libvirt Domain XML format: <http://libvirt.org/formatdomain.html>
 2.OpenStack Creating custom images: <http://docs.openstack.org/trunk/openstack-compute/admin/content/creating-custom-images.html>

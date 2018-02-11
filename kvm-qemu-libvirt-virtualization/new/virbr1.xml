@@ -1,0 +1,15 @@
+<network>
+  <name>second</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr1' stp='on' delay='0'/>
+  <mac address='52:54:10:72:a6:86'/>
+  <ip address='172.16.0.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='172.16.0.2' end='172.16.0.254'/>
+    </dhcp>
+  </ip>
+</network>
