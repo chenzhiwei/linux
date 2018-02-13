@@ -4,11 +4,17 @@ We now use MacBook Pro as workstation, following are some tips.
 
 ## Install iTerm
 
-Make the `Dark Blue` color readable in iTerm with black/dark background.
+* Make the `Dark Blue` color readable in iTerm with black/dark background.
 
-```
-iTerm --> Preferences --> Profiles --> Default --> Colors --> ANSI Colors --> Blue[Normal] --> click and change to a better color.
-```
+    ```
+    iTerm --> Preferences --> Profiles --> Default --> Colors --> ANSI Colors --> Blue[Normal] --> click and change to a better color.
+    ```
+
+* Enable alternate screen
+
+    ```
+    iTerm --> Preferences --> Profiles --> Terminal --> uncheck Save lines to scrollback in alternate screen mode and Disable save/restore alternate screen
+    ```
 
 ## Setup proxy
 
