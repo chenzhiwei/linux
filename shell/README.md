@@ -131,6 +131,14 @@
 
 ## 字符串操作
 
+* ${str//origin/replaced}
+
+    替换字符串，将字符串里的`origin`替换成`replaced`。
+
+* ${str%:*}-amd64:${str##*:}
+
+    替换最后一个`:`为字符串`-amd64:`，比如`repo.com:8443/default/pause:3.0`换成`repo.com:8443/default/pause-amd64:3.0`。
+
 * ${parameter:-word}
 
     If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted.
