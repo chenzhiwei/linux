@@ -139,6 +139,22 @@
 
     替换最后一个`:`为字符串`-amd64:`，比如`repo.com:8443/default/pause:3.0`换成`repo.com:8443/default/pause-amd64:3.0`。
 
+* ${str##*string}
+
+    从左向右截取最后一个string后的字符串，例如截取`a.b.c`中的`c`为`echo ${str##*.}`。
+
+* ${str#*string}
+
+    从左向右截取第一个string后的字符串，例如截取`a.b.c`中的`b.c`为`echo ${str#*.}`。
+
+* ${str%%string*}
+
+    从右向左截取最后一个string后的字符串，例如截取`a.b.c`中的`a`为`echo ${str%%.*}`。
+
+* ${str%string*}
+
+    从右向左截取第一个string后的字符串，例如截取`a.b.c`中的`a.b`为`echo ${str%.*}`。
+
 * ${parameter:-word}
 
     If parameter is unset or null, the expansion of word is substituted. Otherwise, the value of parameter is substituted.
