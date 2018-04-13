@@ -53,6 +53,13 @@ openssl req -newkey rsa:4096 -sha256 -nodes -keyout your-domain.com.key -x509 -d
 
 You can ignore the following steps.
 
+## Convert ASCII format to PEM format
+
+```
+openssl rsa -in server.key -outform PEM -out key.pem
+
+openssl x509 -in server.crt -outform PEM -out cert.pem
+```
 
 ## Create the Server Key file
 
