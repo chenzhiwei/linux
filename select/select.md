@@ -1,4 +1,5 @@
 :: python select网络编程详细介绍
+
 刚看了反应堆模式的原理，特意复习了socket编程，本文主要介绍python的基本socket使用和select使用，主要用于了解socket通信过程
 
 一、socket模块
@@ -62,11 +63,12 @@ This module provides access to the BSD socket interface. It is available on all 
 
 3、socket异常
 
-Exception　　 	   解释
-socket.error 	    由Socket相关错误引发
- socket.herror 	  由地址相关错误引发
- socket.gaierror 	由地址相关错误，如getaddrinfo()或getnameinfo()引发
- socket.timeout 	当socket出现超时时引发。超时时间由settimeout()提前设定
+|Exception | 解释|
+------------|-------------------------------------------------------------|
+|socket.error | 由Socket相关错误引发|
+|socket.herror | 由地址相关错误引发|
+|socket.gaierror |	由地址相关错误，如getaddrinfo()或getnameinfo()引发|
+|socket.timeout |	当socket出现超时时引发。超时时间由settimeout()提前设定|
  
  二、socket编程
 
