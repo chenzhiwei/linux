@@ -26,6 +26,7 @@ This module provides access to the BSD socket interface. It is available on all 
 2、socket函数
 
 服务器端 Socket 函数
+
 |Socket 函数	 | 描述|
 |:------------------|:------------------------------------------------------------------------------------:|
 |s.bind(address) |	将套接字绑定到地址，在AF_INET下，以tuple(host, port)的方式传入，如s.bind((host, port))|
