@@ -74,6 +74,7 @@ This module provides access to the BSD socket interface. It is available on all 
 
 1、基于TCP（面向连接）的Socket编程(C++)
 服务器端顺序：
+
 (1. 加载套接字库
 (2. 创建套接字（serversocket）
 (3. 将套接字绑定到一个本地地址和端口上（bind）
@@ -84,6 +85,7 @@ This module provides access to the BSD socket interface. It is available on all 
 (8. 关闭套接字(closesocket)
  
 客户端程序：
+
 (1. 加载套接字库
 (2. 创建套接字(socket)
 (3. 向服务器发送连接请求（connect）
@@ -92,6 +94,7 @@ This module provides access to the BSD socket interface. It is available on all 
  
 2、基于UDP（面向无连接）的socket编程(C++)
 服务器端（接收端）程序：
+
 (1. 加载套接字库
 (2. 创建套接字（socket）
 (3. 将套接字绑定到一个本地地址和端口上（bind）
@@ -99,6 +102,7 @@ This module provides access to the BSD socket interface. It is available on all 
 (5. 关闭套接字(closesocket)
  
  客户端（发送端）程序
+ 
 (1. 加载套接字库
 (2. 创建套接字（socket）
 (3. 向服务器发送数据（sendto）
