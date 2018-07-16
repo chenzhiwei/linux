@@ -83,29 +83,26 @@ This module provides access to the BSD socket interface. It is available on all 
     (7. 返回，等待另一个客户请求
     (8. 关闭套接字(closesocket)
  
-客户端程序：
-
-(1. 加载套接字库
-(2. 创建套接字(socket)
-(3. 向服务器发送连接请求（connect）
-(4. 和服务器端进行通信(send/receive) 调用socket类的getOutputStream()和getInputStream()获取输出流和输入流
-(5. 关闭套接字(closesocket)
+#### 客户端程序：
+    (1. 加载套接字库
+    (2. 创建套接字(socket)
+    (3. 向服务器发送连接请求（connect）
+    (4. 和服务器端进行通信(send/receive) 调用socket类的getOutputStream()和getInputStream()获取输出流和输入流
+    (5. 关闭套接字(closesocket)
  
-2、基于UDP（面向无连接）的socket编程(C++)
-服务器端（接收端）程序：
-
-(1. 加载套接字库
-(2. 创建套接字（socket）
-(3. 将套接字绑定到一个本地地址和端口上（bind）
-(4. 等待接收数据（recvfrom）
-(5. 关闭套接字(closesocket)
+#### 2、基于UDP（面向无连接）的socket编程(C++)
+#### 服务器端（接收端）程序：
+    (1. 加载套接字库
+    (2. 创建套接字（socket）
+    (3. 将套接字绑定到一个本地地址和端口上（bind）
+    (4. 等待接收数据（recvfrom）
+    (5. 关闭套接字(closesocket)
  
- 客户端（发送端）程序
- 
-(1. 加载套接字库
-(2. 创建套接字（socket）
-(3. 向服务器发送数据（sendto）
-(4. 关闭套接字(closesocket)
+#### 客户端（发送端）程序
+    (1. 加载套接字库
+    (2. 创建套接字（socket）
+    (3. 向服务器发送数据（sendto）
+    (4. 关闭套接字(closesocket)
 
 3、socket tcp 编程实例，c/s程序
 
