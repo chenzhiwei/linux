@@ -73,16 +73,15 @@ This module provides access to the BSD socket interface. It is available on all 
  二、socket编程
 
 1、基于TCP（面向连接）的Socket编程(C++)
-服务器端顺序：
-
-(1. 加载套接字库
-(2. 创建套接字（serversocket）
-(3. 将套接字绑定到一个本地地址和端口上（bind）
-(4. 将套接字设为监听模式，准备接收客户请求（listen）
-(5. 等待客户请求的到来；当请求带来后，接受连接请求，返回一个新的对应于此次连接的套接字（accept）
-(6. 用返回的套接字和客户端进行通信（send/recv）调用socket类的getOutputStream()和getInputStream()获取输出流和输入流
-(7. 返回，等待另一个客户请求
-(8. 关闭套接字(closesocket)
+- 服务器端顺序：
+  - (1. 加载套接字库
+  - (2. 创建套接字（serversocket）
+  - (3. 将套接字绑定到一个本地地址和端口上（bind）
+  - (4. 将套接字设为监听模式，准备接收客户请求（listen）
+  - (5. 等待客户请求的到来；当请求带来后，接受连接请求，返回一个新的对应于此次连接的套接字（accept）
+  - (6. 用返回的套接字和客户端进行通信（send/recv）调用socket类的getOutputStream()和getInputStream()获取输出流和输入流
+  - (7. 返回，等待另一个客户请求
+  - (8. 关闭套接字(closesocket)
  
 客户端程序：
 
