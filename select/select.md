@@ -11,9 +11,9 @@ This module provides access to the BSD socket interface. It is available on all 
 
 1、Socket类型
 
-socket 常量　　             描述
-
-socket.AF_UNIX             只能够用于单一的Unix系统进程间通信
+|socket 常量 |  描述|
+------------|-----------------------------------
+|socket.AF_UNIX | 只能够用于单一的Unix系统进程间通信
 
 socket.AF_INET             服务器之间网络通信
 
