@@ -1,8 +1,8 @@
-:: python select网络编程详细介绍
+## python select网络编程详细介绍
 
 刚看了反应堆模式的原理，特意复习了socket编程，本文主要介绍python的基本socket使用和select使用，主要用于了解socket通信过程
 
-一、socket模块
+### 一、socket模块
 
 socket — Low-level networking interface
 
@@ -24,9 +24,9 @@ This module provides access to the BSD socket interface. It is available on all 
 |创建TCP Socket： |s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)|
 |创建UDP Socket： |s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)|
 
-2、socket函数
+### 2、socket函数
 
-服务器端 Socket 函数
+#### 服务器端 Socket 函数
 
 |Socket 函数	 | 描述|
 |:------------------|:------------------------------------------------------------------------------------|
@@ -34,14 +34,14 @@ This module provides access to the BSD socket interface. It is available on all 
 |s.listen(backlog) |	开始监听TCP传入连接，backlog指定在拒绝链接前，操作系统可以挂起的最大连接数，该值最少为1，大部分应用程序设为5就够用了|
 |s.accpet() |	接受TCP链接并返回（conn, address），其中conn是新的套接字对象，可以用来接收和发送数据，address是链接客户端的地址。|
 
-客户端 Socket 函数
+#### 客户端 Socket 函数
 
 |Socket 函数	| 描述
 ------------|--------------------------------------------------------------------------------------------------------------
 |s.connect(address) | 链接到address处的套接字，一般address的格式为tuple(host, port)，如果链接出错，则返回socket.error错误|
 |s.connect_ex(address) |	功能与s.connect(address)相同，但成功返回0，失败返回errno的值|
 
-公共 Socket 函数
+#### 公共 Socket 函数
 
 |Socket 函数	| 描述|
 ------------|------------------------------------------------------------------------------------------------------------
@@ -70,18 +70,18 @@ This module provides access to the BSD socket interface. It is available on all 
 |socket.gaierror |	由地址相关错误，如getaddrinfo()或getnameinfo()引发|
 |socket.timeout |	当socket出现超时时引发。超时时间由settimeout()提前设定|
  
- 二、socket编程
+### 二、socket编程
 
-1、基于TCP（面向连接）的Socket编程(C++)
-- 服务器端顺序：
-  - (1. 加载套接字库
-  - (2. 创建套接字（serversocket）
-  - (3. 将套接字绑定到一个本地地址和端口上（bind）
-  - (4. 将套接字设为监听模式，准备接收客户请求（listen）
-  - (5. 等待客户请求的到来；当请求带来后，接受连接请求，返回一个新的对应于此次连接的套接字（accept）
-  - (6. 用返回的套接字和客户端进行通信（send/recv）调用socket类的getOutputStream()和getInputStream()获取输出流和输入流
-  - (7. 返回，等待另一个客户请求
-  - (8. 关闭套接字(closesocket)
+#### 1、基于TCP（面向连接）的Socket编程(C++)
+#### 服务器端顺序：
+    (1. 加载套接字库
+    (2. 创建套接字（serversocket）
+    (3. 将套接字绑定到一个本地地址和端口上（bind）
+    (4. 将套接字设为监听模式，准备接收客户请求（listen）
+    (5. 等待客户请求的到来；当请求带来后，接受连接请求，返回一个新的对应于此次连接的套接字（accept）
+    (6. 用返回的套接字和客户端进行通信（send/recv）调用socket类的getOutputStream()和getInputStream()获取输出流和输入流
+    (7. 返回，等待另一个客户请求
+    (8. 关闭套接字(closesocket)
  
 客户端程序：
 
