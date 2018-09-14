@@ -22,6 +22,31 @@ file:53 {
     log
 }
 
+# Regular expression
+regex:53 {
+    # Root domain
+    template ANY ANY {
+        match ^regex[.]$
+        answer "regex 60 IN A 127.0.0.1"
+        fallthrough
+    }
+
+    # Sub domain
+    template ANY ANY {
+        match ^sub.regex[.]$
+        answer "sub.regex 60 IN A 127.0.0.2"
+        fallthrough
+    }
+
+    # Regex domain
+    template ANY ANY {
+        match ^.*\.regex[.]$
+        answer "{{ .Name }} 60 IN A 127.0.0.3"
+        fallthrough
+    }
+    import forward
+}
+
 .:53 {
     hosts /etc/hosts {
         fallthrough
