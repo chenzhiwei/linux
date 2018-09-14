@@ -1,0 +1,30 @@
+# Snippet
+(forward) {
+	forward . 1.1.1.1 8.8.8.8 9.9.9.9
+}
+
+# Inline format hosts
+inline:53 {
+    hosts local.hosts {
+        192.168.122.11 node1.inline
+        192.168.122.12 node2.inline
+        fallthrough
+    }
+    import forward
+}
+
+# File format hosts
+file:53 {
+    root /etc/coredns/hosts.d
+    hosts file.hosts {
+        fallthrough
+	}
+    log
+}
+
+.:53 {
+    hosts /etc/hosts {
+        fallthrough
+    }
+    import forward
+}
