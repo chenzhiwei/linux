@@ -22,6 +22,16 @@ file:53 {
     log
 }
 
+# No IP domain
+# domain-name.1.2.3.4.noip -> 1.2.3.4
+noip:53 {
+    template ANY ANY {
+        match ^.*\.(?P<a>[0-9]*)\.(?P<b>[0-9]*)\.(?P<c>[0-9]*)\.(?P<d>[0-9]*)\.noip[.]$
+        answer "{{ .Name }} 60 IN A {{ .Group.a }}.{{ .Group.b }}.{{ .Group.c }}.{{ .Group.d }}"
+        fallthrough
+    }
+}
+
 # Regular expression
 regex:53 {
     # Root domain
