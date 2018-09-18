@@ -388,6 +388,12 @@ http://wiki.centos.org/FAQ/CentOS5#head-47912ebdae3b5ac10ff76053ef057c366b421dc4
     # ip route add 10.210.210.4 via 10.67.15.1
     # ip route add 10.210.211.0/24 via 10.67.15.1
 
+#### 删除tunl0
+
+    ```
+    modprobe -r ipip
+    ```
+
 ### 添加网卡别名及分配IP地址
 
 假设现在eth0的配置如下：inet 192.168.110.4/24 brd 192.168.110.255
