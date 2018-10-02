@@ -1,0 +1,9 @@
+patch:
+  style/horizontal: true          # 候选窗横向显示
+#  style/inline_preedit: false    # 关闭内嵌编码，候选窗显示两行，第一行拼音，第二行结果
+#  style/font_point: 21           # 字号
+  app_options:
+    com.googlecode.iterm2:
+      ascii_mode: false
+    org.vim.MacVim:
+      ascii_mode: false
