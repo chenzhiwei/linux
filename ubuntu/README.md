@@ -130,6 +130,14 @@ $ sudo vim /etc/sudoers
 zhiwei  ALL=(ALL:ALL) NOPASSWD: ALL
 ```
 
+## Check current display server(x11 or wayland)
+
+```
+loginctl
+loginctl show-session <SESSION_ID> -p Type
+
+loginctl show-session "$XDG_SESSION_ID" -p Type
+```
 
 ## Change locale
 
