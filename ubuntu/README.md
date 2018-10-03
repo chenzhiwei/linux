@@ -139,6 +139,14 @@ loginctl show-session <SESSION_ID> -p Type
 loginctl show-session "$XDG_SESSION_ID" -p Type
 ```
 
+## HiDPI high screen resolution
+
+QT does not support HiDPI until 5.6, so need to add an environment variable before starting the QT applications.
+
+Such as `QT_SCALE_FACTOR=2 your-app`, or `QT_AUTO_SCREEN_SCALE_FACTOR=1 your-app`.
+
+In .desktop file, add `Exec=env QT_AUTO_SCREEN_SCALE_FACTOR=1 your-app`.
+
 ## Change locale
 
 ```
