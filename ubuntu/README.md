@@ -76,6 +76,42 @@ gsettings set org.gnome.mutter overlay-key ""
 gsettings set org.gnome.mutter overlay-key Super_L
 ```
 
+## 中文字体问题
+
+最明显的一个字是`门`字，会显示的特别奇怪，原因就是中文字体太靠后了，优先显示了日文。原因就是这个配置文件：`/etc/fonts/conf.d/64-language-selector-prefer.conf`，修改一下字体顺序就行了。在`.config/fontconfig/fonts.conf`里面修改正确就行了。
+
+```
+<fontconfig>
+	<alias>
+		<family>sans-serif</family>
+		<prefer>
+			<family>Noto Sans CJK SC</family>
+			<family>Noto Sans CJK TC</family>
+			<family>Noto Sans CJK KR</family>
+			<family>Noto Sans CJK JP</family>
+		</prefer>
+	</alias>
+	<alias>
+		<family>serif</family>
+		<prefer>
+			<family>Noto Serif CJK SC</family>
+			<family>Noto Serif CJK TC</family>
+			<family>Noto Serif CJK KR</family>
+			<family>Noto Serif CJK JP</family>
+		</prefer>
+	</alias>
+	<alias>
+		<family>monospace</family>
+		<prefer>
+			<family>Noto Sans Mono CJK SC</family>
+			<family>Noto Sans Mono CJK TC</family>
+			<family>Noto Sans Mono CJK KR</family>
+			<family>Noto Sans Mono CJK JP</family>
+		</prefer>
+	</alias>
+</fontconfig>
+```
+
 
 ## Allow root login
 
