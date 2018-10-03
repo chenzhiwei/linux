@@ -54,12 +54,26 @@ apt install -y ibus-qt4 ibus-clutter ibus-rime librime-data-wubi librime-data-pi
 
 
 ```
-xmodmap -e "keycode 75 = Insert Insert" # need persist this map from f9 to insert key
+xmodmap -e "keycode 76 = Insert Insert" # need persist this map from f10 to insert key
+echo "keycode  76 = Insert Insert Insert Insert" >> ~/.xmodmaprc
+
 echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
 echo 1 | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd
 
 echo options hid_apple fnmode=2 | sudo tee -a /etc/modprobe.d/hid_apple.conf
 echo options hid_apple swap_opt_cmd=1 | sudo tee -a /etc/modprobe.d/hid_apple.conf
+
+sudo update-initramfs -u -k all
+```
+
+for xmodmap change, add a startup application with a shell wrapper of the `xmodmap` command.
+
+## Disable Super_Key to show Gnome activities
+
+```
+gsettings set org.gnome.mutter overlay-key ""
+
+gsettings set org.gnome.mutter overlay-key Super_L
 ```
 
 
