@@ -147,6 +147,8 @@ Such as `QT_SCALE_FACTOR=2 your-app`, or `QT_AUTO_SCREEN_SCALE_FACTOR=1 your-app
 
 In .desktop file, add `Exec=env QT_AUTO_SCREEN_SCALE_FACTOR=1 your-app`.
 
+GTK HiDPI, export `GDK_SCALE=2`, then start the application.
+
 ## Change locale
 
 ```
