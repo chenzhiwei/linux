@@ -55,7 +55,7 @@ apt install -y ibus-qt4 ibus-clutter ibus-rime librime-data-wubi librime-data-pi
 
 ```
 xmodmap -e "keycode 76 = Insert Insert" # need persist this map from f10 to insert key
-echo "keycode  76 = Insert Insert Insert Insert" >> ~/.xmodmaprc
+echo "keycode  76 = Insert Insert Insert Insert" >> ~/.Xmodmap
 
 echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
 echo 1 | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd
