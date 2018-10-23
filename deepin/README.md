@@ -15,6 +15,15 @@ apt update
 apt install -y google-chrome-stable
 ```
 
+Make the google apt repo has a higher priority than deepin repo:
+
+```
+vim /etc/apt/preferences.d/google
+Package: google-chrome-stable
+Pin: origin "dl.google.com"
+Pin-Priority: 1002
+```
+
 ## Install essential packages
 
 ```
