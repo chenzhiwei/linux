@@ -524,7 +524,13 @@ Date:   Wed Jun 22 12:07:45 2016 +0800
     first commit
 ```
 
-## 从历史记录时删除大文件
+## 从历史记录里删除大文件或敏感文件
+
+```
+git filter-branch --tree-filter 'rm -f passwords.txt' HEAD
+```
+
+或
 
 ```
 $ git filter-branch --force --index-filter \
@@ -535,6 +541,28 @@ $ git push origin --force --tags
 ```
 
 这样会导致所有和`PATH-TO-YOUR-BIG-FILES`相关的 commit 都会被修改，感觉压根就不应该提交大文件的。
+
+## 从历史记录里修改某个文件
+
+一不小心把自己的密码放在了某个文件里，直到很久之后才发现，这时就需要修改历史记录里的这个文件了，无论当前是否还有这个文件。
+
+```
+git filter-branch --tree-filter "sed -i 's/d15bd7884eaea39a3974/your-token/g' docs/sensitive-file.md || true" HEAD
+```
+
+## 从历史记录里修改邮件地址
+
+```
+$ git filter-branch --commit-filter '
+        if [ "$GIT_AUTHOR_EMAIL" = "schacon@localhost" ];
+        then
+                GIT_AUTHOR_NAME="Scott Chacon";
+                GIT_AUTHOR_EMAIL="schacon@example.com";
+                git commit-tree "$@";
+        else
+                git commit-tree "$@";
+        fi' HEAD
+```
 
 ## 给 Git 挂代理
 
