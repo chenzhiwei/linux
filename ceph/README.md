@@ -73,10 +73,21 @@ lvcreate -l 512 -n ceph-lv ceph-vg
 ceph-deploy osd create --data  /dev/ceph-vg/ceph-lv zhiwei-1
 ```
 
+### Create metadata server
+
+```
+ceph-deploy mds create zhiwei-1
+```
+
 ### Create OSD pool and user
 
 ```
-ceph osd pool create kube 8 8
+ceph osd pool create kube 100 100 replicated
+
+rbd pool init kube
+
+ceph osd lspools
+
 ceph auth add client.kube mon 'allow r' osd 'allow rwx pool=kube'
 ```
 
