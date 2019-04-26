@@ -96,6 +96,12 @@ $ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 $ openssl x509 -text -noout -in server.crt
 ```
 
+## Check if the certificate is signed by a root ca
+
+```
+openssl verify -verbose -CAfile root.crt user.crt
+```
+
 ## After setup an HTTP server
 
 ```
