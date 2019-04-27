@@ -20,6 +20,21 @@ $ export PATH=/opt/vagrant/embedded/bin:$PATH
 $ vagrant plugin install vagrant-libvirt
 ```
 
+## Vagrant disksize plugin
+
+```
+vagrant plugin install vagrant-disksize
+```
+
+Set disksize like following:
+
+```
+vagrant.configure('2') do |config|
+    config.vm.box = 'ubuntu/bionic64'
+    config.disksize.size = '50GB'
+end
+```
+
 ## Using
 
 ```

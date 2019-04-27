@@ -15,9 +15,15 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline: <<-SHELL
     echo "#{vagrant_hosts}" > /etc/hosts
+
+    # Root Login
     passwd -u root
     mkdir -p /root/.ssh
-    curl -sS https://code.aliyun.com/chenzhiwei.keys > /root/.ssh/authorized_keys
+    curl -sSL https://chenzhiwei.cn/keys > /root/.ssh/authorized_keys
+    systemctl reload sshd
+
+    # Git config
+    curl -sSL -o /root/.gitconfig https://chenzhiwei.cn/gitconfig
   SHELL
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -26,6 +32,7 @@ Vagrant.configure(2) do |config|
     config.vm.define node[:hostname] do |nodeconfig|
       nodeconfig.vm.hostname = node[:hostname]
       nodeconfig.vm.box = node[:box]
+      nodeconfig.disksize.size = '80GB'
       nodeconfig.vm.box_check_update = false
       # The URL can be "file:///tmp/test.box"
       # nodeconfig.vm.box_url = "https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/libvirt.box"
