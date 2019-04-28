@@ -93,7 +93,9 @@ $ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 ## Get the certificate info
 
 ```
-$ openssl x509 -text -noout -in server.crt
+openssl x509 -text -noout -in server.crt
+
+openssl s_client -connect baidu.com:443 2>/dev/null | openssl x509 -noout -text
 ```
 
 ## Check if the certificate is signed by a root ca
