@@ -19,11 +19,11 @@ fi
 chmod +x /usr/local/bin/dep
 
 
-cat <<'EOF' > $HOME/.gorc
+cat <<'EOF' > $HOME/.golangrc
 # GOLANG
-export PATH=$PATH:/usr/local/go/bin
+[[ $PATH == */usr/local/go/bin* ]] || export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 EOF
 
-grep -w '$HOME/.gorc' $HOME/.bashrc || echo '. $HOME/.gorc' >> $HOME/.bashrc
+grep -wq '.golangrc' $HOME/.bashrc || echo '. $HOME/.golangrc' >> $HOME/.bashrc
