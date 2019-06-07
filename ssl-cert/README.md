@@ -34,13 +34,17 @@
 
         ```
         openssl genrsa -out user.key 2048
-        openssl req -new -key user.key -out user.csr
+        openssl req -new -key user.key -out user.csr -subj "/C=US/ST=California/L=Los Angeles/O=My User Inc/CN=myuser.com"
+
+        openssl req -new -key user.key -out user.csr -reqexts SAN -subj "/C=US/ST=California/L=Los Angeles/O=My User Inc/CN=myuser.com" -config <(printf "[req]\ndistinguished_name=SAN\n[SAN]\nsubjectAltName=DNS:example.com,DNS:www.example.com")
         ```
 
     2. 给用户签发证书
 
         ```
-        openssl x509 -req -in user.csr -extensions v3_usr -CA root.crt -CAkey root.key -CAcreateserial -out user.crt
+        openssl x509 -req -days 730 -in user.csr -extensions v3_usr -CA root.crt -CAkey root.key -CAcreateserial -out user.crt
+
+        openssl x509 -req -days 730 -in user.csr -extensions SAN -CA root.crt -CAkey root.key -CAcreateserial -out user.crt -extfile <(printf "[req]\ndistinguished_name=SAN\n[SAN]\nsubjectAltName=DNS:example.com,DNS:www.example.com")
         ```
 
     3. 在浏览器里导入 root.crt ，然后在 HTTP Server 里配置 user.key 和 user.crt，然后就不会有证书错误了。
