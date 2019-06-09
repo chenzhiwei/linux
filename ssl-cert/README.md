@@ -6,48 +6,36 @@
 
 用户的证书生成方式是，用户先生成一个私钥和一个 CSR(Certificate Signing Request) 文件，然后把这个 CSR 文件提交给证书机构（比如 Lets Encrypt），然后证书机构用它的 Root CA 和 Root key 来生成用户的证书。
 
-### 生成 Root CA 和 Root key
+
+## 用 Root CA 签证书
 
 
-1. 生成 Root key
-
-    ```
-    openssl genrsa -out root.key 2048
+1. 生成 Root CA
 
     ```
-
-2. 用 Root key 来生成 CSR
-
-    ```
-    openssl req -new -key root.key -out root.csr
-    ```
-
-3. 用 Root key 和 Root csr 来生成证书
+    openssl req -newkey rsa:4096 -sha256 -nodes -keyout root.key -x509 -days 36500 -out root.crt -subj "/C=US/ST=California/L=Los Angeles/O=Root Inc/CN=root"
 
     ```
-    openssl x509 -req -days 36500 -in root.csr -signkey root.key -out root.crt
-    ```
 
-4. 用 Root CA 和 Root key 生成用户的证书
+2. 用 Root CA 签发用户证书
 
     1. 生成用户的 key 和 csr
 
         ```
-        openssl genrsa -out user.key 2048
-        openssl req -new -key user.key -out user.csr -subj "/C=US/ST=California/L=Los Angeles/O=My User Inc/CN=myuser.com"
-
-        openssl req -new -key user.key -out user.csr -reqexts SAN -subj "/C=US/ST=California/L=Los Angeles/O=My User Inc/CN=myuser.com" -config <(printf "[req]\ndistinguished_name=SAN\n[SAN]\nsubjectAltName=DNS:example.com,DNS:www.example.com")
+        openssl genrsa -out domain.key 4096
+        openssl req -new -key domain.key -out domain.csr -subj "/C=US/ST=California/L=Los Angeles/O=Domain Inc/CN=domain.com"
         ```
 
     2. 给用户签发证书
 
         ```
-        openssl x509 -req -days 730 -in user.csr -extensions v3_usr -CA root.crt -CAkey root.key -CAcreateserial -out user.crt
+        openssl x509 -req -days 730 -in domain.csr -CA root.crt -CAkey root.key -CAcreateserial -out domain.crt -extensions v3_usr
 
-        openssl x509 -req -days 730 -in user.csr -extensions SAN -CA root.crt -CAkey root.key -CAcreateserial -out user.crt -extfile <(printf "[req]\ndistinguished_name=SAN\n[SAN]\nsubjectAltName=DNS:example.com,DNS:www.example.com")
+        openssl x509 -req -days 730 -in domain.csr -CA root.crt -CAkey root.key -CAcreateserial -out domain.crt -extensions SAN -extfile <(printf "[SAN]\nsubjectAltName=DNS:example.com,DNS:www.example.com")
         ```
 
-    3. 在浏览器里导入 root.crt ，然后在 HTTP Server 里配置 user.key 和 user.crt，然后就不会有证书错误了。
+    3. 在浏览器里导入 root.crt ，然后在 HTTP Server 里配置 domain.key 和 domain.crt，然后就不会有证书错误了。
+
 
 ## Single command to generate self-signed certifcate
 
