@@ -43,6 +43,14 @@
 openssl req -newkey rsa:4096 -sha256 -nodes -keyout your-domain.com.key -x509 -days 36500 -out your-domain.com.crt -subj "/C=US/ST=California/L=Los Angeles/O=Your Domain Inc/CN=your-domain.com"
 ```
 
+## Generate self-signed certificate with SAN
+
+```
+openssl genrsa -out domain.key 4096
+openssl req -new -key domain.key -out domain.csr -subj "/C=US/ST=California/L=Los Angeles/O=Domain Inc/CN=domain.com"
+openssl x509 -req -days 36500 -in domain.csr -signkey domain.key -out domain.crt -extensions SAN -extfile <(printf "[SAN]\nsubjectAltName=DNS:domain.com")
+```
+
 You can ignore the following steps.
 
 ## Convert ASCII format to PEM format
