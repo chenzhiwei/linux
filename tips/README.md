@@ -6,6 +6,18 @@
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 ```
 
+## Add git repo
+
+```
+# /etc/yum.repos.d/git.repo
+
+[git]
+name=Git Packages for Enterprise Linux 7 - $basearch
+baseurl=http://opensource.wandisco.com/centos/7/git/x86_64/
+enabled=1
+gpgcheck=0
+```
+
 ## Install Docker
 
 ```
