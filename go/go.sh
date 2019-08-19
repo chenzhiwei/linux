@@ -23,7 +23,7 @@ cat <<'EOF' > $HOME/.golangrc
 # GOLANG
 [[ $PATH == */usr/local/go/bin* ]] || export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
+export GOPATH=$HOME/dev/go
 EOF
 
 grep -wq '.golangrc' $HOME/.bashrc || echo '. $HOME/.golangrc' >> $HOME/.bashrc
