@@ -486,3 +486,23 @@ $ git commit            #提交到自己的
 $ git push
 ```
 
+### 返回版本
+```
+//按文件、路径回退==仅回退这个目录或者文件
+git reset HEAD path/
+ 
+//按版本回退==回退到上个版本
+git reset HEAD^
+ 
+//按版本号回退==回退到某个版本
+git reset –-soft HEAD~3  
+git reset 057d  
+ 
+//将本地的状态回退到和远程的一样  
+git reset –-hard origin/master
+————————————————
+```
+```
+//强制回退远程提交
+git push origin HEAD --force 
+```
