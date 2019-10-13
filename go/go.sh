@@ -1,23 +1,18 @@
 #!/bin/bash
 
-VERSION=${VERSION:-1.12.4}
-DEP_VERSION=${DEP_VERSION:-v0.5.1}
+VERSION=${VERSION:-1.13.1}
 ARCH=$(uname -m|sed 's/x86_64/amd64/g')
 KERNAL=$(uname -s|tr '[:upper:]' '[:lower:]')
 
 URL=https://dl.google.com/go/go${VERSION}.${KERNAL}-${ARCH}.tar.gz
-DEP_URL=https://github.com/golang/dep/releases/download/${DEP_VERSION}/dep-${KERNAL}-${ARCH}
 
 if type curl &>/dev/null; then
-    curl -kL $URL | tar -xz -C /usr/local/
-    curl -kL -o /usr/local/bin/dep $DEP_URL
+    curl -kL $URL | sudo tar -xz -C /usr/local/
 else
-    wget -O - $URL | tar -xz -C /usr/local/
-    wget -O /usr/local/bin/dep $DEP_URL
+    wget -O - $URL | sudo tar -xz -C /usr/local/
 fi
 
 chmod +x /usr/local/bin/dep
-
 
 cat <<'EOF' > $HOME/.golangrc
 # GOLANG
