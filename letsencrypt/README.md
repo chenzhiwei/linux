@@ -29,6 +29,50 @@ You will get something like this:
 [Thu Aug 16 08:04:20 EDT 2018] And the full chain certs is there:  /root/.acme.sh/mixhub.cn/fullchain.cer
 ```
 
+## Generate certificate in DNS alias mode
+
+* domain: mixhub.cn
+* alias domain: mixhub-alias.cn
+
+1. setup domain CNAME to alias domain
+
+    ```
+    _acme-challenge.mixhub.cn
+        => _acme-challenge.mixhub-alias.cn
+    ```
+
+2. Use DNS API
+
+    * CloudFlare
+
+        export CF_Token=xxx
+        export CF_Account_ID=xxx
+        acme.sh --dns dns_cf
+
+    * Digital Ocean
+
+        export DO_API_KEY=xxx
+        acme.sh --dns dns_dgon
+
+3. Issue a certificate
+
+    ```
+    acme.sh --issue \
+        --dns dns_dgon
+        --challenge-alias mixhub-alias.cn \
+        -d mixhub.cn -d '*.mixhub.cn' \
+    ```
+
+4. Renew a certificate
+
+    ```
+    acme.sh --renew \
+        --dns dns_dgon
+        --challenge-alias mixhub-alias.cn \
+        -d mixhub.cn -d '*.mixhub.cn' \
+    ```
+
+
 ## Setup Docker registry
 
 ```
