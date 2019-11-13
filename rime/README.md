@@ -31,3 +31,5 @@ git clone https://github.com/rime/rime-wubi
 
 cp -r *.yaml rime-pinyin-simp/*.yaml rime-wubi/*.yaml ~/Library/Rime/
 ```
+
+Avoid period with double-space: `System -> Keyboard -> Text -> unselect Add period with double-space`
