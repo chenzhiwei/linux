@@ -3,4 +3,6 @@
 
 patch:
   # Disable user dict and auto adjust
-  translator/enable_user_dict: false
+  translator:
+    enable_user_dict: false
+    dictionary: wubi86.jidian

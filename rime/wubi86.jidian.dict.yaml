@@ -9,7 +9,7 @@
 # Wozy <wozy.in@gmail.com>
 
 ---
-name: wubi86
+name: wubi86.jidian
 version: "0.1"
 sort: original
 columns:
@@ -1673,6 +1673,7 @@ encoder:
 苏军	alpl	1
 甍	alpn	1
 花甲之年	alpr	1
+苏宁	alps	1
 苦思冥想	alps	1
 莲	alpu	1
 薨	alpx	1
@@ -1911,6 +1912,7 @@ encoder:
 蔚成	andn	1
 世故	andt	1
 世袭	andx	1
+艺龙	andx	1
 世态	andy	1
 燕尾服	aneb	1
 蔚	anf	1
@@ -5503,6 +5505,7 @@ encoder:
 双线	ccxg	1
 驭	ccy	1
 双	ccy	1
+骏译	ccyc	1
 双语	ccyg	1
 驻马店	ccyh	1
 骚	ccyj	1
@@ -9450,6 +9453,7 @@ encoder:
 厅	ds	1
 奇巧	dsag	1
 奇功	dsal	1
+奇艺	dsan	1
 大本营	dsap	1
 奇葩	dsar	1
 奇耻	dsbh	1
@@ -12375,8 +12379,8 @@ encoder:
 动笔	fctt	1
 支委	fctv	1
 运往	fcty	1
-去	fcu	1
 云	fcu	1
+去	fcu	1
 支	fcu	1
 运送	fcud	1
 支前	fcue	1
@@ -14331,6 +14335,7 @@ encoder:
 卖好	fnvb	1
 块	fnw	1
 专供	fnwa	1
+志伟	fnwf	1
 场合	fnwg	1
 卖命	fnwg	1
 专修	fnwh	1
@@ -16358,6 +16363,7 @@ encoder:
 天外	gdqh	1
 天象	gdqj	1
 吞金	gdqq	1
+天猫	gdqt	1
 天狗	gdqt	1
 球面镜	gdqu	1
 天煞	gdqv	1
@@ -24627,6 +24633,7 @@ encoder:
 省劲	itca	1
 洛桑	itcc	1
 海参	itcd	1
+海通	itce	1
 海马	itcn	1
 海难	itcw	1
 活	itd	1
@@ -24983,6 +24990,7 @@ encoder:
 洋溢	iuiu	1
 滋润	iuiu	1
 滚滚	iuiu	1
+滴滴	iuiu	1
 澜沧	iuiw	1
 滚沸	iuix	1
 洋流	iuiy	1
@@ -30381,6 +30389,7 @@ encoder:
 喉咙	kwkd	1
 哈喇	kwkg	1
 吟唱	kwkj	1
+哈啰	kwkl	1
 呵佛骂祖	kwkp	1
 哗啦	kwkr	1
 吟哦	kwkt	1
@@ -30474,6 +30483,7 @@ encoder:
 吲	kxh	1
 吲	kxhh	1
 吆喝	kxkj	1
+哔哩	kxkj	1
 叱骂	kxkk	1
 哔叽	kxkm	1
 叱咤	kxkp	1
@@ -31336,6 +31346,7 @@ encoder:
 车头	lgud	1
 车前	lgue	1
 车盖	lgug	1
+国美	lgug	1
 车站	lguh	1
 车间	lguj	1
 车况	lguk	1
@@ -33356,6 +33367,7 @@ encoder:
 贴画	mhgl	1
 贴现	mhgm	1
 帻	mhgm	1
+贝瓦	mhgn	1
 由来	mhgo	1
 帖	mhh	1
 帔	mhhc	1
@@ -33964,6 +33976,7 @@ encoder:
 风灾	mqpo	1
 见客	mqpt	1
 见容	mqpw	1
+网宿	mqpw	1
 见礼	mqpy	1
 网	mqq	1
 风色	mqqc	1
@@ -36783,6 +36796,7 @@ encoder:
 飞鱼	nuqg	1
 买饭	nuqn	1
 飞镖	nuqs	1
+飞猪	nuqt	1
 飞鸟	nuqy	1
 飞撒	nura	1
 飞报	nurb	1
@@ -38513,6 +38527,7 @@ encoder:
 米黄	oyam	1
 粮荒	oyay	1
 炉子	oybb	1
+米聊	oybq	1
 炉台	oyck	1
 糖厂	oydg	1
 米面	oydm	1
@@ -39394,6 +39409,7 @@ encoder:
 宝剑	pgwg	1
 写作	pgwt	1
 富余	pgwt	1
+富途	pgwt	1
 定位	pgwu	1
 定价	pgww	1
 富人	pgww	1
@@ -42396,6 +42412,7 @@ encoder:
 锁定	qipg	1
 迩	qipi	1
 销案	qipv	1
+乐视	qipy	1
 铫	qiq	1
 锁钥	qiqe	1
 锁链	qiql	1
@@ -48666,6 +48683,7 @@ encoder:
 拉美	ruug	1
 接站	ruuh	1
 拼音	ruuj	1
+抖音	ruuj	1
 抱头痛哭	ruuk	1
 拉闸	ruul	1
 挂羊头卖狗肉	ruum	1
@@ -48861,6 +48879,7 @@ encoder:
 热锅	rvqk	1
 热饮	rvqn	1
 搜狐	rvqt	1
+搜狗	rvqt	1
 热狗	rvqt	1
 热键	rvqv	1
 拶	rvqy	1
@@ -49131,6 +49150,7 @@ encoder:
 失算	rwth	1
 推衍	rwti	1
 失利	rwtj	1
+携程	rwtk	1
 失和	rwtk	1
 失血	rwtl	1
 推向	rwtm	1
@@ -50452,6 +50472,7 @@ encoder:
 杌	sgqn	1
 本金	sgqq	1
 酬金	sgqq	1
+酷狗	sgqt	1
 丁卯	sgqt	1
 酌	sgqy	1
 配搭	sgra	1
@@ -52887,6 +52908,7 @@ encoder:
 得而复失	tdtr	1
 各有千秋	tdtt	1
 短简	tdtu	1
+知乎	tdtu	1
 矮	tdtv	1
 敌	tdty	1
 短篇	tdty	1
@@ -54979,6 +55001,7 @@ encoder:
 奥运	tmfc	1
 秽土	tmff	1
 躯干	tmfg	1
+微博	tmfg	1
 移山填海	tmfi	1
 射进	tmfj	1
 稠	tmfk	1
@@ -55137,6 +55160,7 @@ encoder:
 身份	tmww	1
 身价	tmww	1
 自由化	tmwx	1
+微信	tmwy	1
 和风细雨	tmxf	1
 射线	tmxg	1
 微细	tmxl	1
@@ -57838,6 +57862,7 @@ encoder:
 闺怨	ufqb	1
 半角	ufqe	1
 北坡镇	ufqf	1
+斗鱼	ufqg	1
 北朝鲜	ufqg	1
 闭锁	ufqi	1
 半句	ufqk	1
@@ -58031,6 +58056,7 @@ encoder:
 盖	ugl	1
 病因	ugld	1
 盖	uglf	1
+美团	uglf	1
 美国	uglg	1
 阑	ugli	1
 头一回	uglk	1
@@ -59664,6 +59690,7 @@ encoder:
 新禧	uspy	1
 鹇	usq	1
 新鲜	usqg	1
+闲鱼	usqg	1
 鹇	usqg	1
 闲逸	usqk	1
 闲饭	usqn	1
@@ -60123,6 +60150,7 @@ encoder:
 立说	uuyu	1
 立论	uuyw	1
 立方	uuyy	1
+阅文	uuyy	1
 妆	uv	1
 兼营	uvap	1
 新婚燕尔	uvaq	1
@@ -60339,6 +60367,7 @@ encoder:
 阀门	uwuy	1
 冷媒	uwva	1
 痤	uww	1
+闪付	uwwf	1
 阀值	uwwf	1
 痤	uwwf	1
 痊愈	uwwg	1
@@ -62970,6 +62999,7 @@ encoder:
 倚	wds	1
 人面桃花	wdsa	1
 人非木石	wdsd	1
+优酷	wdsg	1
 倚	wdsk	1
 僚机	wdsm	1
 做梦	wdss	1
@@ -63339,6 +63369,7 @@ encoder:
 舒张	wfxt	1
 付给	wfxw	1
 传给	wfxw	1
+佳缘	wfxx	1
 传统	wfxy	1
 付	wfy	1
 会试	wfya	1
@@ -65150,6 +65181,7 @@ encoder:
 侨报	wtrb	1
 傻瓜	wtrc	1
 伤兵	wtrg	1
+途牛	wtrh	1
 余年	wtrh	1
 作揖	wtrk	1
 余缺	wtrm	1
@@ -65822,6 +65854,7 @@ encoder:
 人丁	wwsg	1
 俭朴	wwsh	1
 人欲横流	wwsi	1
+谷歌	wwsk	1
 人机	wwsm	1
 人杰	wwso	1
 丛林	wwss	1
@@ -66071,6 +66104,7 @@ encoder:
 货主	wxyg	1
 华语	wxyg	1
 货店	wxyh	1
+华为	wxyl	1
 化为	wxyl	1
 倾谈	wxyo	1
 华亭	wxyp	1
@@ -66574,6 +66608,7 @@ encoder:
 红灯	xaos	1
 红粉	xaow	1
 红糖	xaoy	1
+红米	xaoy	1
 练字	xapb	1
 红军	xapl	1
 红客	xapt	1
@@ -69797,6 +69832,7 @@ encoder:
 就其	yiad	1
 望尘莫及	yiae	1
 旅游鞋	yiaf	1
+京东	yiai	1
 就范	yiai	1
 高深莫测	yiai	1
 应募	yiaj	1
@@ -70464,6 +70500,7 @@ encoder:
 调适	ymtd	1
 高矮	ymtd	1
 高等	ymtf	1
+高德	ymtf	1
 高处	ymth	1
 高利	ymtj	1
 调和	ymtk	1
@@ -71458,6 +71495,7 @@ encoder:
 庖丁解牛	ysqr	1
 魔镜	ysqu	1
 订报	ysrb	1
+摩拜	ysrd	1
 麻质	ysrf	1
 魔爪	ysrh	1
 磨损	ysrk	1
