@@ -35,10 +35,8 @@ cp -r *.yaml rime-pinyin-simp/*.yaml rime-wubi/*.yaml ~/Library/Rime/
 Avoid period with double-space: `System -> Keyboard -> Text -> unselect Add period with double-space`
 
 
-## Special for wubi86.dict.yaml
+## Special for wubi86.jidian.dict.yaml
 
-We use Wubi for simplified Chinese words, but there are some traditional Chinese words in the default library, so we need to use `wubi86.dict.yaml` to replace the default library.
-
-Put this file to `$RIME_HOME/wubi86.dict.yaml` and deploy Rime.
+We use Wubi for simplified Chinese words, but there are some traditional Chinese words in the default library, so we need to use `wubi86.jidian.dict.yaml` to replace the default library.
 
 Details: https://github.com/rime/rime-wubi/pull/3
