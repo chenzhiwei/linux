@@ -2,6 +2,12 @@
 
 喜欢使用 GO 。
 
+## Set goproxy
+
+```
+go env -w GOPROXY=https://goproxy.cn,direct
+```
+
 ## 静态链接 binary
 
 ```
