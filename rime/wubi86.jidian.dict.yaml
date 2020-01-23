@@ -5838,6 +5838,7 @@ encoder:
 对手	cfrt	1
 对接	cfru	1
 对抗	cfry	1
+对标	cfsf	1
 对本	cfsg	1
 对歌	cfsk	1
 对校	cfsu	1
@@ -17254,6 +17255,7 @@ encoder:
 下周	ghmf	1
 下贱	ghmg	1
 下帖	ghmh	1
+正则	ghmj	1
 下岗	ghmm	1
 下山	ghmm	1
 下风	ghmq	1
@@ -17473,6 +17475,7 @@ encoder:
 邳	gigb	1
 不到	gigc	1
 珠沉玉碎	gigd	1
+琑	gige	1
 不敷	gige	1
 一举一动	gigf	1
 丕	gigf	1
@@ -17606,6 +17609,7 @@ encoder:
 不免	giqk	1
 不负	giqm	1
 珧	giqn	1
+珖	giqn	1
 不多	giqq	1
 政治犯	giqt	1
 不争	giqv	1
@@ -17665,6 +17669,7 @@ encoder:
 不好	givb	1
 还好	givb	1
 孬	givb	1
+珰	givg	1
 不妙	givi	1
 不如	givk	1
 不灵	givo	1
@@ -17774,6 +17779,7 @@ encoder:
 惠	gjh	1
 理睬	gjhe	1
 瑁	gjhg	1
+珅	gjhh	1
 遭遇战	gjhk	1
 惠	gjhn	1
 更具	gjhw	1
@@ -17789,6 +17795,7 @@ encoder:
 一日游	gjiy	1
 更紧	gjjc	1
 更是	gjjg	1
+琩	gjjg	1
 更早	gjjh	1
 更显	gjjo	1
 更易	gjjq	1
@@ -17799,6 +17806,7 @@ encoder:
 理路	gjkh	1
 理喻	gjkw	1
 班师回朝	gjlf	1
+瑥	gjlg	1
 更加	gjlk	1
 理财	gjmf	1
 理由	gjmh	1
@@ -17935,6 +17943,8 @@ encoder:
 带到	gkgc	1
 整天	gkgd	1
 带球	gkgf	1
+珵	gkgg	1
+羋	gkgh	1
 整理	gkgj	1
 事理	gkgj	1
 整整	gkgk	1
@@ -17958,6 +17968,7 @@ encoder:
 璐	gkhk	1
 橐	gkhs	1
 逼眼	gkhv	1
+珿	gkhy	1
 束	gki	1
 融汇	gkia	1
 整治	gkic	1
@@ -18273,6 +18284,7 @@ encoder:
 现款	gmff	1
 瑞士	gmfg	1
 天崩地裂	gmfg	1
+珃	gmfg	1
 再起	gmfh	1
 现场	gmfn	1
 两者	gmft	1
@@ -18300,10 +18312,12 @@ encoder:
 形同虚设	gmhy	1
 刺	gmi	1
 现汇	gmia	1
+丽江	gmia	1
 两汉	gmic	1
 两湖	gmid	1
 一败涂地	gmif	1
 棘	gmii	1
+丽水	gmii	1
 刺	gmij	1
 再没	gmim	1
 枣泥	gmin	1
@@ -18340,6 +18354,7 @@ encoder:
 责怪	gmnc	1
 两臂	gmnk	1
 两翼	gmnl	1
+天网恢恢	gmnn	1
 现已	gmnn	1
 两性	gmnt	1
 刺戳	gmnw	1
@@ -18513,6 +18528,7 @@ encoder:
 瑕	gnh	1
 瑕	gnhc	1
 下情上达	gnhd	1
+㺩	gnhh	1
 死心眼	gnhv	1
 与此	gnhx	1
 不敢当	gniv	1
@@ -20507,6 +20523,7 @@ encoder:
 上头	hhud	1
 目送	hhud	1
 目前	hhue	1
+上前	hhue	1
 上装	hhuf	1
 上闩	hhug	1
 上站	hhuh	1
@@ -21531,6 +21548,7 @@ encoder:
 汇	ian	1
 渫	ian	1
 汇展	iana	1
+港剧	iand	1
 泄愤	ianf	1
 满怀	iang	1
 泄	iann	1
@@ -26491,6 +26509,7 @@ encoder:
 量度	jgya	1
 题诗	jgyf	1
 师训	jgyk	1
+题库	jgyl	1
 题为	jgyl	1
 旺市	jgym	1
 题词	jgyn	1
@@ -28485,6 +28504,7 @@ encoder:
 吹鼓手	kfrt	1
 哭丧棒	kfsd	1
 叶枝	kfsf	1
+吐槽	kfsg	1
 叶柄	kfsg	1
 中直机关	kfsu	1
 喷枪	kfsw	1
@@ -28894,6 +28914,7 @@ encoder:
 啃噬	khkt	1
 盅	khl	1
 中辍	khlc	1
+跳转	khlf	1
 中转	khlf	1
 盅	khlf	1
 中国	khlg	1
@@ -29048,6 +29069,7 @@ encoder:
 足	khu	1
 蹉	khua	1
 踯	khub	1
+足疗	khub	1
 跟着	khud	1
 遣送	khud	1
 噱头	khud	1
@@ -29766,6 +29788,7 @@ encoder:
 呢	knxn	1
 叫绝	knxq	1
 吣	kny	1
+叫床	knys	1
 叫座	knyw	1
 唯心主义	knyy	1
 噗	ko	1
@@ -30308,6 +30331,7 @@ encoder:
 哪去	kvfc	1
 啸声	kvfn	1
 哪天	kvgd	1
+唧歪	kvgi	1
 哪来	kvgo	1
 嗖	kvh	1
 嗖	kvhc	1
@@ -31774,6 +31798,7 @@ encoder:
 回请	lkyg	1
 回应	lkyi	1
 回禀	lkyl	1
+回调	lkym	1
 架设	lkym	1
 贺词	lkyn	1
 圆底	lkyq	1
@@ -33953,6 +33978,7 @@ encoder:
 风帆	mqmh	1
 刚刚	mqmq	1
 网购	mqmq	1
+飓风	mqmq	1
 巍然屹立	mqmu	1
 网内	mqmw	1
 网民	mqna	1
@@ -33990,6 +34016,7 @@ encoder:
 飑	mqqn	1
 见多	mqqq	1
 网兜	mqqr	1
+网银	mqqv	1
 风急	mqqv	1
 风铃	mqqw	1
 见报	mqrb	1
@@ -37754,6 +37781,7 @@ encoder:
 炒货	oiwx	1
 炒熟	oiyb	1
 炒高	oiym	1
+炒房	oiyn	1
 烛	oj	1
 爆	oja	1
 焊工	ojaa	1
@@ -37790,9 +37818,11 @@ encoder:
 焊管	ojtp	1
 焊条	ojts	1
 爆竹	ojtt	1
+爆笑	ojtt	1
 煜	oju	1
 煜	ojug	1
 爆冷	ojuw	1
+爆仓	ojwb	1
 精明强干	ojxf	1
 焊缝	ojxt	1
 焊丝	ojxx	1
@@ -37916,6 +37946,7 @@ encoder:
 断口	onkk	1
 爆发力	onlt	1
 断崖	onmd	1
+断网	onmq	1
 断层	onnf	1
 断壁	onnk	1
 焗	onnk	1
@@ -38885,6 +38916,7 @@ encoder:
 宏伟	pdwf	1
 割舍	pdwf	1
 寡合	pdwg	1
+寄件	pdwr	1
 害人	pdww	1
 寄信	pdwy	1
 家破人亡	pdwy	1
@@ -39363,6 +39395,7 @@ encoder:
 宝刹	pgqs	1
 安琪儿	pgqt	1
 宝岛	pgqy	1
+定投	pgrm	1
 定制	pgrm	1
 宣扬	pgrn	1
 宣誓	pgrr	1
@@ -40907,6 +40940,7 @@ encoder:
 窠臼	pwvt	1
 容忍	pwvy	1
 容	pww	1
+空仓	pwwb	1
 宿舍	pwwf	1
 宿命	pwwg	1
 窬	pwwj	1
@@ -42171,6 +42205,7 @@ encoder:
 钰	qgyy	1
 外	qh	1
 钻戒	qhaa	1
+钟点工	qhaa	1
 外藩	qhai	1
 外勤	qhak	1
 外功	qhal	1
@@ -42265,7 +42300,7 @@ encoder:
 外界	qhlw	1
 外贼	qhma	1
 外财	qhmf	1
-外见	qhmq	1
+外网	qhmq	1
 外层	qhnf	1
 外屋	qhng	1
 外快	qhnn	1
@@ -43453,6 +43488,7 @@ encoder:
 刎颈	qrca	1
 兜鍪	qrcb	1
 铁骑	qrcd	1
+铁通	qrce	1
 猴年马月	qrce	1
 铁马	qrcn	1
 钣	qrcy	1
@@ -44796,6 +44832,7 @@ encoder:
 披荆斩棘	ralg	1
 找回	ralk	1
 搭边	ralp	1
+抠图	ralt	1
 描图	ralt	1
 拱圈	ralu	1
 搭界	ralw	1
@@ -46973,6 +47010,7 @@ encoder:
 投送	rmud	1
 罐装	rmuf	1
 投资	rmuq	1
+抽奖	rmuq	1
 抽闲	rmus	1
 投产	rmut	1
 制冷	rmuw	1
@@ -48552,6 +48590,7 @@ encoder:
 撇开	ruga	1
 接到	rugc	1
 损益表	ruge	1
+拉环	rugg	1
 接下	rugh	1
 撇下	rugh	1
 牛头不对马嘴	rugk	1
@@ -48560,6 +48599,7 @@ encoder:
 拼死	rugq	1
 拉平	rugu	1
 接班	rugy	1
+拉皮	ruhc	1
 接上	ruhh	1
 手疾眼快	ruhn	1
 拦洪	ruia	1
@@ -48807,6 +48847,7 @@ encoder:
 执政	rvgh	1
 抛下	rvgh	1
 热带	rvgk	1
+执事	rvgk	1
 招来	rvgo	1
 热烈	rvgq	1
 扫平	rvgu	1
@@ -49171,6 +49212,7 @@ encoder:
 抢答	rwtw	1
 操作系统	rwtx	1
 推入	rwty	1
+推送	rwud	1
 摄像头	rwud	1
 扮装	rwuf	1
 白化病	rwug	1
@@ -50126,6 +50168,7 @@ encoder:
 柰	sfiu	1
 瓢	sfiy	1
 标	sfiy	1
+标注	sfiy	1
 标明	sfje	1
 村里	sfjf	1
 标题	sfjg	1
@@ -50151,6 +50194,7 @@ encoder:
 标贴	sfmh	1
 村内	sfmw	1
 椟	sfn	1
+村民	sfna	1
 杜志民	sfna	1
 椟	sfnd	1
 剽悍	sfnj	1
@@ -50895,6 +50939,7 @@ encoder:
 查阅	sjuu	1
 查寻	sjvf	1
 查修	sjwh	1
+查件	sjwr	1
 查分	sjwv	1
 棍	sjx	1
 查结	sjxf	1
@@ -53541,6 +53586,7 @@ encoder:
 等待	tftf	1
 先行	tftf	1
 先生	tftg	1
+毛片	tfth	1
 选自	tfth	1
 迁徙	tfth	1
 毛利	tftj	1
@@ -53615,9 +53661,11 @@ encoder:
 造价	tfww	1
 行人	tfww	1
 等价	tfww	1
+行货	tfwx	1
 造化	tfwx	1
 自动化	tfwx	1
 选集	tfwy	1
+毛绒	tfxa	1
 行经	tfxc	1
 等级	tfxe	1
 待续	tfxf	1
@@ -53868,6 +53916,7 @@ encoder:
 生铁	tgqr	1
 生锈	tgqt	1
 重犯	tgqt	1
+生猛	tgqt	1
 笺	tgr	1
 垂拱	tgra	1
 重报	tgrb	1
@@ -53898,6 +53947,7 @@ encoder:
 生相	tgsh	1
 臭不可当	tgsi	1
 生机	tgsm	1
+重构	tgsq	1
 垂柳	tgsq	1
 臭不可闻	tgsu	1
 重要	tgsv	1
@@ -54068,6 +54118,7 @@ encoder:
 处于	thgf	1
 怎不	thgi	1
 处理	thgj	1
+自理	thgj	1
 自带	thgk	1
 处事	thgk	1
 版画	thgl	1
@@ -57340,6 +57391,7 @@ encoder:
 养蜂	udjt	1
 关照	udjv	1
 头号	udkg	1
+减号	udkg	1
 差距	udkh	1
 差遣	udkh	1
 关口	udkk	1
@@ -57801,6 +57853,7 @@ encoder:
 半球	ufgf	1
 闭环	ufgg	1
 背城一战	ufgh	1
+装逼	ufgk	1
 装束	ufgk	1
 壮丽	ufgm	1
 壮烈	ufgq	1
@@ -58080,6 +58133,7 @@ encoder:
 恙	ugn	1
 美展	ugna	1
 凄惨	ugnc	1
+美剧	ugnd	1
 美丑	ugnf	1
 病情	ugng	1
 美眉	ugnh	1
@@ -65693,6 +65747,7 @@ encoder:
 代人受过	wwef	1
 俎	wweg	1
 佾	wweg	1
+偷腥	wweg	1
 人脑	wwey	1
 坐	wwf	1
 坐地	wwfb	1
@@ -67172,8 +67227,8 @@ encoder:
 引申	xhjh	1
 绰	xhjh	1
 纵虎归山	xhjm	1
-绰号	xhkg	1
 引号	xhkg	1
+绰号	xhkg	1
 引路	xhkh	1
 引力	xhlt	1
 引见	xhmq	1
@@ -70474,6 +70529,7 @@ encoder:
 诺贝尔	ymqi	1
 旗帜鲜明	ymqj	1
 敲锣	ymql	1
+调包	ymqn	1
 刻骨铭心	ymqn	1
 调匀	ymqu	1
 讽	ymqy	1
@@ -71491,6 +71547,7 @@ encoder:
 魔怪	ysnc	1
 魔怔	ysng	1
 订书	ysnn	1
+魔改	ysnt	1
 摩尼	ysnx	1
 磨炼	ysoa	1
 麻烦	ysod	1
