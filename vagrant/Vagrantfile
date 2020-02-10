@@ -1,9 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+#
+# vagrant plugin install vagrant-disksize
+#
 
 nodes = [
-  {:hostname => 'host0', :ip => '192.168.122.10', :box => 'centos/7', :cpu => 2, :memory => 4096},
-  {:hostname => 'host1', :ip => '192.168.122.11', :box => 'centos/7', :cpu => 2, :memory => 4096},
+  {:hostname => 'ubuntu', :ip => '192.168.122.10', :box => 'ubuntu/bionic64', :cpu => 2, :memory => 4096, :disk => '80GB'},
+  {:hostname => 'centos', :ip => '192.168.122.11', :box => 'centos/8', :cpu => 2, :memory => 4096, :disk => '10GB'},
 ]
 
 vagrant_hosts = "127.0.0.1 localhost\n"
@@ -19,11 +22,12 @@ Vagrant.configure(2) do |config|
     # Root Login
     passwd -u root
     mkdir -p /root/.ssh
-    curl -sSL https://chenzhiwei.cn/keys > /root/.ssh/authorized_keys
     systemctl reload sshd
 
-    # Git config
-    curl -sSL -o /root/.gitconfig https://chenzhiwei.cn/gitconfig
+    # config
+    curl -sSL -o /root/.gitconfig https://chenzhiwei.cn/gitconfig.txt
+    curl -sSL -o /root/.ssh/config https://chenzhiwei.cn/sshconfig.txt
+    curl -sSL -o /root/.ssh/authorized_keys https://chenzhiwei.cn/keys.txt
   SHELL
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -32,7 +36,7 @@ Vagrant.configure(2) do |config|
     config.vm.define node[:hostname] do |nodeconfig|
       nodeconfig.vm.hostname = node[:hostname]
       nodeconfig.vm.box = node[:box]
-      nodeconfig.disksize.size = '80GB'
+      nodeconfig.disksize.size = node[:disk]
       nodeconfig.vm.box_check_update = false
       # The URL can be "file:///tmp/test.box"
       # nodeconfig.vm.box_url = "https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/libvirt.box"
