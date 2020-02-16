@@ -1,5 +1,11 @@
 # git的相关配置
 
+## 代码空格、空行检查
+
+```
+git diff-tree --check $(git hash-object -t tree /dev/null) HEAD
+```
+
 ## 使用git
 
 搭建gitserver： <https://github.com/chenzhiwei/linux/blob/master/git/build-git-server.mkd>
