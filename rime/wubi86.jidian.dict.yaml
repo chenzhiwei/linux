@@ -1385,6 +1385,7 @@ encoder:
 草地	ajfb	1
 墓地	ajfb	1
 蓦地	ajfb	1
+划动	ajfc	1
 萌动	ajfc	1
 幕墙	ajff	1
 草坪	ajfg	1
@@ -1480,6 +1481,7 @@ encoder:
 鹊桥	ajst	1
 草根	ajsv	1
 蓝	ajt	1
+蓝筹	ajtd	1
 惹是生非	ajtd	1
 划船	ajte	1
 萌生	ajtg	1
@@ -1925,6 +1927,7 @@ encoder:
 巨献	anfm	1
 巨型	anga	1
 世事	angk	1
+蔚来	ango	1
 蔬	anh	1
 葭	anhc	1
 世上	anhh	1
@@ -2994,6 +2997,7 @@ encoder:
 荷叶	awkf	1
 花哨	awki	1
 巷口	awkk	1
+花呗	awkm	1
 花呢	awkn	1
 共鸣	awkq	1
 恭听	awkr	1
@@ -7015,6 +7019,7 @@ encoder:
 大吼	ddkb	1
 大喊	ddkd	1
 大号	ddkg	1
+套路	ddkh	1
 大路	ddkh	1
 大吵	ddki	1
 大唱	ddkj	1
@@ -12410,6 +12415,7 @@ encoder:
 二叠纪	fcxn	1
 云缝	fcxt	1
 动弹	fcxu	1
+运维	fcxw	1
 支离	fcyb	1
 却让	fcyh	1
 支应	fcyi	1
@@ -13205,6 +13211,7 @@ encoder:
 超车	fhlg	1
 赶回	fhlk	1
 盐田	fhll	1
+直连	fhlp	1
 直辖	fhlp	1
 走软	fhlq	1
 越轨	fhlv	1
@@ -29012,7 +29019,7 @@ encoder:
 中年	khrh	1
 嘴损	khrk	1
 跳舞	khrl	1
-跳投	khrm	1
+跟投	khrm	1
 踬	khrm	1
 中气	khrn	1
 踢打	khrs	1
@@ -29397,6 +29404,7 @@ encoder:
 鼍	kkl	1
 口轻	kklc	1
 咖啡因	kkld	1
+口罩	kklh	1
 器皿	kklh	1
 骂架	kklk	1
 鼍	kkln	1
@@ -31771,6 +31779,7 @@ encoder:
 回退	lkve	1
 辑录	lkvi	1
 轵	lkw	1
+加仓	lkwb	1
 加值	lkwf	1
 回合	lkwg	1
 回叙	lkwt	1
@@ -36201,6 +36210,7 @@ encoder:
 怩	nnxn	1
 慌慌张张	nnxx	1
 羽	nny	1
+快充	nnyc	1
 快译	nnyc	1
 书斋	nnyd	1
 心悦诚服	nnye	1
@@ -38147,6 +38157,7 @@ encoder:
 熔炼	opoa	1
 烷烃	opoc	1
 迷糊	opod	1
+熔断	opon	1
 精神焕发	opon	1
 熔炉	opoy	1
 迷宫	oppk	1
@@ -41811,6 +41822,7 @@ encoder:
 解雇	qeyn	1
 解谜	qeyo	1
 蟹膏	qeyp	1
+触底	qeyq	1
 解放	qeyt	1
 解说	qeyu	1
 触诊	qeyw	1
@@ -45004,6 +45016,7 @@ encoder:
 近卫军	rbpl	1
 报案	rbpv	1
 报社	rbpy	1
+报错	rbqa	1
 摄氏	rbqa	1
 报怨	rbqb	1
 报销	rbqi	1
@@ -46475,6 +46488,7 @@ encoder:
 捎给	rixw	1
 搅缠	rixy	1
 打油诗	riyf	1
+抄底	riyq	1
 泉州	riyt	1
 朱文	riyy	1
 提	rj	1
@@ -46950,6 +46964,7 @@ encoder:
 制导	rmnf	1
 皑	rmnn	1
 制发	rmnt	1
+投屏	rmnu	1
 缺	rmnw	1
 投以	rmny	1
 白骨精	rmog	1
@@ -50269,6 +50284,7 @@ encoder:
 枝丫	sfuh	1
 标间	sfuj	1
 樯	sfuk	1
+标普	sfuo	1
 标准	sfuw	1
 杳无音讯	sfuy	1
 村姑	sfvd	1
@@ -53701,6 +53717,7 @@ encoder:
 赞许	tfyt	1
 行旅	tfyt	1
 德州	tfyt	1
+靠谱	tfyu	1
 先说	tfyu	1
 午夜	tfyw	1
 造诣	tfyx	1
@@ -54581,8 +54598,8 @@ encoder:
 复燃	tjoq	1
 长明灯	tjos	1
 香料	tjou	1
-得数	tjov	1
 复数	tjov	1
+得数	tjov	1
 香粉	tjow	1
 香炉	tjoy	1
 各显神通	tjpc	1
@@ -56680,8 +56697,8 @@ encoder:
 入乡随俗	txbw	1
 繁难	txcw	1
 每套	txdd	1
-第三	txdg	1
 敏感	txdg	1
+第三	txdg	1
 身经百战	txdh	1
 每页	txdm	1
 繁盛	txdn	1
@@ -56807,6 +56824,7 @@ encoder:
 稿子	tybb	1
 篱	tybc	1
 入耳	tybg	1
+入职	tybk	1
 入院	tybp	1
 入主出奴	tybv	1
 入队	tybw	1
@@ -58058,6 +58076,7 @@ encoder:
 美乳	ugeb	1
 美貌	ugee	1
 靖	ugeg	1
+美股	ugem	1
 美不胜收	ugen	1
 决一胜负	ugeq	1
 前列腺	uger	1
@@ -58528,8 +58547,8 @@ encoder:
 癞蛤蟆	ujja	1
 阊	ujjd	1
 彰明	ujje	1
-竟是	ujjg	1
 音量	ujjg	1
+竟是	ujjg	1
 单日	ujjj	1
 彰显	ujjo	1
 间歇	ujjq	1
@@ -59551,8 +59570,9 @@ encoder:
 交代	uqwa	1
 交公	uqwc	1
 将佐	uqwd	1
-将会	uqwf	1
 交付	uqwf	1
+净值	uqwf	1
+将会	uqwf	1
 将使	uqwg	1
 交合	uqwg	1
 效命	uqwg	1
@@ -62585,6 +62605,7 @@ encoder:
 偃	wajv	1
 代号	wakg	1
 借口	wakk	1
+借呗	wakm	1
 借喻	wakw	1
 黛	wal	1
 借车	walg	1
@@ -62754,6 +62775,7 @@ encoder:
 创作	wbwt	1
 创伤	wbwt	1
 他们	wbwu	1
+仓位	wbwu	1
 他人	wbww	1
 仓储	wbwy	1
 保险费	wbxj	1
@@ -63090,6 +63112,7 @@ encoder:
 做好	wdvb	1
 信而好古	wdvd	1
 傣	wdw	1
+估值	wdwf	1
 倚仗	wdwd	1
 俸	wdwh	1
 傣	wdwi	1
@@ -66453,6 +66476,7 @@ encoder:
 领扣	wyrk	1
 领舞	wyrl	1
 仿制	wyrm	1
+领投	wyrm	1
 依据	wyrn	1
 住所	wyrn	1
 邻近	wyrp	1
@@ -66656,6 +66680,7 @@ encoder:
 绕嘴	xakh	1
 练唱	xakj	1
 绕圈	xalu	1
+红帽	xamh	1
 绒帽	xamh	1
 红彤	xamy	1
 练	xan	1
@@ -70207,6 +70232,7 @@ encoder:
 识数	ykov	1
 识字	ykpb	1
 误解	ykqe	1
+误触	ykqe	1
 训勉	ykqk	1
 误杀	ykqs	1
 误报	ykrb	1
@@ -72444,6 +72470,7 @@ encoder:
 庇佑	yxwd	1
 率领	yxwy	1
 庇	yxx	1
+玄幻	yxxn	1
 文绉绉	yxxq	1
 谐	yxxr	1
 庇	yxxv	1
