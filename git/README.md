@@ -17,9 +17,36 @@ $ git config --global user.name "Chen Zhiwei"
 $ git config --global user.email zhiweik@gmail.com
 ```
 
-配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考[示例](.gitconfig)。
-
 `--local` 是将这些内容写入 project 下的 .git/config 文件中，每个project都可以有不同的配置。
+
+配置完成之后会在$HOME目录下生成一个.gitconfig配置文件：
+
+```
+[user]
+    name    = Chen Zhiwei
+    email   = zhiweik@gmail.com
+[core]
+    editor  = vim
+    pager   = less -x1,5
+[merge]
+    tool    = vimdiff
+[color]
+    diff    = auto
+    status  = auto
+    branch  = auto
+    interactive = auto
+[alias]
+    st  = status
+    last = log -1 HEAD
+    unstage = reset HEAD --
+    history = log -p --
+[push]
+    default = simple
+[credential]
+    helper = store
+# [http]
+#     proxy = http://localhost:7980
+```
 
 ### 自动补全
 
