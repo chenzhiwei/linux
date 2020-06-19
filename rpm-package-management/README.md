@@ -1,4 +1,24 @@
-# RPM包管理相关
+# RPM 包管理相关
+
+## 怎样找到RPM包
+
+1. 从 CentOS 里找
+
+  * 最新版：http://mirror.centos.org/
+  * 旧版本：http://vault.centos.org/
+
+2. 直接从 epel 里安装
+
+    ```
+    yum install http://mirror.centos.org/centos-7/7/extras/x86_64/Packages/epel-release-7-11.noarch.rpm
+
+    yum install http://mirror.centos.org/centos-8/8/extras/x86_64/os/Packages/epel-release-8-8.el8.noarch.rpm
+    ```
+
+3. 从 fedoraproject build 里找
+
+    链接：https://koji.fedoraproject.org/koji/packages
+
 
 ## RPM包相关工具
 
