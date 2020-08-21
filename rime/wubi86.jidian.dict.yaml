@@ -1219,6 +1219,7 @@ encoder:
 荡漾	aiiu	1
 黄澄澄	aiiw	1
 东瀛	aiiy	1
+东明	aije	1
 东盟	aije	1
 茫昧	aijf	1
 落日	aijj	1
@@ -6260,6 +6261,7 @@ encoder:
 鸡啼	cqku	1
 驳回	cqlk	1
 鸡鸭	cqlq	1
+鸡贼	cqma	1
 驳岸	cqmd	1
 鸡骨	cqme	1
 鸡肉	cqmw	1
@@ -18091,6 +18093,7 @@ encoder:
 豉	gkuc	1
 带着	gkud	1
 带头	gkud	1
+融券	gkud	1
 带状	gkud	1
 事前	gkue	1
 豆	gkuf	1
@@ -22394,6 +22397,7 @@ encoder:
 渍	igmy	1
 浅层	ignf	1
 漫天飞舞	ignr	1
+浦发	ignt	1
 满天飞	ignu	1
 清心	igny	1
 涞	igo	1
@@ -23012,6 +23016,7 @@ encoder:
 水管	iitp	1
 沙特	iitr	1
 挲	iitr	1
+沙箱	iits	1
 水箱	iits	1
 沙	iitt	1
 洋洋得意	iitu	1
@@ -25557,6 +25562,7 @@ encoder:
 浪漫	iyij	1
 漩涡	iyik	1
 淤泥	iyin	1
+沪深	iyip	1
 游学	iyip	1
 流光	iyiq	1
 流派	iyir	1
@@ -29161,6 +29167,7 @@ encoder:
 踉	khye	1
 跟庄	khyf	1
 躔	khyf	1
+中证	khyg	1
 跻	khyj	1
 遗训	khyk	1
 踮	khyk	1
@@ -35629,8 +35636,9 @@ encoder:
 收税	nhtu	1
 收入	nhty	1
 收	nhty	1
-眉头	nhud	1
 收养	nhud	1
+蛋卷	nhud	1
+眉头	nhud	1
 疏剪	nhue	1
 蛋羹	nhug	1
 疏阔	nhui	1
@@ -46322,6 +46330,7 @@ encoder:
 看作	rhwt	1
 卸任	rhwt	1
 年份	rhww	1
+年化	rhwx	1
 年华	rhwx	1
 卸货	rhwx	1
 看住	rhwy	1
@@ -48239,6 +48248,7 @@ encoder:
 打问	rsuk	1
 投机商	rsum	1
 打浆	rsuq	1
+打新	rsus	1
 打道	rsut	1
 打闪	rsuw	1
 打闹	rsuy	1
@@ -56426,6 +56436,7 @@ encoder:
 冬闲	tuus	1
 乘凉	tuuy	1
 自立门户	tuuy	1
+科创	tuwb	1
 简便	tuwg	1
 每况愈下	tuwg	1
 简介	tuwj	1
@@ -65673,6 +65684,7 @@ encoder:
 颁行	wvtf	1
 分片	wvth	1
 分秒	wvti	1
+伊利	wvtj	1
 分得	wvtj	1
 贫血	wvtl	1
 健身	wvtm	1
@@ -66382,6 +66394,7 @@ encoder:
 伪	wyl	1
 领罪	wyld	1
 集团	wylf	1
+焦园	wylf	1
 停车	wylg	1
 邻国	wylg	1
 领回	wylk	1
@@ -67661,6 +67674,7 @@ encoder:
 纳福	xmpy	1
 纲	xmq	1
 纲	xmqy	1
+纳指	xmrx	1
 纳西	xmsg	1
 绞肉机	xmsm	1
 纲要	xmsv	1
@@ -72603,6 +72617,7 @@ encoder:
 广收	yynh	1
 广辟	yynk	1
 文书	yynn	1
+广发	yynt	1
 谨言慎行	yynt	1
 该	yynw	1
 方尺	yyny	1
