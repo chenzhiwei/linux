@@ -2794,8 +2794,8 @@ encoder:
 巧妇难为无米之炊	avco	1
 菇	avd	1
 薅	avd	1
-菇	avdf	1
 薅	avdf	1
+菇	avdf	1
 切面	avdm	1
 切成	avdn	1
 切磋	avdu	1
@@ -8994,8 +8994,8 @@ encoder:
 盛况	dnuk	1
 万端	dnum	1
 成癖	dnun	1
-成效	dnuq	1
 成交	dnuq	1
+成效	dnuq	1
 成亲	dnus	1
 盛产	dnut	1
 成立	dnuu	1
@@ -10985,6 +10985,7 @@ encoder:
 股海	emit	1
 肌注	emiy	1
 受贿罪	emld	1
+股转	emlf	1
 股骨	emme	1
 悬崖峭壁	emmn	1
 肌肉	emmw	1
@@ -12298,6 +12299,7 @@ encoder:
 动口	fckk	1
 动员	fckm	1
 动听	fckr	1
+去哪	fckv	1
 动	fcl	1
 动辄	fclb	1
 动因	fcld	1
@@ -16041,6 +16043,7 @@ encoder:
 开刀	gavn	1
 珙	gaw	1
 开创	gawb	1
+开仓	gawb	1
 不落俗套	gawd	1
 开会	gawf	1
 武侠	gawg	1
@@ -17315,6 +17318,7 @@ encoder:
 下欠	ghqw	1
 正反	ghrc	1
 下拜	ghrd	1
+下挂	ghrf	1
 下操	ghrk	1
 下摆	ghrl	1
 政制	ghrm	1
@@ -19570,6 +19574,7 @@ encoder:
 平价	guww	1
 夹住	guwy	1
 平信	guwy	1
+平今	guwy	1
 开门红	guxa	1
 平缓	guxe	1
 夹缝	guxt	1
@@ -23608,7 +23613,6 @@ encoder:
 当局者迷	info	1
 漏壶	infp	1
 泥垢	infr	1
-法属圭亚那	infv	1
 漏	infy	1
 泥坑	infy	1
 渥	ing	1
@@ -23619,9 +23623,8 @@ encoder:
 学习班	ingy	1
 湄	inh	1
 泼皮	inhc	1
+湑	inhe	1
 湄	inhg	1
-洋快餐	inhq	1
-小心眼	inhv	1
 漏泄	inia	1
 汤池	inib	1
 泥滩	inic	1
@@ -29057,8 +29060,9 @@ encoder:
 路径	khtc	1
 跃	khtd	1
 中盘	khte	1
-中等	khtf	1
 中午	khtf	1
+跨行	khtf	1
+中等	khtf	1
 忠告	khtf	1
 踵	khtf	1
 贵重	khtg	1
@@ -31735,6 +31739,7 @@ encoder:
 回拜	lkrd	1
 回援	lkre	1
 加持	lkrf	1
+加挂	lkrf	1
 贺年	lkrh	1
 回扣	lkrk	1
 回抽	lkrm	1
@@ -33912,6 +33917,7 @@ encoder:
 网域	mqfa	1
 见地	mqfb	1
 风云	mqfc	1
+刚需	mqfd	1
 风土	mqff	1
 风雨	mqfg	1
 网址	mqfh	1
@@ -41707,6 +41713,7 @@ encoder:
 锄地	qefb	1
 触动	qefc	1
 锾	qefc	1
+解封	qeff	1
 解救	qefi	1
 触雷	qefl	1
 触击	qefm	1
@@ -42502,8 +42509,9 @@ encoder:
 销往	qity	1
 尔	qiu	1
 乐意	qiuj	1
-乐章	qiuj	1
+锁单	qiuj	1
 乐道	qiut	1
+乐章	qiuj	1
 金光闪闪	qiuu	1
 锁门	qiuy	1
 铛	qiv	1
@@ -45290,6 +45298,7 @@ encoder:
 摊	rcw	1
 兵马俑	rcwc	1
 择优	rcwd	1
+返佣	rcwe	1
 瓜仁	rcwf	1
 反倒	rcwg	1
 拚命	rcwg	1
@@ -46903,6 +46912,7 @@ encoder:
 抽验	rmcw	1
 投	rmcy	1
 揣	rmd	1
+投顾	rmdb	1
 投奔	rmdf	1
 投在	rmdh	1
 揣	rmdj	1
@@ -48656,6 +48666,7 @@ encoder:
 投闲置散	rula	1
 皇亲国戚	ruld	1
 搁置	rulf	1
+拼车	rulg	1
 撞车	rulg	1
 拉架	rulk	1
 接连	rulp	1
@@ -53351,6 +53362,7 @@ encoder:
 千丈	tfdy	1
 得过且过	tfef	1
 赞助	tfeg	1
+选股	tfem	1
 血雨腥风	tfem	1
 造爱	tfep	1
 等腰	tfes	1
@@ -56938,6 +56950,7 @@ encoder:
 往外	tyqh	1
 篇名	tyqk	1
 我为鱼肉	tyqm	1
+入金	tyqq	1
 入狱	tyqt	1
 往返	tyrc	1
 秋高气爽	tyrd	1
@@ -58506,7 +58519,7 @@ encoder:
 音耗	ujdi	1
 单面	ujdm	1
 竟成	ujdn	1
-竟达	ujdp	1
+韵达	ujdp	1
 意愿	ujdr	1
 单帮	ujdt	1
 并日而食	ujdw	1
@@ -66163,6 +66176,7 @@ encoder:
 倾翻	wxto	1
 货物	wxtr	1
 货箱	wxts	1
+佛系	wxtx	1
 化冻	wxua	1
 化疗	wxub	1
 化装	wxuf	1
@@ -66710,8 +66724,8 @@ encoder:
 红焰	xaoq	1
 红灯	xaos	1
 红粉	xaow	1
-红糖	xaoy	1
 红米	xaoy	1
+红糖	xaoy	1
 练字	xapb	1
 红军	xapl	1
 红客	xapt	1
@@ -67444,6 +67458,7 @@ encoder:
 绢画	xkgl	1
 强烈	xkgq	1
 绝口不提	xkgr	1
+强平	xkgu	1
 缉毒	xkgx	1
 缄口不言	xkgy	1
 缋	xkh	1
@@ -69807,8 +69822,8 @@ encoder:
 遮天盖地	yguf	1
 语病	ygug	1
 评	yguh	1
-主意	yguj	1
 语音	yguj	1
+主意	yguj	1
 请问	yguk	1
 评奖	yguq	1
 主次	yguq	1
