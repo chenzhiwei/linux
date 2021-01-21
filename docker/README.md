@@ -42,18 +42,11 @@ Setting /usr/bin/qemu-microblazeel-static as binfmt interpreter for microblazeel
 Setting /usr/bin/qemu-or1k-static as binfmt interpreter for or1k
 
 [root@mixhub ~]# docker build -t ppc -f Dockerfile.ppc64le .
-STEP 1: FROM amd64/alpine AS builder
-STEP 2: RUN wget -O /qemu-ppc64le-static https://github.com/multiarch/qemu-user-static/releases/latest/download/qemu-ppc64le-static
---> Using cache 2dc8d555e80bcb78e721dd707ad3bcf485c785dc9385a11598fe34fb2e2ab4e8
---> 2dc8d555e80
-STEP 3: RUN chmod +x /qemu-ppc64le-static
---> Using cache a2bcbc6e4a31ac4415e50a0c6a4422a7f2d05f45462b09241999eff8f52a4ec7
---> a2bcbc6e4a3
-STEP 4: FROM ppc64le/alpine
-STEP 5: COPY --from=builder /qemu-ppc64le-static /usr/bin/
+STEP 1: FROM ppc64le/alpine
+STEP 2: COPY --from=builder /qemu-ppc64le-static /usr/bin/
 --> Using cache 48a0e2645b666bc848dec0244e980d435c20433b358074d962967c6d2bf39129
 --> 48a0e2645b6
-STEP 6: RUN apk --no-cache add bash
+STEP 3: RUN apk --no-cache add bash
 fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/main/ppc64le/APKINDEX.tar.gz
 fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/community/ppc64le/APKINDEX.tar.gz
 (1/4) Installing ncurses-terminfo-base (6.2_p20210109-r0)
@@ -63,7 +56,7 @@ fetch https://dl-cdn.alpinelinux.org/alpine/v3.13/community/ppc64le/APKINDEX.tar
 Executing bash-5.1.0-r0.post-install
 Executing busybox-1.32.1-r0.trigger
 OK: 9 MiB in 18 packages
-STEP 7: COMMIT ppc
+STEP 4: COMMIT ppc
 --> 12650ee65c8
 12650ee65c841b25253fb14402b4b0a3d378f2de0f5d2b62adf10a1e4ecefac9
 
@@ -76,16 +69,6 @@ The Dockerfile.ppc64le content:
 
 ```
 [root@mixhub ~]# cat Dockerfile.ppc64le
-# This Dockerfile demos how to build ppc64le image on amd64 machine
-
-# The architecture is same as build machine
-FROM amd64/alpine AS builder
-
-# Change the qume-static binary to the target image architecture
-RUN wget -O /qemu-ppc64le-static https://github.com/multiarch/qemu-user-static/releases/latest/download/qemu-ppc64le-static
-
-RUN chmod +x /qemu-ppc64le-static
-
 # The target base image
 FROM ppc64le/alpine
 
