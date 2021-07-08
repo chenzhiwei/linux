@@ -78,3 +78,5 @@ Created a new port:
 | tenant_id             | 619a60d46b1349f7998116abec50b088                                                    |
 +-----------------------+-------------------------------------------------------------------------------------+
 ```
+
+Refer: https://blog.codecentric.de/en/2016/11/highly-available-vips-openstack-vms-vrrp/
