@@ -4,8 +4,11 @@
 # And you should set the VMs' default gateway to 192.168.0.1
 #
 
-brctl show br0 || brctl addbr br0
-brctl show br1 || brctl addbr br1
+# brctl show br0 || brctl addbr br0
+# brctl show br1 || brctl addbr br1
+
+ip link show br0 || ip link add br0 type bridge
+ip link show br1 || ip link add br1 type bridge
 
 ip addr add 192.168.0.1/24 brd 192.168.0.255 dev br0
 ip addr add 10.0.0.1/24 brd 10.0.0.255 dev br1
