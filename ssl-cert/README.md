@@ -13,45 +13,50 @@
 1. 生成 Root CA
 
     ```
-    openssl req -newkey rsa:4096 -sha256 -nodes -keyout root.key -x509 -days 36500 -out root.crt -subj "/C=US/ST=California/L=Los Angeles/O=Root Inc/CN=root"
-
+    openssl req -newkey rsa:4096 -sha256 -nodes -keyout ca.key -x509 -days 36500 -out ca.crt \
+        -subj "/C=US/ST=California/L=Los Angeles/O=Root Inc/CN=root-ca" \
+        -addext "keyUsage = critical, digitalSignature, keyEncipherment, dataEncipherment, cRLSign, keyCertSign"
     ```
 
-2. 用 Root CA 签发用户证书
+2. 用 Root CA 签发普通 web server 证书
 
-    1. 生成用户的 key 和 csr
+    如果需要 Web Server Authentication 或 Web Client Authentication 的话，就添加相应的 extensions 就行了。
 
-        ```
-        openssl genrsa -out domain.key 4096
-        openssl req -new -key domain.key -out domain.csr -subj "/C=US/ST=California/L=Los Angeles/O=Domain Inc/CN=domain.com"
-        ```
+    ```
+    openssl genrsa -out mixhub.cn.key 4096
 
-    2. 给用户签发证书
+    openssl req -new -key mixhub.cn.key -out mixhub.cn.csr \
+        -subj "/C=US/ST=California/L=Los Angeles/O=MixHub Inc/CN=mixhub.cn" \
 
-        ```
-        openssl x509 -req -days 730 -in domain.csr -CA root.crt -CAkey root.key -CAcreateserial -out domain.crt -extensions v3_usr
+    openssl x509 -req -days 730 -in mixhub.cn.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out mixhub.cn.crt -extensions v3_req \
+        -extfile <(printf "[v3_req]\nbasicConstraints=critical,CA:FALSE\nextendedKeyUsage=serverAuth,clientAuth\nkeyUsage=critical,digitalSignature,keyEncipherment\nauthorityKeyIdentifier=keyid,issuer\nsubjectAltName=DNS:mixhub.cn,DNS:
+*.mixhub.cn")
+    ```
 
-        openssl x509 -req -days 730 -in domain.csr -CA root.crt -CAkey root.key -CAcreateserial -out domain.crt -extensions SAN -extfile <(printf "[SAN]\nsubjectAltName=DNS:example.com,DNS:www.example.com")
-        ```
+    看文档中有写`openssl x509`会支持`-copy_extensions copy`，这样就可以在生成 CSR 的时候加上 extensions ，然后在生成证书的命令就非常简单了，但是目前还没实现。如果实现的话可以用以下方法：
 
-    3. 在浏览器里导入 root.crt ，然后在 HTTP Server 里配置 domain.key 和 domain.crt，然后就不会有证书错误了。
+    ```
+    openssl genrsa -out mixhub.cn.key 4096
 
+    openssl req -new -key mixhub.cn.key -out mixhub.cn.csr \
+        -subj "/C=US/ST=California/L=Los Angeles/O=MixHub Inc/CN=mixhub.cn" \
+        -addext "basicConstraints = critical,CA:FALSE" \
+        -addext "keyUsage = critical,digitalSignature,keyEncipherment" \
+        -addext "extendedKeyUsage = serverAuth,clientAuth" \
+        -addext "subjectAltName = DNS:mixhub.cn,DNS:*.mixhub.cn"
 
-## Single command to generate self-signed certifcate
+    # this should be work in future version of openssl
+    openssl x509 -req -days 730 -in mixhub.cn.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out mixhub.cn.crt -copy_extensions copy
+    ```
+
+## Generate self-signed certifcate for web server
 
 ```
-openssl req -newkey rsa:4096 -sha256 -nodes -keyout your-domain.com.key -x509 -days 36500 -out your-domain.com.crt -subj "/C=US/ST=California/L=Los Angeles/O=Your Domain Inc/CN=your-domain.com"
+openssl req -newkey rsa:4096 -sha256 -nodes -keyout your-domain.com.key -x509 -days 36500 -out your-domain.com.crt \
+    -subj "/C=US/ST=California/L=Los Angeles/O=Your Domain Inc/CN=your-domain.com" \
+    -addext "subjectAltName = DNS:your-domain.com,DNS:www.your-domain.com,IP:127.0.0.1"
 ```
 
-## Generate self-signed certificate with SAN
-
-```
-openssl genrsa -out domain.key 4096
-openssl req -new -key domain.key -out domain.csr -subj "/C=US/ST=California/L=Los Angeles/O=Domain Inc/CN=domain.com"
-openssl x509 -req -days 36500 -in domain.csr -signkey domain.key -out domain.crt -extensions SAN -extfile <(printf "[SAN]\nsubjectAltName=DNS:domain.com")
-```
-
-You can ignore the following steps.
 
 ## Convert ASCII format to PEM format
 
@@ -90,6 +95,12 @@ $ openssl rsa -in server.key.org -out server.key
 $ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 ```
 
+## Get the CSR info
+
+```
+openssl req -noout -text -in mixhub.cn.csr
+```
+
 ## Get the certificate info
 
 ```
@@ -101,7 +112,7 @@ openssl s_client -connect baidu.com:443 2>/dev/null | openssl x509 -noout -text
 ## Check if the certificate is signed by a root ca
 
 ```
-openssl verify -verbose -CAfile root.crt user.crt
+openssl verify -verbose -CAfile ca.crt user.crt
 ```
 
 ## After setup an HTTP server
