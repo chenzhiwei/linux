@@ -1,0 +1,88 @@
+# requires settings in gitlab-runner
+#   [[runners.kubernetes.volumes.empty_dir]]
+#   name = "docker-certs"
+#   mount_path = "/certs"
+#   medium = "Memory"
+variables:
+  DOCKER_HOST: tcp://localhost:2376/
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+
+# only triggers in "push" and "merge requests in master" events
+workflow:
+  rules:
+  - if: $CI_MERGE_REQUEST_IID
+  - if: $CI_COMMIT_TAG
+  - if: $CI_COMMIT_BRANCH == "master"
+
+stages:
+- check
+- test
+- build
+- deploy
+
+check-lint-job:
+  stage: check
+  image: docker.mixhub.cn/gitlab/alpine:latest
+  before_script:
+  - pwd
+  - ls
+  script:
+  - echo "lint check job - script"
+
+check-syntax-job:
+  stage: check
+  image: docker.mixhub.cn/gitlab/alpine:latest
+  before_script:
+  - pwd
+  - ls
+  script:
+  - echo "syntax check job - script"
+
+test-unit-job:
+  stage: test
+  image: docker.mixhub.cn/gitlab/alpine:latest
+  before_script:
+  - pwd
+  - ls
+  script:
+  - echo "unit test job - script"
+
+test-integration-job:
+  stage: test
+  image: docker.mixhub.cn/gitlab/alpine:latest
+  before_script:
+  - pwd
+  - ls
+  script:
+  - echo "integration test job - script"
+
+build-package-job:
+  stage: build
+  image: docker.mixhub.cn/gitlab/maven:3.6-jdk-11
+  before_script:
+  - pwd
+  - ls
+  script:
+  - mkdir target
+  - touch target/yamu-data-product-common-111-RELEASE.jar
+  artifacts: # share files with follow up jobs
+    paths:
+    - ./target/yamu-data-product-common-*-RELEASE.jar
+
+deploy-job:
+  stage: deploy
+  image: docker.mixhub.cn/gitlab/docker:latest
+  services:
+  - docker.mixhub.cn/gitlab/docker:dind
+  before_script:
+  - env
+  - echo "$CI_PIPELINE_SOURCE"
+  - pwd
+  - ls
+  - docker info
+  script:
+  - find ./target
+  rules:
+  - if: '$CI_PIPELINE_SOURCE != "merge_request_event"'
