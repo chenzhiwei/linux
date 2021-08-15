@@ -1,5 +1,7 @@
 # 生成 SSL 证书
 
+推荐使用这个更简单并且无任何依赖的证书生成工具： https://github.com/chenzhiwei/certctl
+
 ## 概念
 
 所谓 Root CA 就是用来签发证书的根证书，与 Root CA 对应的还有 Root key。这个 Root CA 是公共的证书，用户可以导入到自己浏览器里面，这样所有用这个 Root CA 签名的证书都能被浏览器信任了。Root key 是非常重要的私钥，证书机构全靠这个东西来赚钱呢，所以不能泄漏。
