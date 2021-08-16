@@ -89,6 +89,12 @@ $ cp server.key server.key.org
 $ openssl rsa -in server.key.org -out server.key
 ```
 
+## Export RSA Public Key
+
+```
+openssl rsa -in server.key -outform PEM -pubout -out server.pubkey
+```
+
 ## Self-sign your Server Key file
 
 > `server.crt` is your certificate file
