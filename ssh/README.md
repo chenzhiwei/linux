@@ -19,6 +19,37 @@ https://launchpad.net/~username/+sshkeys
 
 将里面的`username`替换一下就能得到别人的ssh key了，想对别人授权时更容易了。
 
+
+## SSH Key Info
+
+The Private key contains the public key and the comment, you can only backup the private key.
+
+### Export Public Key from Private Key
+
+```
+ssh-keygen -y -f id_rsa > id_rsa.pub
+```
+
+### Update the comment in Private Key
+
+```
+ssh-keygen -c -f id_rsa -C "the new comment"
+```
+
+### Convert Private Key from OpenSSH to PEM(RSA)
+
+```
+ssh-keygen -p -N"" -m PEM id_rsa
+```
+
+
+### Convert Private Key from PEM(RSA) to OpenSSH
+
+```
+ssh-keygen -p -N"" id_rsa
+```
+
+
 ## SSH Client
 
 配置文件路径：`/etc/ssh/ssh_config` 和 `~/.ssh/ssh_config`。
