@@ -1,0 +1,14 @@
+# podman build -t docker.io/siji/minio -f Dockerfile.minio .
+
+FROM docker.io/minio/mc:latest AS client
+
+FROM docker.io/minio/minio:latest AS server
+
+FROM docker.io/library/ubuntu:latest
+
+COPY --from=client /usr/bin/mc /usr/bin/mc
+COPY --from=server /opt/bin/minio /usr/bin/minio
+
+RUN apt update \
+    && apt install -y --no-install-recommends curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*

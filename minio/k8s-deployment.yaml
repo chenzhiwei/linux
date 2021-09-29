@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+  labels: &labels
+    app: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels: *labels
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+        - name: nginx
+          image: docker.io/siji/nginx:alpine
+          ports:
+            - containerPort: 8000
+              hostPort: 8000
+              protocol: TCP
+            - containerPort: 8001
+              hostPort: 8001
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+            - name: nginx-certs
+              mountPath: /etc/nginx/certs
+        - name: minio
+          image: docker.io/siji/minio:latest
+          command:
+            - minio
+            - server
+            - /data
+            - --address=:9000
+            - --console-address=:9001
+          env:
+            - name: MINIO_ROOT_USER
+              value: minio
+            - name: MINIO_ROOT_PASSWORD
+              value: minio123
+          resources: {}
+          volumeMounts:
+            - name: minio-data
+              mountPath: /data
+      volumes:
+        - name: nginx-conf
+          hostPath:
+            path: /etc/nginx/conf.d
+            type: DirectoryOrCreate
+        - name: nginx-certs
+          hostPath:
+            path: /etc/nginx/certs
+            type: DirectoryOrCreate
+        - name: minio-data
+          hostPath:
+            path: /var/lib/minio
+            type: DirectoryOrCreate
