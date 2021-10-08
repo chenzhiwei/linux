@@ -58,7 +58,49 @@ curl -v -k -X PUT -T README.md \
 
 ## User & Policy
 
+ARNs: `arn:partition:service:region:account:resource`
+Actions: https://docs.min.io/minio/baremetal/security/minio-identity-management/policy-based-access-control.html#supported-s3-policy-actions
+
 ### Bucket CRUD
+
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:CreateBucket",
+                "s3:GetBucketLocation",
+                "s3:ListBucket",
+                "s3:ListAllMyBuckets",
+                "s3:DeleteBucket",
+                "s3:ForceDeleteBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::*"
+            ]
+        }
+    ]
+}
+```
 
 ### Bucket ReadOnly
 
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::/mybucket/*"
+            ]
+        }
+    ]
+}
+```
