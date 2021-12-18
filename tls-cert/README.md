@@ -102,9 +102,13 @@ openssl pkcs12 -export -in server.crt -inkey server.key -out server.pkcs12
 # generate truststore
 keytool -importcert -keystore keystore.jks -file ca.crt -noprompt -storepass abc123
 
-#generate keystore
+# generate keystore
 keytool -importcert -keystore keystore.jks -file ca.crt -noprompt -storepass abc123
 keytool -importkeystore -destkeystore keystore.jks -deststorepass abc123 -srckeystore server.pkcs12 -srcstorepass abc123
+
+# view keystore entries
+keytool -list -v -keystore keystore.jks -storepass abc123
+keytool -list -v -keystore server.pkcs12 -storepass abc123
 ```
 
 ## Create the Server Key file
