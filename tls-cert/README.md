@@ -93,14 +93,14 @@ openssl x509 -in server.crt -outform PEM -out cert.pem
 ## Convert certificate and key to pkcs12 format
 
 ```
-openssl pkcs12 -export -in server.crt -inkey server.key -out server.pkcs12
+openssl pkcs12 -export -in server.crt -inkey server.key -out server.pkcs12 -passout pass:abc123
 ```
 
 ## Generate Java Key Store files
 
 ```
 # generate truststore
-keytool -importcert -keystore keystore.jks -file ca.crt -noprompt -storepass abc123
+keytool -importcert -keystore truststore.jks -file ca.crt -noprompt -storepass abc123
 
 # generate keystore
 keytool -importcert -keystore keystore.jks -file ca.crt -noprompt -storepass abc123
