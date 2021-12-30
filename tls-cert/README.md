@@ -166,6 +166,13 @@ openssl verify -verbose -CAfile ca.crt user.crt
 $ curl --cacert server.crt http://your_host
 ```
 
+## Install CA certificate on Ubuntu
+
+```
+sudo cp a-root-ca.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+```
+
 ## Make System trusted your self-signed certificate
 
 ### RHEL / CentOS
