@@ -75,6 +75,17 @@ openssl req -new -key server.key -out server.csr \
     -addext "subjectAltName = DNS:mixhub.cn,DNS:*.mixhub.cn"
 ```
 
+## Generate Private Key and CSR
+
+```
+openssl req -newkey rsa:4096 -nodes -keyout server.key -out server.csr \
+    -subj "/C=CN/ST=Beijing/L=Haidian/O=MixHub Inc/CN=mixhub.cn" \
+    -addext "basicConstraints = critical,CA:FALSE" \
+    -addext "keyUsage = digitalSignature,keyEncipherment" \
+    -addext "extendedKeyUsage = serverAuth,clientAuth" \
+    -addext "subjectAltName = DNS:mixhub.cn,DNS:*.mixhub.cn"
+```
+
 ## Sign Certificate with CSR by Root CA
 
 ```
