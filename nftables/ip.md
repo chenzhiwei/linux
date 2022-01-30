@@ -34,3 +34,9 @@ nft add rule ip test local iif tun1 accept
 # nftables mark other packets
 nft add rule ip test local meta mark 115
 ```
+
+## References
+
+https://comzyh.gitbook.io/clash/
+
+https://comzyh.gitbook.io/clash/real-ip-tun-example
