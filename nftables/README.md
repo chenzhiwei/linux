@@ -120,7 +120,29 @@ nft list ruleset
 * Set fwmark
 
     ```
+    # set fwmark to packet
     nft add rule ip test local ip daddr 223.6.6.6 udp dport 53 meta mark set 0x00012345
+
+    # https://lwn.net/Articles/594698/
+    # set the conntrack mark to the packet mark
+    nft filter input ct mark set mark
+
+
+    # set the packet mark to the conntrack mark
+    nft filter output mark set ct mark
+
+
+    # set the conntrack mark to the value 0x1.
+    nft filter output ct mark set 0x1
+
+    # https://wiki.nftables.org/wiki-nftables/index.php/Setting_packet_metainformation
+    nft add rule filter forward meta mark set 1
+
+    # mark is store in the conntrack entry associated with the flow
+    nft add rule filter forward ct mark set mark
+
+    # the conntrack mark is stored in the packet
+    nft add rule filter forward meta mark set ct mark
     ```
 
 ## Routing
