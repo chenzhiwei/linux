@@ -10,6 +10,9 @@ Deb/RPM: https://releases.hashicorp.com/vagrant/
 sudo dpkg -i vagrant.deb
 sudo apt install libvirt-daemon-system qemu-utils qemu-system-x86 libvirt-dev --no-install-recommends
 vagrant plugin install vagrant-libvirt
+
+# logout & login to let the usermod take effect
+sudo usermod --append --groups kvm,libvirt $USER
 ```
 
 * RHEL/CentOS/Fedora
