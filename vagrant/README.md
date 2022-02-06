@@ -2,13 +2,14 @@
 
 ## Installing
 
+Deb/RPM: https://releases.hashicorp.com/vagrant/
+
 * Ubuntu/Debian
 
 ```
-$ sudo dpkg -i vagrant.deb
-$ sudo apt-get install libxslt-dev libxml2-dev libvirt-dev zlib1g-dev
-$ export PATH=/opt/vagrant/embedded/bin:$PATH
-$ vagrant plugin install vagrant-libvirt
+sudo dpkg -i vagrant.deb
+sudo apt install libvirt-daemon-system qemu-utils qemu-system-x86 libvirt-dev --no-install-recommends
+vagrant plugin install vagrant-libvirt
 ```
 
 * RHEL/CentOS/Fedora

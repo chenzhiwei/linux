@@ -1,63 +1,32 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-#
-# vagrant plugin install vagrant-disksize
-#
 
-nodes = [
-  {:hostname => 'ubuntu', :ip => '192.168.122.10', :box => 'ubuntu/bionic64', :cpu => 2, :memory => 4096, :disk => '80GB'},
-  {:hostname => 'centos', :ip => '192.168.122.11', :box => 'centos/8', :cpu => 2, :memory => 4096, :disk => '10GB'},
-]
+node = {:hostname => "debian", :ip => "192.168.122.10", :box => "debian/bullseye64", :cpus => 4, :memory => 4096, :disk => 50}
 
-vagrant_hosts = "127.0.0.1 localhost\n"
-nodes.each do |node|
-  vagrant_hosts = vagrant_hosts + "#{node[:ip]} #{node[:hostname]}\n"
-end
+Vagrant.configure("2") do |config|
+  config.vm.box_check_update = true
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
-Vagrant.configure(2) do |config|
+  config.vm.box = node[:box]
+  config.vm.hostname = node[:hostname]
+
+  config.vm.provider "libvirt" do |libvirt|
+    libvirt.management_network_address = "192.168.122.0/24" # public_network
+    libvirt.cpus = node[:cpus]
+    libvirt.memory = node[:memory]
+    libvirt.machine_virtual_size = node[:disk]
+  end
+
+  config.vm.network :public_network,
+    :dev => "virbr0",
+    :mode => "bridge",
+    :type => "bridge",
+    :ip => node[:ip]
 
   config.vm.provision "shell", inline: <<-SHELL
-    echo "#{vagrant_hosts}" > /etc/hosts
-
-    # Root Login
     passwd -u root
+    apt update && apt -y install curl ca-certificates
     mkdir -p /root/.ssh
-    systemctl reload sshd
-
-    # config
-    curl -sSL -o /root/.gitconfig https://chenzhiwei.cn/gitconfig.txt
-    curl -sSL -o /root/.ssh/config https://chenzhiwei.cn/sshconfig.txt
     curl -sSL -o /root/.ssh/authorized_keys https://chenzhiwei.cn/keys.txt
   SHELL
-
-  config.vm.synced_folder ".", "/vagrant", disabled: true
-
-  nodes.each do |node|
-    config.vm.define node[:hostname] do |nodeconfig|
-      nodeconfig.vm.hostname = node[:hostname]
-      nodeconfig.vm.box = node[:box]
-      nodeconfig.disksize.size = node[:disk]
-      nodeconfig.vm.box_check_update = false
-      # The URL can be "file:///tmp/test.box"
-      # nodeconfig.vm.box_url = "https://atlas.hashicorp.com/centos/boxes/7/versions/1603.01/providers/libvirt.box"
-      # nodeconfig.vm.box_url = "http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1603_01.LibVirt.box"
-      nodeconfig.vm.network "private_network", ip: node[:ip]
-
-      # virtualbox provider
-      # nodeconfig.vm.provider "virtualbox" do |virtualbox|
-      #   virtualbox.gui = false
-      #  virtualbox.cpus = node[:cpu]
-      #  virtualbox.memory = node[:memory]
-      # end
-
-      nodeconfig.vm.provider "libvirt" do |libvirt|
-        # Use qemu instead of kvm in virtual machine
-        # libvirt.driver = "qemu"
-        # Customize the amount of memory on the VM:
-        libvirt.cpus = node[:cpu]
-        libvirt.memory = node[:memory]
-      end
-
-    end
-  end
 end
