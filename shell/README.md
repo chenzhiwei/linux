@@ -180,6 +180,14 @@
 
 <https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html>
 
+## Read file line by line
+
+```
+while read -r line; do
+    echo $line
+done < file.txt
+```
+
 ## 创建文件（Here Documents）
 
 ```
