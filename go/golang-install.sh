@@ -2,7 +2,7 @@
 
 ARCH=$(uname -m|sed 's/x86_64/amd64/g')
 KERNAL=$(uname -s|tr '[:upper:]' '[:lower:]')
-VERSION=$(curl -s https://golang.org/VERSION?m=text)
+VERSION=$(curl -sL https://go.dev/VERSION?m=text)
 URL=https://dl.google.com/go/${VERSION}.${KERNAL}-${ARCH}.tar.gz
 
 GOINSTALL=$HOME/.golang/versions/$VERSION
