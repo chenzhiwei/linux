@@ -88,3 +88,86 @@ spec:
     - containerPort: 80
       hostPort: 80
 ```
+
+## Build Podman
+
+### Install Build Library
+
+```
+apt install \
+  btrfs-progs \
+  gcc \
+  iptables \
+  libassuan-dev \
+  libbtrfs-dev \
+  libc6-dev \
+  libdevmapper-dev \
+  libglib2.0-dev \
+  libgpgme-dev \
+  libgpg-error-dev \
+  libprotobuf-dev \
+  libprotobuf-c-dev \
+  libseccomp-dev \
+  libselinux1-dev \
+  libsystemd-dev \
+  make \
+  pkg-config \
+  uidmap
+```
+
+### Build conmon
+
+```
+git clone https://github.com/containers/conmon
+cd conmon
+make
+
+mkdir -p /usr/libexec/podman
+cp bin/conmon /usr/libexec/podman/
+```
+
+### Build podman
+
+```
+git clone https://github.com/containers/podman
+cd podman
+make BUILDTAGS="selinux seccomp systemd"
+
+cp bin/podman /usr/bin/
+```
+
+### Install crun/netavark
+
+```
+wget https://github.com/containers/crun/releases/download/1.4.4/crun-1.4.4-linux-amd64
+
+chmod +x crun-*
+mv crun-* /usr/bin/crun
+
+
+wget https://github.com/containers/netavark/releases/download/v1.0.2/netavark.gz
+
+gunzip netavark.gz
+chmod +x netavark
+mv netavark /usr/libexec/podman/
+```
+
+### Create policy.json
+
+```
+mkdir -p /etc/containers
+vim /etc/containers/policy.json
+
+{
+  "default": [
+    {
+      "type": "insecureAcceptAnything"
+    }
+  ],
+  "transports":{
+    "docker-daemon": {
+      "": [{"type":"insecureAcceptAnything"}]
+    }
+  }
+}
+```
