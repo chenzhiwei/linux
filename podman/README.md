@@ -150,6 +150,10 @@ wget https://github.com/containers/netavark/releases/download/v1.0.2/netavark.gz
 gunzip netavark.gz
 chmod +x netavark
 mv netavark /usr/libexec/podman/
+
+wget https://github.com/openSUSE/catatonit/releases/download/v0.1.7/catatonit.x86_64
+chmod +x catatonit.x86_64
+mv catatonit.x86_64 /usr/libexec/podman/catatonit
 ```
 
 ### Create policy.json
