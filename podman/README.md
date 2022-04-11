@@ -134,6 +134,8 @@ cd podman
 make BUILDTAGS="selinux seccomp systemd"
 
 cp bin/podman /usr/bin/
+
+podman completion bash > /usr/share/bash-completion/completions/podman
 ```
 
 ### Install crun/netavark
@@ -183,4 +185,15 @@ vim /etc/containers/containers.conf
 
 [engine]
 infra_image = "docker.io/siji/pause:3.7"
+```
+
+### Build Skopeo
+
+```
+git clone https://github.com/containers/skopeo
+cd skopeo
+make bin/skopeo
+
+cp bin/skopeo /usr/bin/
+cp completions/bash/skopeo /usr/share/bash-completion/completions/
 ```
