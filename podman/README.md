@@ -175,3 +175,12 @@ vim /etc/containers/policy.json
   }
 }
 ```
+
+### Create containers.conf
+
+```
+vim /etc/containers/containers.conf
+
+[engine]
+infra_image = "docker.io/siji/pause:3.7"
+```
