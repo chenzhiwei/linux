@@ -26,3 +26,17 @@ terraform plan -var-file input.tfvars
 terraform apply -var-file input.tfvars
 terraform apply -var-file input.tfvars -backend-config=xx=xx
 ```
+
+
+## How to use a module
+
+Suppose this project is in a git repo:
+
+```
+module "simple_mig" {
+  source = "https://github.com/chenzhiwei/terraform-mig.git?ref=master"
+  project = "your-project"
+  region = "asia-east2"
+  xxx = xxx
+}
+```
