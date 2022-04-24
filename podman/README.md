@@ -187,6 +187,12 @@ vim /etc/containers/containers.conf
 infra_image = "docker.io/siji/pause:3.7"
 ```
 
+### Create registries.conf
+
+```
+echo 'unqualified-search-registries=["docker.io"]' > /etc/containers/registries.conf
+```
+
 ### Build Skopeo
 
 ```
