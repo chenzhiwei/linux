@@ -141,13 +141,13 @@ podman completion bash > /usr/share/bash-completion/completions/podman
 ### Install crun/netavark
 
 ```
-wget https://github.com/containers/crun/releases/download/1.4.4/crun-1.4.4-linux-amd64
+wget https://github.com/containers/crun/releases/download/1.6/crun-1.6-linux-amd64
 
 chmod +x crun-*
 mv crun-* /usr/bin/crun
 
 
-wget https://github.com/containers/netavark/releases/download/v1.0.2/netavark.gz
+wget https://github.com/containers/netavark/releases/download/v1.1.0/netavark.gz
 
 gunzip netavark.gz
 chmod +x netavark
@@ -202,4 +202,13 @@ make bin/skopeo
 
 cp bin/skopeo /usr/bin/
 cp completions/bash/skopeo /usr/share/bash-completion/completions/
+```
+
+### On WSL2
+
+由于 WSL2 内核不支持 nftables，因此需要将 iptables 设置为 legacy 模式。
+
+```
+update-alternatives --set iptables /usr/sbin/iptables-legacy
+update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 ```
