@@ -148,10 +148,14 @@ mv crun-* /usr/bin/crun
 
 
 wget https://github.com/containers/netavark/releases/download/v1.1.0/netavark.gz
-
 gunzip netavark.gz
 chmod +x netavark
 mv netavark /usr/libexec/podman/
+
+wget https://github.com/containers/aardvark-dns/releases/download/v1.2.0/aardvark-dns.gz
+gunzip aardvark-dns.gz
+chmod +x aardvark-dns
+mv aardvark-dns /usr/libexec/podman/
 
 wget https://github.com/openSUSE/catatonit/releases/download/v0.1.7/catatonit.x86_64
 chmod +x catatonit.x86_64
