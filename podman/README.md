@@ -4,91 +4,6 @@ Podman is a Docker alternative tool and which gets rid of the big daemon.
 
 I like this tool, the commands are almost same as Docker.
 
-## Systemd
-
-```
-# /etc/systemd/system/podman-privoxy.service
-[Unit]
-Description=Privoxy in Podman Container
-After=network.target
-
-[Service]
-Type=simple
-TimeoutStartSec=30s
-ExecStartPre=-/usr/bin/podman rm privoxy
-
-ExecStart=/usr/bin/podman run --name privoxy --network host docker.io/siji/privoxy:3.0.24
-
-ExecReload=-/usr/bin/podman stop privoxy
-ExecReload=-/usr/bin/podman rm privoxy
-ExecStop=-/usr/bin/podman stop privoxy
-Restart=always
-RestartSec=30
-
-[Install]
-WantedBy=multi-user.target
-```
-
-## Install
-
-```
-add-apt-repository -y ppa:projectatomic/ppa
-apt install podman
-```
-
-## Kubernetes Pod
-
-```
-# /etc/systemd/system/pod@.service
-[Unit]
-Description=Podman Container
-After=network.target
-
-[Service]
-Type=oneshot
-TimeoutStartSec=30s
-ExecStartPre=-/usr/bin/podman play kube /etc/podman/%i.yaml
-
-ExecStart=/usr/bin/podman pod start %i
-
-ExecStop=-/usr/bin/podman pod stop %i
-
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
-
-
-# systemctl daemon-reload
-```
-
-```
-mkdir -p /etc/podman
-cp imap-app.yaml /etc/podman
-
-systemctl enable pod@imap-app
-```
-
-```
----
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    app: nginx
-  name: nginx
-spec:
-  containers:
-  - command:
-    - sleep
-    - 100000
-    image: docker.io/siji/nginx:latest
-    name: app
-    ports:
-    - containerPort: 80
-      hostPort: 80
-```
-
 ## Build Podman
 
 ### Install Build Library
@@ -138,65 +53,6 @@ cp bin/podman /usr/bin/
 podman completion bash > /usr/share/bash-completion/completions/podman
 ```
 
-### Install crun/netavark
-
-```
-wget https://github.com/containers/crun/releases/download/1.6/crun-1.6-linux-amd64
-
-chmod +x crun-*
-mv crun-* /usr/bin/crun
-
-
-wget https://github.com/containers/netavark/releases/download/v1.1.0/netavark.gz
-gunzip netavark.gz
-chmod +x netavark
-mv netavark /usr/libexec/podman/
-
-wget https://github.com/containers/aardvark-dns/releases/download/v1.2.0/aardvark-dns.gz
-gunzip aardvark-dns.gz
-chmod +x aardvark-dns
-mv aardvark-dns /usr/libexec/podman/
-
-wget https://github.com/openSUSE/catatonit/releases/download/v0.1.7/catatonit.x86_64
-chmod +x catatonit.x86_64
-mv catatonit.x86_64 /usr/libexec/podman/catatonit
-```
-
-### Create policy.json
-
-```
-mkdir -p /etc/containers
-vim /etc/containers/policy.json
-
-{
-  "default": [
-    {
-      "type": "insecureAcceptAnything"
-    }
-  ],
-  "transports":{
-    "docker-daemon": {
-      "": [{"type":"insecureAcceptAnything"}]
-    }
-  }
-}
-```
-
-### Create containers.conf
-
-```
-vim /etc/containers/containers.conf
-
-[engine]
-infra_image = "docker.io/siji/pause:3.7"
-```
-
-### Create registries.conf
-
-```
-echo 'unqualified-search-registries=["docker.io"]' > /etc/containers/registries.conf
-```
-
 ### Build Skopeo
 
 ```
@@ -208,6 +64,36 @@ cp bin/skopeo /usr/bin/
 cp completions/bash/skopeo /usr/share/bash-completion/completions/
 ```
 
+### Install Helpers
+
+```
+wget https://github.com/containers/crun/releases/download/1.6/crun-1.6-linux-amd64
+
+chmod +x crun-*
+mv crun-* /usr/bin/crun
+
+
+wget https://github.com/containers/netavark/releases/latest/download/netavark.gz
+gunzip netavark.gz
+chmod +x netavark
+mv netavark /usr/libexec/podman/
+
+wget https://github.com/containers/aardvark-dns/releases/latest/download/aardvark-dns.gz
+gunzip aardvark-dns.gz
+chmod +x aardvark-dns
+mv aardvark-dns /usr/libexec/podman/
+
+wget https://github.com/openSUSE/catatonit/releases/latest/download/catatonit.x86_64
+chmod +x catatonit.x86_64
+mv catatonit.x86_64 /usr/libexec/podman/catatonit
+```
+
+### Create Configuration files
+
+* /etc/containers/policy.json
+* /etc/containers/containers.conf
+* /etc/containers/registries.conf
+
 ### On WSL2
 
 由于 WSL2 内核不支持 nftables，因此需要将 iptables 设置为 legacy 模式。
@@ -215,4 +101,17 @@ cp completions/bash/skopeo /usr/share/bash-completion/completions/
 ```
 update-alternatives --set iptables /usr/sbin/iptables-legacy
 update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+```
+
+### Rootless Podman
+
+```
+apt install fuse-overlayfs slirp4netns uidmap
+
+vim ~/.config/containers/storage.conf
+[storage]
+  driver = "overlay"
+
+[storage.options]
+  mount_program = "/usr/bin/fuse-overlayfs"
 ```
