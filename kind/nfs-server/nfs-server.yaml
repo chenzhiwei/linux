@@ -1,0 +1,69 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: nfs-server
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nfs-server
+  namespace: nfs-server
+  labels:
+    app: nfs-server
+spec:
+  type: ClusterIP
+  selector:
+    app: nfs-server
+  ports:
+    - name: tcp-2049
+      port: 2049
+      protocol: TCP
+    - name: udp-111
+      port: 111
+      protocol: UDP
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nfs-server
+  namespace: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-server
+  template:
+    metadata:
+      name: nfs-server
+      labels:
+        app: nfs-server
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-control-plane
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: nfs-server
+          image: quay.io/siji/nfs-server:latest
+          volumeMounts:
+            - mountPath: /var/nfs
+              name: nfs-vol
+          securityContext:
+            capabilities:
+              add: ["SYS_ADMIN", "SETPCAP"]
+          ports:
+            - name: tcp-2049
+              containerPort: 2049
+              protocol: TCP
+            - name: udp-111
+              containerPort: 111
+              protocol: UDP
+      volumes:
+        - name: nfs-vol
+          hostPath:
+            path: /var/nfs
+            type: DirectoryOrCreate

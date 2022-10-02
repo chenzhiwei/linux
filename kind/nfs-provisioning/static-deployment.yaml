@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-nfs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deployment-nfs
+  template:
+    metadata:
+      name: deployment-nfs
+      labels:
+        name: deployment-nfs
+    spec:
+      containers:
+        - name: deployment-nfs
+          image: docker.io/library/ubuntu:latest
+          command:
+            - bash
+            - -c
+            - set -euo pipefail; while true; do echo $(hostname) $(date) >> /data/outfile; sleep 5; done
+          volumeMounts:
+            - name: nfs
+              mountPath: /data
+      volumes:
+        - name: nfs
+          persistentVolumeClaim:
+            claimName: static-nfs-pvc

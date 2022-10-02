@@ -1,0 +1,15 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: k8s
+networking:
+  podSubnet: 20.0.0.0/8
+  serviceSubnet: 30.33.0.0/16
+nodes:
+  - role: control-plane
+    image: docker.io/siji/kind-node:v1.25.2
+  - role: worker
+    image: docker.io/siji/kind-node:v1.25.2
+  - role: worker
+    image: docker.io/siji/kind-node:v1.25.2
+  - role: worker
+    image: docker.io/siji/kind-node:v1.25.2

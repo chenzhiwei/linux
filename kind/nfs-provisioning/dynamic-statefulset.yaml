@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: statefulset-nfs
+  labels:
+    app: statefulset-nfs
+spec:
+  ports:
+    - port: 80
+      name: web
+  clusterIP: None
+  selector:
+    app: statefulset-nfs
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-nfs
+spec:
+  selector:
+    matchLabels:
+      app: statefulset-nfs
+  serviceName: statefulset-nfs
+  replicas: 3
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: statefulset-nfs
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: statefulset-nfs
+          image: docker.io/library/ubuntu:latest
+          command:
+            - bash
+            - -c
+            - set -euo pipefail; while true; do echo $(hostname) $(date) >> /data/outfile; sleep 5; done
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: persist-data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: persist-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: nfs-csi
+        resources:
+          requests:
+            storage: 1Gi
