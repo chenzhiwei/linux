@@ -61,7 +61,7 @@ cd skopeo
 make bin/skopeo
 
 cp bin/skopeo /usr/bin/
-cp completions/bash/skopeo /usr/share/bash-completion/completions/
+skopeo completion bash > /usr/share/bash-completion/completions/skopeo
 ```
 
 ### Install Helpers
