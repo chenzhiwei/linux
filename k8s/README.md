@@ -1,5 +1,11 @@
 # Kubernetes
 
+## Download kind
+
+```
+curl -LO https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-linux-amd64
+```
+
 ## Download kubectl
 
 ```
