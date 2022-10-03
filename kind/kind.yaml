@@ -6,10 +6,23 @@ networking:
   serviceSubnet: 7.7.0.0/16
 nodes:
   - role: control-plane
-    image: docker.io/siji/kind-node:v1.25.2
+    image: docker.io/kindest/node:v1.25.2
   - role: worker
-    image: docker.io/siji/kind-node:v1.25.2
+    image: docker.io/kindest/node:v1.25.2
   - role: worker
-    image: docker.io/siji/kind-node:v1.25.2
+    image: docker.io/kindest/node:v1.25.2
   - role: worker
-    image: docker.io/siji/kind-node:v1.25.2
+    image: docker.io/kindest/node:v1.25.2
+containerdConfigPatches:
+  - |-
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."registry.k8s.io"]
+      endpoint = ["https://10.88.1.1", "https://registry.k8s.io",]
+
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+      endpoint = ["https://10.88.1.1", "https://registry-1.docker.io",]
+
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io"]
+      endpoint = ["https://10.88.1.1", "https://quay.io",]
+
+    [plugins."io.containerd.grpc.v1.cri".registry.configs."10.88.1.1".tls]
+      insecure_skip_verify = true
