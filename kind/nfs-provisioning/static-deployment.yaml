@@ -7,12 +7,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: deployment-nfs
+      app: deployment-nfs
   template:
     metadata:
-      name: deployment-nfs
       labels:
-        name: deployment-nfs
+        app: deployment-nfs
     spec:
       containers:
         - name: deployment-nfs
@@ -20,10 +19,10 @@ spec:
           command:
             - bash
             - -c
-            - set -euo pipefail; while true; do echo $(hostname) $(date) >> /data/outfile; sleep 5; done
+            - set -euo pipefail; while true; do echo $(hostname) $(date) >> /mnt/outfile; sleep 5; done
           volumeMounts:
             - name: nfs
-              mountPath: /data
+              mountPath: /mnt
       volumes:
         - name: nfs
           persistentVolumeClaim:

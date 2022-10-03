@@ -36,13 +36,13 @@ spec:
           command:
             - bash
             - -c
-            - set -euo pipefail; while true; do echo $(hostname) $(date) >> /data/outfile; sleep 5; done
+            - set -euo pipefail; while true; do echo $(hostname) $(date) >> /mnt/outfile; sleep 5; done
           ports:
             - containerPort: 80
               name: web
           volumeMounts:
             - name: persist-data
-              mountPath: /data
+              mountPath: /mnt
   volumeClaimTemplates:
     - metadata:
         name: persist-data
