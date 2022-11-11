@@ -67,25 +67,18 @@ skopeo completion bash > /usr/share/bash-completion/completions/skopeo
 ### Install Helpers
 
 ```
-wget https://github.com/containers/crun/releases/download/1.6/crun-1.6-linux-amd64
+curl -Lo /usr/bin/crun https://github.com/containers/crun/releases/download/1.7/crun-1.7-linux-amd64
+chmod 755 /usr/bin/crun
 
-chmod +x crun-*
-mv crun-* /usr/bin/crun
+curl -Lo /usr/libexec/podman/netavark.gz https://github.com/containers/netavark/releases/latest/download/netavark.gz
+gunzip /usr/libexec/podman/netavark.gz
 
+curl -Lo /usr/libexec/podman/aardvark-dns.gz https://github.com/containers/aardvark-dns/releases/latest/download/aardvark-dns.gz
+gunzip /usr/libexec/podman/aardvark-dns.gz
 
-wget https://github.com/containers/netavark/releases/latest/download/netavark.gz
-gunzip netavark.gz
-chmod +x netavark
-mv netavark /usr/libexec/podman/
+curl -Lo /usr/libexec/podman/catatonit https://github.com/openSUSE/catatonit/releases/latest/download/catatonit.x86_64
 
-wget https://github.com/containers/aardvark-dns/releases/latest/download/aardvark-dns.gz
-gunzip aardvark-dns.gz
-chmod +x aardvark-dns
-mv aardvark-dns /usr/libexec/podman/
-
-wget https://github.com/openSUSE/catatonit/releases/latest/download/catatonit.x86_64
-chmod +x catatonit.x86_64
-mv catatonit.x86_64 /usr/libexec/podman/catatonit
+chmod 755 /usr/libexec/podman/*
 ```
 
 ### Create Configuration files
