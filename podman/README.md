@@ -67,7 +67,8 @@ skopeo completion bash > /usr/share/bash-completion/completions/skopeo
 ### Install Helpers
 
 ```
-curl -Lo /usr/bin/crun https://github.com/containers/crun/releases/download/1.7/crun-1.7-linux-amd64
+CRUN_VERSION=1.7.2
+curl -Lo /usr/bin/crun https://github.com/containers/crun/releases/download/${CRUN_VERSION}/crun-${CRUN_VERSION}-linux-amd64
 chmod 755 /usr/bin/crun
 
 curl -Lo /usr/libexec/podman/netavark.gz https://github.com/containers/netavark/releases/latest/download/netavark.gz
@@ -77,6 +78,8 @@ curl -Lo /usr/libexec/podman/aardvark-dns.gz https://github.com/containers/aardv
 gunzip /usr/libexec/podman/aardvark-dns.gz
 
 curl -Lo /usr/libexec/podman/catatonit https://github.com/openSUSE/catatonit/releases/latest/download/catatonit.x86_64
+
+curl -Lo usr/libexec/podman/conmon https://github.com/containers/conmon/releases/latest/download/conmon.amd64
 
 chmod 755 /usr/libexec/podman/*
 ```
