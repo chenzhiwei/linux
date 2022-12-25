@@ -32,6 +32,8 @@ apt install \
 
 ### Build conmon
 
+NOTE: The pre-built binary has issues.
+
 ```
 git clone https://github.com/containers/conmon
 cd conmon
@@ -78,8 +80,6 @@ curl -Lo /usr/libexec/podman/aardvark-dns.gz https://github.com/containers/aardv
 gunzip /usr/libexec/podman/aardvark-dns.gz
 
 curl -Lo /usr/libexec/podman/catatonit https://github.com/openSUSE/catatonit/releases/latest/download/catatonit.x86_64
-
-curl -Lo usr/libexec/podman/conmon https://github.com/containers/conmon/releases/latest/download/conmon.amd64
 
 chmod 755 /usr/libexec/podman/*
 ```
