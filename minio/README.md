@@ -28,14 +28,79 @@ podman play kube k8s-deployment.yaml
 
 ## Use
 
-```
-mc alias set minio https://192.168.122.10:8000/ minio minio123 --insecure
+### Set Alias
 
-mc mb minio/mybucket --insecure
-mc ls minio --insecure
+This command is used to set a local alias `myminio`, if your minio server is setup with self-signed certificates, you can also add `--insecure`.
 
-mc cp README.md minio/mybucket/some/dir/README.md --insecure
 ```
+mc alias set myminio http://127.0.0.1:9000/ user-or-accesskey pass-or-secret-key
+```
+
+## Create User
+
+The user and password are same as access-key and secret key.
+
+```
+mc admin user list myminio
+
+mc admin user add myminio test-user test-pass
+mc admin user list myminio
+```
+
+## Create Bucket
+
+```
+mc mb myminio/mybucket
+```
+
+## Create Policy and Assign to User
+
+### only allow readwrite to bucket `mybucket`
+
+readwrite-mybucket.json
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::mybucket/*"
+      ]
+    }
+  ]
+}
+```
+
+### Create Policy
+
+```
+mc admin policy list myminio
+
+mc admin policy add myminio mybucket-readwrite mybucket-readwrite.json
+```
+
+### Assign Policy to User
+
+```
+mc admin policy set myminio mybucket-readwrite user=test-user
+
+mc admin policy unset myminio mybucket-readwrite user=test-user
+```
+
+## Upload File
+
+### mc client
+
+```
+mc cp README.md myminio/mybucket/some/dir/README.md
+```
+
+### curl
 
 ```
 ACCESS_KEY=minio
@@ -98,7 +163,7 @@ Actions: https://docs.min.io/minio/baremetal/security/minio-identity-management/
                 "s3:GetObject"
             ],
             "Resource": [
-                "arn:aws:s3:::/mybucket/*"
+                "arn:aws:s3:::mybucket/*"
             ]
         }
     ]
