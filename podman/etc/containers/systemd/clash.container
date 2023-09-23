@@ -1,0 +1,16 @@
+# Location: /etc/containers/systemd/clash.container
+[Unit]
+Description=The Clash Service
+After=local-fs.target network.target
+
+[Container]
+ContainerName=clash
+Image=docker.io/siji/clash:latest
+Network=host
+Volume=/etc/clash:/etc/clash
+AddCapability=NET_ADMIN MKNOD
+AddDevice=/dev/net/tun
+AutoUpdate=registry
+
+[Install]
+WantedBy=multi-user.target

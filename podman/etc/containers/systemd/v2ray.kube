@@ -1,0 +1,11 @@
+# Location: /etc/containers/systemd/v2ray.kube
+[Unit]
+Description=The v2ray Server
+After=local-fs.target network.target
+
+[Kube]
+AutoUpdate=registry
+Yaml=/etc/containers/manifest/k8s-v2ray.yaml
+
+[Install]
+WantedBy=multi-user.target

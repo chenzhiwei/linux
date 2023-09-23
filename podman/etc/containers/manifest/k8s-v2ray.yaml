@@ -1,0 +1,131 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: v2ray
+data:
+  config.json: |-
+    {
+      "inbounds": [
+        {
+          "port": 9999,
+          "listen": "0.0.0.0",
+          "protocol": "vmess",
+          "settings": {
+            "clients": [
+              {
+                "id": "92e00974-9ab8-471c-a988-2dc35322cca4"
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "ws",
+            "security": "none",
+            "wsSettings": {
+              "path": "/v2ray"
+            }
+          }
+        }
+      ],
+      "outbounds": [{
+        "protocol": "freedom",
+        "settings": {}
+      }]
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx
+data:
+  v2ray-http.conf: |-
+    server {
+        listen       80;
+        server_name  http-server.com;
+
+        location /buffer {
+            proxy_redirect off;
+            proxy_pass http://127.0.0.1:9999;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_read_timeout 52w;
+        }
+
+        location / {
+            rewrite ^/(.*)$ https://baidu.com/$1 permanent;
+            root   /usr/share/nginx/html;
+            index  index.html;
+        }
+    }
+  v2ray-https.conf: |-
+    server {
+        listen       443 ssl http2;
+        server_name  https-server.com;
+
+        ssl_certificate      /etc/v2ray/pki/server.crt;
+        ssl_certificate_key  /etc/v2ray/pki/server.key;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers   on;
+
+        location /buffer {
+            proxy_pass http://127.0.0.1:9999;
+            proxy_redirect off;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_read_timeout 52w;
+        }
+
+        location / {
+            rewrite ^/(.*)$ https://baidu.com/$1 permanent;
+            root   /usr/share/nginx/html;
+            index  index.html;
+        }
+    }
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: v2ray
+spec:
+  containers:
+    - name: nginx
+      image: docker.io/library/nginx:latest
+      ports:
+        - containerPort: 80
+          hostPort: 80
+          protocol: TCP
+        - containerPort: 443
+          hostPort: 443
+          protocol: TCP
+      volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+        - name: v2ray-pki
+          mountPath: /etc/v2ray/pki
+    - name: v2ray
+      image: docker.io/siji/v2ray:latest
+      volumeMounts:
+        - name: v2ray-config
+          mountPath: /etc/v2ray
+  volumes:
+    - name: nginx-config
+      configMap:
+        name: nginx
+    - name: v2ray-config
+      configMap:
+        name: v2ray
+    - name: v2ray-pki
+      hostPath:
+        path: /etc/v2ray/pki
+        type: DirectoryOrCreate
