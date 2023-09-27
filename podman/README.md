@@ -69,7 +69,7 @@ skopeo completion bash > /usr/share/bash-completion/completions/skopeo
 ### Install Helpers
 
 ```
-CRUN_VERSION=1.7.2
+CRUN_VERSION=$(curl -sSL https://api.github.com/repos/containers/crun/releases/latest | jq -r .tag_name)
 curl -Lo /usr/bin/crun https://github.com/containers/crun/releases/download/${CRUN_VERSION}/crun-${CRUN_VERSION}-linux-amd64
 chmod 755 /usr/bin/crun
 
