@@ -4,6 +4,26 @@ Podman is a Docker alternative tool and which gets rid of the big daemon.
 
 I like this tool, the commands are almost same as Docker.
 
+## Build Podman Binaries
+
+Build all the Podman required binaries inside container.
+
+```
+apt install --no-install-recommends docker.io
+docker run --rm -it -v $(pwd):/data docker.io/library/ubuntu:22.04 /data/build-podman.sh
+apt purge docker.io containerd runc
+rm -rf /var/lib/docker
+```
+
+## Install Podman Runtime Dependencies
+
+```
+apt install fuse-overlayfs slirp4netns iptables
+```
+
+<details>
+  <summary>Deprecated Steps</summary>
+
 ## Build Podman
 
 ### Install Build Library
@@ -111,3 +131,4 @@ vim ~/.config/containers/storage.conf
 [storage.options]
   mount_program = "/usr/bin/fuse-overlayfs"
 ```
+</details>
