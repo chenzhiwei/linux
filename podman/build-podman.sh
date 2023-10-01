@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 set -eux -o pipefail
 
@@ -60,7 +60,7 @@ function build_podman() {
     cp /tmp/podman/bin/podman usr/bin/
     cp /tmp/podman/bin/{rootlessport,quadlet} usr/libexec/podman/
     usr/bin/podman completion bash > usr/share/bash-completion/completions/podman
-    cp files/etc/containers/{containers.conf,policy.json,registries.conf} etc/containers/
+    cp files/etc/containers/{*.conf,*.json} etc/containers/
     cd usr/lib/systemd/system-generators/
     ln -s ../../../libexec/podman/quadlet podman-systemd-generator
 }
