@@ -67,7 +67,7 @@ function build_podman() {
 
 function build_skopeo() {
     SKOPEO_VERSION=$(curl -sSL https://api.github.com/repos/containers/skopeo/releases/latest | jq -r .tag_name)
-    git clone --depth=1 -b $CONMON_VERSION https://github.com/containers/skopeo /tmp/skopeo
+    git clone --depth=1 -b $SKOPEO_VERSION https://github.com/containers/skopeo /tmp/skopeo
     cd /tmp/skopeo
     make bin/skopeo
     cd -
