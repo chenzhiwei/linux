@@ -43,7 +43,7 @@ function build_conmon() {
     CONMON_VERSION=$(curl -sSL https://api.github.com/repos/containers/conmon/releases/latest | jq -r .tag_name)
     git clone --depth=1 -b $CONMON_VERSION https://github.com/containers/conmon /tmp/conmon
     cd /tmp/conmon
-    make PREFIX="/usr"
+    make PREFIX=/usr
     cd -
     cp /tmp/conmon/bin/conmon usr/libexec/podman/
 }
@@ -55,7 +55,7 @@ function build_podman() {
     PODMAN_VERSION=$(curl -sSL https://api.github.com/repos/containers/podman/releases/latest | jq -r .tag_name)
     git clone --depth=1 -b $PODMAN_VERSION https://github.com/containers/podman /tmp/podman
     cd /tmp/podman
-    make PREFIX="/usr" BUILDTAGS="selinux seccomp systemd exclude_graphdriver_devicemapper" podman rootlessport quadlet
+    make PREFIX=/usr BUILDTAGS="selinux seccomp systemd exclude_graphdriver_devicemapper" podman rootlessport quadlet
     cd -
     cp /tmp/podman/bin/podman usr/bin/
     cp /tmp/podman/bin/{rootlessport,quadlet} usr/libexec/podman/
@@ -70,7 +70,7 @@ function build_skopeo() {
     SKOPEO_VERSION=$(curl -sSL https://api.github.com/repos/containers/skopeo/releases/latest | jq -r .tag_name)
     git clone --depth=1 -b $SKOPEO_VERSION https://github.com/containers/skopeo /tmp/skopeo
     cd /tmp/skopeo
-    make PREFIX="/usr" bin/skopeo
+    make PREFIX=/usr bin/skopeo
     cd -
     cp /tmp/skopeo/bin/skopeo usr/bin/
     usr/bin/skopeo completion bash > usr/share/bash-completion/completions/skopeo

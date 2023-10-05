@@ -13,6 +13,8 @@ apt install --no-install-recommends docker.io
 docker run --rm -v $(pwd):/data docker.io/library/ubuntu:22.04 /data/build-podman.sh
 apt purge docker.io containerd runc
 rm -rf /var/lib/docker
+
+rsync -a files/* /
 ```
 
 ## Install Podman Runtime Dependencies

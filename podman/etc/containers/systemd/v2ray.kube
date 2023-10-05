@@ -6,5 +6,8 @@ After=local-fs.target network.target
 [Kube]
 Yaml=/etc/containers/manifest/k8s-v2ray.yaml
 
+[Service]
+TimeoutStartSec=900
+
 [Install]
 WantedBy=multi-user.target

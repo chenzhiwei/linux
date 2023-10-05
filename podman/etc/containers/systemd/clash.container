@@ -12,5 +12,8 @@ AddCapability=NET_ADMIN MKNOD
 AddDevice=/dev/net/tun
 AutoUpdate=registry
 
+[Service]
+TimeoutStartSec=900
+
 [Install]
 WantedBy=multi-user.target
