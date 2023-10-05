@@ -44,7 +44,7 @@ data:
         listen       80;
         server_name  http-server.com;
 
-        location /buffer {
+        location /v2ray {
             proxy_redirect off;
             proxy_pass http://127.0.0.1:9999;
             proxy_http_version 1.1;
@@ -73,7 +73,7 @@ data:
         ssl_protocols TLSv1.2 TLSv1.3;
         ssl_prefer_server_ciphers   on;
 
-        location /buffer {
+        location /v2ray {
             proxy_pass http://127.0.0.1:9999;
             proxy_redirect off;
             proxy_http_version 1.1;

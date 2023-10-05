@@ -3,7 +3,7 @@
 set -eux -o pipefail
 
 function prepare_dir() {
-    mkdir -p etc/containers/systemd usr/bin usr/libexec/podman usr/lib/systemd/system-generators usr/share/bash-completion/completions/
+    mkdir -p etc/containers/{manifest,systemd} usr/bin usr/libexec/podman usr/lib/systemd/system-generators usr/share/bash-completion/completions/
 }
 
 function install_deps() {
@@ -60,9 +60,10 @@ function build_podman() {
     cp /tmp/podman/bin/podman usr/bin/
     cp /tmp/podman/bin/{rootlessport,quadlet} usr/libexec/podman/
     usr/bin/podman completion bash > usr/share/bash-completion/completions/podman
-    cp files/etc/containers/{*.conf,*.json} etc/containers/
+    cp ../etc/containers/{*.conf,*.json} etc/containers/
     cd usr/lib/systemd/system-generators/
     ln -s ../../../libexec/podman/quadlet podman-systemd-generator
+    cd -
 }
 
 function build_skopeo() {
@@ -91,8 +92,8 @@ function strip_and_chmod() {
     strip usr/bin/* usr/libexec/podman/*
 }
 
-mkdir -p /data
-cd /data
+mkdir -p /data/files
+cd /data/files
 
 prepare_dir
 install_deps
