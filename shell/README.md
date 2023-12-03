@@ -15,6 +15,7 @@
     11. echo $TERM 查看term类型（xterm）
     12. echo $RANDOM 产生随机整数
     13. 还有很多$PWD,$HISTFILE,$HISTCMD,$MAIL等，可以用 echo $ +tab tab 来查看所有的常量
+    14. echo $_ 查看上条命名最后的参数
 
 ### Shell脚本语言中test命令用法
 
