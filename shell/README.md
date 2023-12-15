@@ -175,6 +175,15 @@
 
 * ${parameter:offset} ${parameter:offset:length}
 
+    ```
+    str=0123456789
+    echo ${str:3}    # 从第3位到最后的子串 3456789
+    echo ${str:3:2}  # 从第3位开始取2个字符 34
+    echo ${str:3:-2} # 从第3位取到倒数第3位 34567
+    echo ${str::3}   # 取前两位字符 012
+    echo ${str:0:3}  # 取前两位字符 012
+    ```
+
     This is referred to as Substring Expansion. It expands to up to length characters of the value of parameter starting at the character specified by offset. If parameter is ‘@’, an indexed array subscripted by ‘@’ or ‘*’, or an associative array name, the results differ as described below. If length is omitted, it expands to the substring of the value of parameter starting at the character specified by offset and extending to the end of the value. length and offset are arithmetic expressions.
 
 <http://tldp.org/LDP/abs/html/refcards.html#AEN22728>
