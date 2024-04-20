@@ -60,7 +60,7 @@ function build_crun() {
     # Install WasmEdge
     curl -sSf https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh | bash -s -- -p /usr/local
     cp /usr/local/bin/wasmedge* usr/local/bin/
-    cp -P /usr/local/lib/libwasmedge* /usr/local/lib/
+    cp -P /usr/local/lib/libwasmedge* usr/local/lib/
 
     CRUN_VERSION=$(curl -sSL https://api.github.com/repos/containers/crun/releases/latest | jq -r .tag_name)
     git clone --depth=1 -b $CRUN_VERSION https://github.com/containers/crun /tmp/crun
