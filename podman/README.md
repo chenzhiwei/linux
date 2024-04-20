@@ -20,7 +20,7 @@ rsync -a files/* /
 ## Install Podman Runtime Dependencies
 
 ```
-apt install fuse-overlayfs slirp4netns iptables
+apt install fuse-overlayfs passt iptables
 ```
 
 <details>
@@ -124,7 +124,7 @@ update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 ### Rootless Podman
 
 ```
-apt install fuse-overlayfs slirp4netns uidmap
+apt install fuse-overlayfs passt uidmap
 
 vim ~/.config/containers/storage.conf
 [storage]
