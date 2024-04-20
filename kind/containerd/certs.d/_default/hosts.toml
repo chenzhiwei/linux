@@ -1,0 +1,3 @@
+[host."https://10.88.1.1"]
+  capabilities = ["pull", "resolve", "push"]
+  skip_verify = true

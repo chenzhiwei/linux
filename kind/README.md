@@ -57,18 +57,15 @@ podman run -d --name container-registry --ip 10.88.1.1 -v /var/lib/registry:/var
 
 ### Set Containerd Mirror
 
+Using local private registry as mirror of all other registries.
+
+copy the file to host `/etc/containerd/certs.d/_default/hosts.toml`
+
 Append following to `/etc/containerd/config.toml`.
 
 ```
-[plugins."io.containerd.grpc.v1.cri".registry.mirrors."registry.k8s.io"]
-  endpoint = ["https://10.88.1.1", "https://registry.k8s.io",]
+version = 2
 
-[plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-  endpoint = ["https://10.88.1.1", "https://registry-1.docker.io",]
-
-[plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io"]
-  endpoint = ["https://10.88.1.1", "https://quay.io",]
-
-[plugins."io.containerd.grpc.v1.cri".registry.configs."10.88.1.1".tls]
-  insecure_skip_verify = true
+[plugins."io.containerd.grpc.v1.cri".registry]
+   config_path = "/etc/containerd/certs.d"
 ```

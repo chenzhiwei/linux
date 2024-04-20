@@ -1,28 +1,33 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-name: k8s
+name: kube
 networking:
   podSubnet: 6.0.0.0/8
   serviceSubnet: 7.7.0.0/16
 nodes:
   - role: control-plane
-    image: docker.io/kindest/node:v1.25.2
+    image: docker.io/kindest/node:v1.30.0
+    extraMounts:
+      - containerPath: /etc/containerd/certs.d
+        hostPath: /etc/containerd/certs.d
   - role: worker
-    image: docker.io/kindest/node:v1.25.2
+    image: docker.io/kindest/node:v1.30.0
+    extraMounts:
+      - containerPath: /etc/containerd/certs.d
+        hostPath: /etc/containerd/certs.d
   - role: worker
-    image: docker.io/kindest/node:v1.25.2
+    image: docker.io/kindest/node:v1.30.0
+    extraMounts:
+      - containerPath: /etc/containerd/certs.d
+        hostPath: /etc/containerd/certs.d
   - role: worker
-    image: docker.io/kindest/node:v1.25.2
+    image: docker.io/kindest/node:v1.30.0
+    extraMounts:
+      - containerPath: /etc/containerd/certs.d
+        hostPath: /etc/containerd/certs.d
 containerdConfigPatches:
   - |-
-    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."registry.k8s.io"]
-      endpoint = ["https://10.88.1.1", "https://registry.k8s.io",]
+    version = 2
 
-    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-      endpoint = ["https://10.88.1.1", "https://registry-1.docker.io",]
-
-    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io"]
-      endpoint = ["https://10.88.1.1", "https://quay.io",]
-
-    [plugins."io.containerd.grpc.v1.cri".registry.configs."10.88.1.1".tls]
-      insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry]
+       config_path = "/etc/containerd/certs.d"
