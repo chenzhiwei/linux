@@ -3,22 +3,27 @@
 set -eux -o pipefail
 
 function prepare_dir() {
-    mkdir -p etc/containers/{manifest,systemd} usr/bin usr/libexec/podman usr/lib/systemd/system-generators usr/share/bash-completion/completions/
+    mkdir -p etc/containers/{manifest,systemd} usr/bin usr/libexec/podman usr/local/{bin,lib} usr/lib/systemd/system-generators usr/share/bash-completion/completions/
 }
 
 function install_deps() {
     apt update
     apt install -y \
+        autoconf \
+        automake \
         binutils \
         btrfs-progs \
+        build-essential \
         curl \
         gcc \
         git \
+        go-md2man \
         iptables \
         jq \
         libassuan-dev \
         libbtrfs-dev \
         libc6-dev \
+        libcap-dev \
         libdevmapper-dev \
         libglib2.0-dev \
         libgpgme-dev \
@@ -28,8 +33,11 @@ function install_deps() {
         libseccomp-dev \
         libselinux1-dev \
         libsystemd-dev \
+        libtool \
+        libyajl-dev \
         make \
         pkg-config \
+        python3 \
         uidmap
 }
 
@@ -46,6 +54,23 @@ function build_conmon() {
     make PREFIX=/usr
     cd -
     cp /tmp/conmon/bin/conmon usr/libexec/podman/
+}
+
+function build_crun() {
+    # Install WasmEdge
+    curl -sSf https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh | bash -s -- -p /usr/local
+    cp /usr/local/bin/wasmedge* usr/local/bin/
+    cp -P /usr/local/lib/libwasmedge* /usr/local/lib/
+
+    CRUN_VERSION=$(curl -sSL https://api.github.com/repos/containers/crun/releases/latest | jq -r .tag_name)
+    git clone --depth=1 -b $CRUN_VERSION https://github.com/containers/crun /tmp/crun
+    cd /tmp/crun
+    ./autogen.sh
+    ./configure --with-wasmedge
+    make PREFIX=/usr
+    cd -
+    cp /tmp/crun/crun usr/bin/crun
+    cp /tmp/crun/crun usr/bin/crun-wasm
 }
 
 function build_podman() {
@@ -77,8 +102,8 @@ function build_skopeo() {
 }
 
 function fetch_binaries() {
-    CRUN_VERSION=$(curl -sSL https://api.github.com/repos/containers/crun/releases/latest | jq -r .tag_name)
-    curl -sSL -o usr/bin/crun https://github.com/containers/crun/releases/download/${CRUN_VERSION}/crun-${CRUN_VERSION}-linux-amd64
+    # CRUN_VERSION=$(curl -sSL https://api.github.com/repos/containers/crun/releases/latest | jq -r .tag_name)
+    # curl -sSL -o usr/bin/crun https://github.com/containers/crun/releases/download/${CRUN_VERSION}/crun-${CRUN_VERSION}-linux-amd64
 
     curl -sSL -o usr/libexec/podman/netavark.gz https://github.com/containers/netavark/releases/latest/download/netavark.gz
     gunzip usr/libexec/podman/netavark.gz
@@ -98,6 +123,7 @@ cd /data/files
 prepare_dir
 install_deps
 build_conmon
+build_crun
 build_podman
 build_skopeo
 fetch_binaries
