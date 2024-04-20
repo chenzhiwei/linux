@@ -1,0 +1,23 @@
+# Enter to host node
+#   kubectl exec -it nsenter -- nsenter -a -t 1 -- bash
+#
+# Single command:
+#   kubectl run nsenter --rm -it --privileged --image=debian:stable-slim --overrides '{"spec":{"nodeName":"kube-worker02","hostPID":true}}' -- nsenter -a -t 1 -- bash
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nsenter
+spec:
+  hostPID: true
+  nodeName: kube-worker02
+  containers:
+  - name: nsenter
+    image: docker.io/library/debian:stable-slim
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      privileged: true
+    command:
+      - sleep
+      - "36000000"
