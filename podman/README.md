@@ -23,6 +23,56 @@ rsync -a files/* /
 apt install fuse-overlayfs passt iptables
 ```
 
+## Use wasm with Podman
+
+### Rebuild crun with wasmedge runtime
+
+Install wasmedge, you will get the header files, then build crun to enable wasmedge runtime:
+
+```
+git clone https://github.com/containers/crun
+cd crun
+./autogen.sh
+./configure --with-wasmedge
+make
+cp crun /usr/bin/crun-wasm
+
+crun-wasm -v
+crun version 1.14.4
+commit: a220ca661ce078f2c37b38c92e66cf66c012d9c1
+rundir: /run/user/1000/crun
+spec: 1.0.0
++SYSTEMD +SELINUX +APPARMOR +CAP +SECCOMP +EBPF +CRIU +WASM:wasmedge +YAJL
+```
+
+### Build a wasm image and run it
+
+```
+// main.go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, WebAssembly!")
+}
+```
+
+```
+// Dockerfile
+FROM scratch
+
+COPY main.wasm /
+CMD ["/main.wasm"]
+```
+
+```
+GOOS=wasip1 GOARCH=wasm go build -o main.wasm main.go
+podman build --platform=wasi/wasm -t docker.io/siji/wasm-hello:latest .
+
+podman run --rm docker.io/siji/wasm-hello:latest
+```
+
 <details>
   <summary>Deprecated Steps</summary>
 
