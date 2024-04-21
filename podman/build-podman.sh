@@ -88,7 +88,7 @@ function build_podman() {
     cp /tmp/podman/bin/podman usr/bin/
     cp /tmp/podman/bin/{rootlessport,quadlet} usr/libexec/podman/
     usr/bin/podman completion bash > usr/share/bash-completion/completions/podman
-    cp ../etc/containers/{*.conf,*.json} etc/containers/
+    cp -r ../metadata/* .
     cd usr/lib/systemd/system-generators/
     ln -s ../../../libexec/podman/quadlet podman-systemd-generator
     cd -
