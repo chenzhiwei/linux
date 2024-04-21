@@ -73,6 +73,14 @@ podman build --platform=wasi/wasm -t docker.io/siji/wasm-hello:latest .
 podman run --rm docker.io/siji/wasm-hello:latest
 ```
 
+## Build Multi-arch image
+
+```
+podman manifest create docker.io/siji/any:latest
+podman build --platform linux/amd64,linux/arm64 --manifest docker.io/siji/any:latest .
+podman manifest push docker.io/siji/any:latest
+```
+
 <details>
   <summary>Deprecated Steps</summary>
 
