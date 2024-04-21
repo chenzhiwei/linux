@@ -3,7 +3,10 @@
 set -eux -o pipefail
 
 function prepare_dir() {
-    mkdir -p etc/containers/{manifest,systemd} usr/bin usr/libexec/podman usr/local/{bin,lib} usr/lib/systemd/system-generators usr/share/bash-completion/completions/
+    mkdir -p usr/bin usr/libexec/podman \
+             usr/local/{bin,lib} \
+             usr/lib/systemd/system-generators \
+             usr/share/bash-completion/completions
 }
 
 function install_deps() {
