@@ -2,7 +2,7 @@
 
 ## Build Kubernetes
 
-NOTE: If you want to add a suffix in KUBE_GIT_VERSION, please don't use dash(`-`) to separate, an example is: `KUBE_GIT_VERSION=v1.8.2+special`
+NOTE: If you want to add a suffix in `KUBE_GIT_VERSION`, please don't use dash(`-`) to separate, an example is: `KUBE_GIT_VERSION=v1.8.2+special`
 
 ### Build static linked binary
 
