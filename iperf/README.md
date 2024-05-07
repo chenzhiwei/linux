@@ -23,3 +23,11 @@ iperf3 --server --port 5201
 ```
 iperf3 --client server-ip-address --port 5201 --time 60 -w 2M
 ```
+
+## NUMA亲和
+
+```
+lscpu
+
+taskset -c 0-5 iperf3 --server/--client
+```
