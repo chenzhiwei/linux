@@ -1,3 +1,6 @@
+# How to use
+# 1. Update id in line 20 to yours
+# 2. Update the server_name in line 48 to yours
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -39,36 +42,13 @@ kind: ConfigMap
 metadata:
   name: nginx
 data:
-  v2ray-http.conf: |-
-    server {
-        listen       80;
-        server_name  http-server.com;
-
-        location /v2ray {
-            proxy_redirect off;
-            proxy_pass http://127.0.0.1:9999;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_read_timeout 52w;
-        }
-
-        location / {
-            rewrite ^/(.*)$ https://baidu.com/$1 permanent;
-            root   /usr/share/nginx/html;
-            index  index.html;
-        }
-    }
   v2ray-https.conf: |-
     server {
         listen       443 ssl http2;
         server_name  https-server.com;
 
-        ssl_certificate      /etc/v2ray/pki/server.crt;
-        ssl_certificate_key  /etc/v2ray/pki/server.key;
+        ssl_certificate      /etc/v2ray/pki/tls.crt;
+        ssl_certificate_key  /etc/v2ray/pki/tls.key;
 
         ssl_protocols TLSv1.2 TLSv1.3;
         ssl_prefer_server_ciphers   on;
@@ -126,6 +106,59 @@ spec:
       configMap:
         name: v2ray
     - name: v2ray-pki
-      hostPath:
-        path: /etc/v2ray/pki
-        type: DirectoryOrCreate
+      configMap:
+        name: v2ray-pki
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: v2ray-pki
+data:
+  tls.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIC5jCCAc6gAwIBAgIRAN1Ixjok7NHMw75LvoClaCMwDQYJKoZIhvcNAQELBQAw
+    FDESMBAGA1UEAxMJYW55LmxvY2FsMCAXDTI0MTAzMTExMzk1MVoYDzIxMjQxMDA3
+    MTEzOTUxWjAUMRIwEAYDVQQDEwlhbnkubG9jYWwwggEiMA0GCSqGSIb3DQEBAQUA
+    A4IBDwAwggEKAoIBAQCp5ANireYBABuPuxE8IxqKP/Km3GZ97nspZJGx2kLnCuvl
+    0BrwpMnzhyhm5+1qeuzWwyew4ayK2XYYxCnoayUgo8cECvPioBp5SgRaEgJMzK4z
+    mDICQO/HGaQ+uqZfl+fq0XRDgFkvgSj+AscpyVQODkTuXfFqnnPhm2PZIYhxWd2Y
+    arfs03CHtBAIcQpzJtLpxLQ/y6rIF10nvu52shkmy0u5ElIkJYGa3HvsOmouGHQJ
+    ObH1Smxq56QJNaUrAn9HzuGIYp13AsmvghfPSfVh0gTD8XKyuXvtFP29OkFvYUq4
+    5jqv1zHUBoPi4CfSNI+6Vpb1a5yI/Jl7zEeabFDnAgMBAAGjMTAvMA4GA1UdDwEB
+    /wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDQYJKoZIhvcN
+    AQELBQADggEBADvPjzQdDJnaNeRePn6+iXRm1mEgjXr8QvLVrRX/SEKg2rWkxO4u
+    /DtB4PFZHXdznJS2JdriOQ2E8KjH3lCGRz7t5R0wcMMvjt6dpVJeG+j2H5+mHX6I
+    gvt0FJ7K6cYe7iLqrki/6oZ2Scptd2Z3Z5kSDn8r8Iw68k+vJpBhMRIf8zzQ/dkQ
+    mwZ/Y+0brFei31Hasu6KAW8MIyb8scOGABvoToAIGIfVVrbiZhWcf5ROQxdzDBc+
+    plMxH5lbtphvq/3d8GDaBeZGpQcgKNfBnfBBPOy/x8AnjhwhOQ/7cHLp5U5thaS7
+    vnebx0KzwAg4cWM3I/vEy4Zpw/K20QjJjfY=
+    -----END CERTIFICATE-----
+  tls.key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEAqeQDYq3mAQAbj7sRPCMaij/yptxmfe57KWSRsdpC5wrr5dAa
+    8KTJ84coZuftanrs1sMnsOGsitl2GMQp6GslIKPHBArz4qAaeUoEWhICTMyuM5gy
+    AkDvxxmkPrqmX5fn6tF0Q4BZL4Eo/gLHKclUDg5E7l3xap5z4Ztj2SGIcVndmGq3
+    7NNwh7QQCHEKcybS6cS0P8uqyBddJ77udrIZJstLuRJSJCWBmtx77DpqLhh0CTmx
+    9UpsauekCTWlKwJ/R87hiGKddwLJr4IXz0n1YdIEw/Fysrl77RT9vTpBb2FKuOY6
+    r9cx1AaD4uAn0jSPulaW9WuciPyZe8xHmmxQ5wIDAQABAoIBABfIGUk4+pdtQm5u
+    S01VxKNRrE/7TkWWmpsCvvpciTz6ZGc5KGxDRRnX86nkEXH0Xy75BpdWH+cX5dY1
+    r4Afb4UQKA3C0r0ImGweFlndZ4EEreX/ChESsf328uztB9kd1JMkWtgQIWvq8qgM
+    D4Ej86Y8DR4o/GBmaeZM8D822Hi1VzcN+zxyBkcSq0y4l0p+qgSMrwQwVJX25uXz
+    faM1Ux9YJvJ8NZgslxmnAqJkV97lLRlrkTv+2XHlPeUBX2Yayxs9WdesvUBHr1u4
+    5ng0DOoDxVBrY45kccTJLcL/rlpzbKB6DQVsYPg3T7OJaqvOFcL6KOhjf0TDAGA7
+    n1PCoGECgYEA3aLm4nKQxl1lyKBiyQEzuX5pn6OyrAWKSiLW65HKaM+u11KsrvEP
+    WewhD33zgQMCPAAgjj3yaQ3Xk89mrHHrcD3LrqXs8mzK6oQQrHvolQhuG7ApgjEH
+    G6CPT1nhIJwvX9ZGPSVnCq9lXDQn5N+HR15g4hKJ+1o8L+ELnVQRHTkCgYEAxDs+
+    dD6tEvIUK6FR11H4xxDeTTuCSWzlrSRtk2wbBlMc8uc61D7pwCX+qp6jC64ZZnPm
+    VZEOTcsLfioXLaU3ZQqOzhA1IESgBesWRr1LBW7bpDPaIlnZNyH39u+dLbagZBtr
+    p5uzObYP8KFZmiUNV/TTRmxUcK01lODn2yAu/x8CgYATgoiCfIVEAOq5y2yGtyVf
+    ecJAfD95Jw+yUPjMScwgh8+jQrLSv4OTbdbHL1YlECe9MmGrQ8a3+rD0YPhvy6Nn
+    APmSCScfe/YsyK1TEaE6pUBUDaDJxhkTFIIpAQdxQG5nKEyMi2NTrHbms+yjGA4n
+    eSZcIDenOZ08tbm5ArJy+QKBgQCFrGXrAhccZNPgtM/vgeOal58XtYYXRpteywXp
+    +yadtFhwD5w/oWvSfQ9yYwZmmn6rECDEAUBhNgPqOfn4GigWKI8HSHsoNBdecLqI
+    DcLhPJda0Ae0hsg1impESQ4ladbw2s0HLEV29tL89Kz5GGxyklCqFHmhGBz8Aglv
+    eAkLuQKBgQCG8eQbJEiuLyAytHI6Rev7ApkJkIdkbqalgA9pF0dLJsO+mOm/2HVU
+    jq72gTSLmyjM93wAkxh3BM/mQ4/ikrIJsrNKTpyB+cnNGaXSbucf/qgR9uadl3QZ
+    UHEc1pLYIkyeg2ZDj7A6wDTVRlNOpqCUWNVqEXzBsUYqFE1KcmD9DQ==
+    -----END RSA PRIVATE KEY-----
