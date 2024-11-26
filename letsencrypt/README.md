@@ -58,18 +58,20 @@ You will get something like this:
 
     ```
     acme.sh --issue \
-        --dns dns_dgon
+        --dns dns_dgon \
+        --server letsencrypt \
         --challenge-alias mixhub-alias.cn \
-        -d mixhub.cn -d '*.mixhub.cn' \
+        -d mixhub.cn -d '*.mixhub.cn'
     ```
 
 4. Renew a certificate
 
     ```
     acme.sh --renew \
-        --dns dns_dgon
+        --dns dns_dgon \
+        --server letsencrypt \
         --challenge-alias mixhub-alias.cn \
-        -d mixhub.cn -d '*.mixhub.cn' \
+        -d mixhub.cn -d '*.mixhub.cn'
     ```
 
 
