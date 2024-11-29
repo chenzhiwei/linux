@@ -45,8 +45,8 @@ function install_deps() {
 }
 
 function install_golang() {
-    GO_VERSION=$(curl -sSL https://go.dev/VERSION?m=text | head -1)
-    curl -sSL -o /tmp/go.tgz https://go.dev/dl/${GO_VERSION}.linux-amd64.tar.gz
+    GO_VERSION=$(curl -sSL https://golang.google.cn/VERSION?m=text | head -1)
+    curl -sSL -o /tmp/go.tgz https://golang.google.cn/dl/${GO_VERSION}.linux-amd64.tar.gz
     tar xf /tmp/go.tgz -C /usr/local/
 }
 
