@@ -83,12 +83,15 @@ podman manifest push docker.io/siji/any:latest
 
 ## Setup Mirrors
 
+Put file under `/etc/containers/registries.conf.d/`.
+
 * prefix, the prefix of user-specified image name, can be omitted and default to `location`
 * location, the physical location of the image
 * insecure, pull image from HTTP or untrusted HTTPS
 * block, pull image with matching name is forbidden
 
 ```
+# /etc/containers/registries.conf.d/docker.io.conf
 # docker.io/repo/image =>
      1. registry.dockermirror.com/repo/image
      2. mirror.com/repo/image
@@ -105,6 +108,7 @@ location = "mirror.com"
 ```
 
 ```
+# /etc/containers/registries.conf.d/docker.io.conf
 # docker.io/repo/image => mirror.local/docker.io/repo/image
 [[registry]]
 location = "docker.io"
