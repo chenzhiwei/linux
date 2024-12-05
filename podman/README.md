@@ -81,6 +81,53 @@ podman build --platform linux/amd64,linux/arm64 --manifest docker.io/siji/any:la
 podman manifest push docker.io/siji/any:latest
 ```
 
+## Setup Mirrors
+
+* prefix, the prefix of user-specified image name, can be omitted and default to `location`
+* location, the physical location of the image
+* insecure, pull image from HTTP or untrusted HTTPS
+* block, pull image with matching name is forbidden
+
+```
+# docker.io/repo/image =>
+     1. registry.dockermirror.com/repo/image
+     2. mirror.com/repo/image
+[[registry]]
+block = false
+location = "docker.io"
+
+[[registry.mirror]]
+location = "registry.dockermirror.com"
+
+[[registry.mirror]]
+insecure = true
+location = "mirror.com"
+```
+
+```
+# docker.io/repo/image => mirror.local/docker.io/repo/image
+[[registry]]
+location = "docker.io"
+
+[[registry.mirror]]
+insecure = true
+location = "mirror.local/docker.io"
+```
+
+```
+# Not recommend to set prefix
+# docker.io/repo/image =>
+     1. mirror.com/repo/image
+     2. registry.dockermirror.com/repo/image
+[[registry]]
+prefix = "docker.io"
+location = "registry.dockermirror.com"
+
+[[registry.mirror]]
+insecure = true
+location = "mirror.com"
+```
+
 <details>
   <summary>Deprecated Steps</summary>
 
