@@ -24,20 +24,60 @@
 
 ## 测试命令
 
-测试命令：
+* 顺序写吞吐量：
 
-```
-fio --name=write4K-seq --directory=/mnt/dir \
-    --ioengine=libaio --direct=1 --rw=write \
-    --numjobs=16 --time_based --runtime=3m \
-    --group_reporting --size=1G --bs=4K \
-    --iodepth=256 --iodepth_batch_submit=256 --iodepth_batch_complete_max=256
-```
+    ```
+    fio --name=write_throughput --directory=/path/to \
+        --ioengine=libaio --direct --rw=write \
+        --numjobs=16 --time_based --runtime=5m --ramp_time=2s \
+        --group_reporting --size=1G --bs=1M \
+        --iodepth=64 --iodepth_batch_submit=64 --iodepth_batch_complete_max=64
+    ```
+
+* 随机写IOPS：
+
+    ```
+    fio --name=write_iops --directory=/path/to \
+        --ioengine=libaio --direct --rw=randwrite \
+        --numjobs=16 --time_based --runtime=5m --ramp_time=2s \
+        --group_reporting --size=1G --bs=4K \
+        --iodepth=256 --iodepth_batch_submit=256 --iodepth_batch_complete_max=256
+    ```
+
+* 顺序读吞吐量：
+
+    ```
+    fio --name=read_throughput --directory=/path/to \
+        --ioengine=libaio --direct --rw=read \
+        --numjobs=16 --time_based --runtime=5m --ramp_time=2s \
+        --group_reporting --size=1G --bs=1M \
+        --iodepth=64 --iodepth_batch_submit=64 --iodepth_batch_complete_max=64
+    ```
+
+* 随机读IOPS：
+
+    ```
+    fio --name=read_iops --directory=/path/to \
+        --ioengine=libaio --direct --rw=randread \
+        --numjobs=16 --time_based --runtime=5m --ramp_time=2s \
+        --group_reporting --size=1G --bs=4K \
+        --iodepth=256 --iodepth_batch_submit=256 --iodepth_batch_complete_max=256
+    ```
+
+* 测试裸盘写IOPS：
+
+    ```
+    fio --name=write_iops --filename=/dev/sdX --filesize=200G \
+        --ioengine=libaio --direct --rw=randwrite \
+        --numjobs=16 --time_based --runtime=5m --ramp_time=2s \
+        --group_reporting --bs=4K \
+        --iodepth=256 --iodepth_batch_submit=256 --iodepth_batch_complete_max=256
+    ```
 
 使用Jobfile：
 
 ```
-fio --output output.file --output-format terse,json,json+,normal jobfile.conf
+fio --output output.fio --output-format terse,json,json+,normal jobfile.conf
 ```
 
 jobfile.conf:
@@ -47,42 +87,45 @@ jobfile.conf:
 ```
 [global]
 ioengine=libaio
-direct=1
+direct
 numjobs=16
-group_reporting=1
+group_reporting
 ramp_time=2s
 runtime=5m
 size=2G
 time_based
-verify=0
 
 directory=/your/path
 
-[write1M-seq]
+[write1M-seq-throughput]
 bs=1M
 iodepth=64
 iodepth_batch_complete_max=64
 iodepth_batch_submit=64
 rw=write
+new_group
 
-[write4K-rand]
+[write4K-rand-iops]
 bs=4K
 iodepth=256
 iodepth_batch_complete_max=256
 iodepth_batch_submit=256
 rw=randwrite
+new_group
 
-[read1M-seq]
+[read1M-seq-throughput]
 bs=1M
 iodepth=64
 iodepth_batch_complete_max=64
 iodepth_batch_submit=64
 rw=read
+new_group
 
-[read4K-rand]
+[read4K-rand-iops]
 bs=4K
 iodepth=256
 iodepth_batch_complete_max=256
 iodepth_batch_submit=256
 rw=randread
+new_group
 ```
