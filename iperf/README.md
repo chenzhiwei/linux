@@ -31,3 +31,20 @@ lscpu
 
 taskset -c 0-5 iperf3 --server/--client
 ```
+
+## 错误
+
+如遇到如下错误：
+
+> iperf3: error - socket buffer size not set correctly
+
+https://github.com/esnet/iperf/issues/757#issuecomment-401173762
+
+在客户端与服务端运行如下命令：
+
+```
+sysctl -w net.core.wmem_max=67108864
+sysctl -w net.core.rmem_max=67108864
+sysctl -w net.ipv4.tcp_rmem="4096 87380 33554432"
+sysctl -w net.ipv4.tcp_wmem="4096 65536 33554432"
+```
