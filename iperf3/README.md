@@ -8,6 +8,8 @@
 sudo wget -O /usr/lib64/libiperf.so.0 https://iperf.fr/download/ubuntu/libiperf.so.0_3.1.3
 sudo wget -O /usr/bin/iperf3 https://iperf.fr/download/ubuntu/iperf3_3.1.3
 sudo chmod +x /usr/bin/iperf3
+
+sudo apt update && sudo apt install iperf3
 ```
 
 ## 使用
