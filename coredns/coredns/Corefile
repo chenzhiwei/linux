@@ -1,65 +1,62 @@
-# Snippet
-(forward) {
-	forward . 1.1.1.1 8.8.8.8 9.9.9.9
+# Snippet, can be used by `import`
+(common-snip) {
+    log
+    errors
+
+    # reload every 24 hours
+    reload 24h
+
+    # bind address
+    bind 0.0.0.0
+
+    # forward . 1.1.1.1 8.8.8.8 9.9.9.9
+    forward . /etc/resolv.conf
 }
 
-# Inline format hosts
-inline:53 {
-    hosts local.hosts {
-        192.168.122.11 node1.inline
-        192.168.122.12 node2.inline
+# DNS Server for a specific domain
+youya.org:53 {
+    file /etc/coredns/zones/youya.org.zone
+
+    import common-snip
+}
+
+# DNS Server
+.:53 {
+    # hosts plugin
+    # use both /etc/hosts and following inline hosts
+    hosts {
+        192.168.122.11 node1.internal
+        192.168.122.12 node2.internal
+        192.168.122.22 node2.internal
+        192.168.122.32 node2.internal
+        ttl 3600
         fallthrough
     }
-    import forward
-}
 
-# File format hosts
-file:53 {
-    root /etc/coredns/hosts.d
-    hosts file.hosts {
-        fallthrough
-	}
-    log
-}
-
-# No IP domain
-# domain-name.1.2.3.4.noip -> 1.2.3.4
-noip:53 {
+    # template plugin
+    # 1.2.3.4.noip -> 1.2.3.4
+    # ip-1-2-3-4.noip -> 1.2.3.4
     template ANY ANY {
-        match ^.*\.(?P<a>[0-9]*)\.(?P<b>[0-9]*)\.(?P<c>[0-9]*)\.(?P<d>[0-9]*)\.noip[.]$
+        match "^(?P<a>[0-9]*)\.(?P<b>[0-9]*)\.(?P<c>[0-9]*)\.(?P<d>[0-9]*)\.noip[.]$"
+        match "^ip-(?P<a>[0-9]*)-(?P<b>[0-9]*)-(?P<c>[0-9]*)-(?P<d>[0-9]*)\.noip[.]$"
         answer "{{ .Name }} 60 IN A {{ .Group.a }}.{{ .Group.b }}.{{ .Group.c }}.{{ .Group.d }}"
         fallthrough
     }
+
+    # template plugin
+    # prefix.xxx.xx -> 10.1.2.3
+    template ANY ANY {
+        match "^prefix\."
+        answer "{{ .Name }} 60 IN A 10.1.2.3"
+        fallthrough
+    }
+
+    import common-snip
 }
 
-# Regular expression
-regex:53 {
-    # Root domain
-    template ANY ANY {
-        match ^regex[.]$
-        answer "{{ .Name }} 60 IN A 127.0.0.1"
-        fallthrough
-    }
+# DOH DNS Server
+https://. {
+    tls /etc/coredns/pki/tls.crt /etc/coredns/pki/tls.key
 
-    # Sub domain
-    template ANY ANY {
-        match ^sub.regex[.]$
-        answer "{{ .Name }} 60 IN A 127.0.0.2"
-        fallthrough
-    }
-
-    # Regex domain
-    template ANY ANY {
-        match ^.*\.regex[.]$
-        answer "{{ .Name }} 60 IN A 127.0.0.3"
-        fallthrough
-    }
-    import forward
-}
-
-.:53 {
-    hosts /etc/hosts {
-        fallthrough
-    }
-    import forward
+    import common-snip
 }
