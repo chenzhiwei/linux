@@ -1,5 +1,7 @@
 # SSH
 
+是时候与时俱进了，使用`ed25519`类型的密钥。而 RSA 类型的密钥需要4096位了，实在太长了。
+
 ## SSH Import
 
 突然发现Ubuntu下有个包`ssh-import-id`，可以自动导入用户在Launchpad或Github上的ssh key，于是打开脚本看一下发现如下：
@@ -24,29 +26,43 @@ https://launchpad.net/~username/+sshkeys
 
 The Private key contains the public key and the comment, you can only backup the private key.
 
+### Generate SSH Key Pair
+
+```
+ssh-keygen -t ed25519 -C "zhiwei@ubuntu"
+```
+
+> 在旧系统上使用`ssh-keygen -t rsa -b 4096`
+
 ### Export Public Key from Private Key
 
 ```
-ssh-keygen -y -f id_rsa > id_rsa.pub
+ssh-keygen -y -f id_ed25519 > id_ed25519.pub
+```
+
+### Get RSA public key fingerprint
+
+```
+ssh-keygen -l -f id_ed25519
+ssh-keygen -l -f id_ed25519.pub
 ```
 
 ### Update the comment in Private Key
 
 ```
-ssh-keygen -c -f id_rsa -C "the new comment"
+ssh-keygen -c -f id_ed25519 -C "the new comment"
 ```
 
 ### Convert Private Key from OpenSSH to PEM(RSA)
 
 ```
-ssh-keygen -p -N"" -m PEM id_rsa
+ssh-keygen -p -N"" -m PEM id_ed25519
 ```
-
 
 ### Convert Private Key from PEM(RSA) to OpenSSH
 
 ```
-ssh-keygen -p -N"" id_rsa
+ssh-keygen -p -N"" id_ed25519
 ```
 
 
