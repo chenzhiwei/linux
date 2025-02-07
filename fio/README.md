@@ -100,28 +100,28 @@ time_based
 
 directory=/your/path
 
-[write1M-seq-throughput]
+[job-throughput-1M-seq-write]
 bs=1M
 rw=write
 iodepth=64
 iodepth_batch_submit=64
 iodepth_batch_complete_max=64
 
-[write4K-rand-iops]
+[job-iops-4K-rand-write]
 bs=4K
 rw=randwrite
 iodepth=256
 iodepth_batch_submit=256
 iodepth_batch_complete_max=256
 
-[read1M-seq-throughput]
+[job-throughput-1M-seq-read]
 bs=1M
 rw=read
 iodepth=64
 iodepth_batch_submit=64
 iodepth_batch_complete_max=64
 
-[read4K-rand-iops]
+[job-iops-4K-rand-read]
 bs=4K
 rw=randread
 iodepth=256
