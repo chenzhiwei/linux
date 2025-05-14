@@ -243,6 +243,42 @@ $ git checkout -b new_branch
 $ git checkout -- file_name
 ```
 
+### git fetch
+
+通常`git fetch`会将远端仓库里的所有branch给fetch下来，这个命令的行为在`.git/config`中配置，通常内容如下：
+
+```
+...
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+...
+```
+
+即运行`git fetch origin`会将远端仓库的所有分支给 fetch 下来，这种配置的协作模式一般是每个人都有自己的仓库，合并请求是从自己的 fork 仓库向主仓库发。
+
+也有一部分项目是在同一个仓库进行开发，为不同的改动创建不同的 branch ，这种会导致仓库的 branch 非常非常多，所以配置一般如下：
+
+```
+...
+[remote "origin"]
+	fetch = +refs/heads/master:refs/remotes/origin/master
+...
+```
+
+但这样的话不太适合多 branch 开发，比如有时还会往 stable branch 提交PR，这样就不好办了，因为`git fetch origin`只会把 master branch 内容给 fetch 下来，这时可以将仓库根目录下的`.git/config`改成如下内容：
+
+```
+...
+[remote "origin"]
+	fetch = +refs/heads/master:refs/remotes/origin/master
+	fetch = +refs/heads/stable:refs/remotes/origin/stable
+...
+```
+
+如此一来，`git fetch origin`就会同时将远端最新的 master 和 stable branch 的内容 fetch 下来。
+
+单独执行的话，命令是：`git fetch origin stable:refs/remotes/origin/stable`
+
 ### git clean
 
 清理当前工作目录。
