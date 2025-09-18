@@ -1,8 +1,7 @@
-export PATH=$HOME/.local/bin:$PATH
+# shellcheck source=bashrc
 
 _dir="$HOME/.local/share/bash-completion/completions"
 
-[[ -d $_dir ]] || exit
-for _file in $(ls $_dir); do
+for _file in $(ls $_dir 2>/dev/null); do
     . "$_dir/$_file"
 done
