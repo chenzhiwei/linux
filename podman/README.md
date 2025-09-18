@@ -10,17 +10,23 @@ Build all the Podman required binaries inside container.
 
 ```
 apt install --no-install-recommends docker.io
-docker run --rm -v $(pwd):/data docker.io/library/ubuntu:22.04 /data/build-podman.sh
+docker run --rm -v $(pwd):/data docker.io/library/ubuntu:24.04 /data/build-podman.sh
 apt purge docker.io containerd runc
 rm -rf /var/lib/docker
 
 rsync -a files/* /
 ```
 
+For Rootless Podman:
+
+* copy the binaries to `~/.local/{bin,lib,libexec}`
+* copy the configuration to `~/.config/containers/containers.conf`
+* append `. ~/.config/containers/bashrc` to your bashrc
+
 ## Install Podman Runtime Dependencies
 
 ```
-apt install fuse-overlayfs passt iptables
+apt install fuse-overlayfs passt libyajl2 uidmap
 ```
 
 ## Use wasm with Podman
