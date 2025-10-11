@@ -4,7 +4,30 @@ Podman is a Docker alternative tool and which gets rid of the big daemon.
 
 I like this tool, the commands are almost same as Docker.
 
+## Install Podman and Dependencies
+
+```
+apt install --no-install-recommends podman aardvark-dns fuse-overlayfs passt libyajl2 uidmap
+```
+
+## Override Configurations
+
+* etc/containers/containers.conf
+* etc/containers/registries.conf.d/ghcr.io.conf
+* etc/containers/registries.conf.d/docker.io.conf
+
+For Rootless Podman in User Dir:
+
+* copy the binaries to `~/.local/{bin,lib,libexec}`
+* copy the configuration to `~/.config/containers/containers.conf`
+* append `. ~/.config/containers/bashrc` to your bashrc
+
+<details>
+  <summary>Deprecated Steps</summary>
+
 ## Build Podman Binaries
+
+Podman is stable enough in Debian and Ubuntu latest releases, I think I don't need to manually build it anymore.
 
 Build all the Podman required binaries inside container.
 
@@ -50,6 +73,7 @@ rundir: /run/user/1000/crun
 spec: 1.0.0
 +SYSTEMD +SELINUX +APPARMOR +CAP +SECCOMP +EBPF +CRIU +WASM:wasmedge +YAJL
 ```
+</details>
 
 ### Build a wasm image and run it
 
