@@ -16,11 +16,34 @@ apt install --no-install-recommends podman aardvark-dns fuse-overlayfs passt lib
 * etc/containers/registries.conf.d/ghcr.io.conf
 * etc/containers/registries.conf.d/docker.io.conf
 
-For Rootless Podman in User Dir:
+For Rootless Podman in User Directory, use following structure:
 
-* copy the binaries to `~/.local/{bin,lib,libexec}`
-* copy the configuration to `~/.config/containers/containers.conf`
-* append `. ~/.config/containers/bashrc` to your bashrc
+```
+~/.local
+|-- bin
+|   |-- crun
+|   |-- crun-wasm
+|   |-- docker -> podman
+|   |-- podman
+|   `-- skopeo
+|-- libexec
+|   `-- podman
+|       |-- aardvark-dns
+|       |-- conmon
+|       |-- netavark
+|       |-- quadlet
+|       `-- rootlessport
+`-- share
+    `-- bash-completion
+        `-- completions
+            |-- kubectl
+            `-- podman
+
+~/.config
+`-- containers
+    |-- bashrc
+    `-- containers.conf
+```
 
 <details>
   <summary>Deprecated Steps</summary>
