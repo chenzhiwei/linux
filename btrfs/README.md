@@ -71,6 +71,12 @@ Btrfs 也被称为「Better FS」、「Butter FS」、「B-tree FS」，是一�
     btrfs qgroup limit 10G 0/256 /data
     ```
 
+* 查看子卷配额
+
+    ```
+    btrfs subvolume show /data/@video
+    ```
+
 * 挂载子卷
 
     ```
