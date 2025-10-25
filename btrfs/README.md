@@ -88,7 +88,7 @@ Btrfs 也被称为「Better FS」、「Butter FS」、「B-tree FS」，是一�
     将如下内容放入`/etc/fstab`中，可通过`blkid`来获取`UUID`。
 
     ```
-    UUID=</dev/nvme0n1p1 uuid> /video btrfs defaults,compress=zstd,subvol=/@video 0 0
+    UUID=</dev/nvme0n1p1 uuid> /video btrfs rw,relatime,compress=zstd,subvol=/@video 0 0
     ```
 
 ## 高级用法 Raid
