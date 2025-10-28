@@ -26,7 +26,7 @@ For Rootless Podman in User Directory, use following structure:
 |   |-- docker -> podman
 |   |-- podman
 |   `-- skopeo
-|-- libexec
+|-- lib
 |   `-- podman
 |       |-- aardvark-dns
 |       |-- conmon
