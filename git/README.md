@@ -655,6 +655,36 @@ Host github.com
 
 原理是给 SSH 配置代理，其中`-X 5`的意思是使用 socks5 协议，`-x localhost:1080`就是 socks5 的代理地址了，这两个都是 nc 的参数。
 
+## git worktree
+
+主要是为了开发方便，可以同进行多个并行开发，比如同时修复多个bug或添加多个功能时。
+
+不需要使用 git stash 进行暂存了。
+
+* 列出 worktree
+
+    ```
+    git worktree list
+    ```
+
+* 创建 worktree
+
+    创建之后可以切过去进行开发，并做代码提交和修改，完成后删除即可。
+
+    ```
+    git worktree add -b bugfix ../bugfix origin/master
+
+    cd ../bugfix
+    git status
+    git branch -a
+    git remote -v
+    ```
+
+* 删除 worktree
+
+    ```
+    git worktree remove xxx
+    ```
 
 ## 其他
 
