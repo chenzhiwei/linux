@@ -1,0 +1,25 @@
+http:
+  address: "0.0.0.0"
+  port: "5000"
+  compat: ["docker2s2"]
+  # tls:
+  #   key: /etc/zot/tls.key
+  #   cert: /etc/zot/tls.crt
+storage:
+  rootDirectory: "/var/lib/zot"
+extensions:
+  sync:
+    enable: true
+    registries:
+      - onDemand: true  # podman pull xxx.com/docker/library/alpine:latest
+        urls:
+          - "https://docker.io"
+        content:
+          - prefix: "**"
+            destination: "/docker"
+      - onDemand: true  # podman pull xxx.com/quay/library/alpine:latest
+        urls:
+          - "https://quay.io"
+        content:
+          - prefix: "**"
+            destination: "/quay"
