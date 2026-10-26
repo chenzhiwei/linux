@@ -25,6 +25,10 @@ data:
     storage:
       rootDirectory: "/var/lib/zot"
     extensions:
+      ui:
+        enable: true
+      search:
+        enable: true
       sync:
         enable: true
         registries:
