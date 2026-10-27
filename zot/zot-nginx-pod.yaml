@@ -14,7 +14,7 @@ data:
       compat: ["docker2s2"]
       auth:
         htpasswd:
-          path: "/etc/zot/conf/auth.htpasswd"
+          path: "/etc/zot/auth.htpasswd"
       accessControl:
         repositories:
           "**":
@@ -49,15 +49,15 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: zot-nginx
+  name: nginx-config
 data:
   zot-https.conf: |-
     server {
         listen       443 ssl http2;
         server_name  _;
 
-        ssl_certificate      /etc/zot/pki/tls.crt;
-        ssl_certificate_key  /etc/zot/pki/tls.key;
+        ssl_certificate      /etc/nginx/pki/zot.crt;
+        ssl_certificate_key  /etc/nginx/pki/zot.key;
 
         ssl_protocols TLSv1.2 TLSv1.3;
         ssl_prefer_server_ciphers   on;
@@ -92,32 +92,32 @@ spec:
           hostPort: 443
           protocol: TCP
       volumeMounts:
-        - name: zot-nginx
+        - name: nginx-config
           mountPath: /etc/nginx/conf.d
-        - name: zot-pki
-          mountPath: /etc/zot/pki
+        - name: nginx-pki
+          mountPath: /etc/nginx/pki
     - name: zot
       image: ghcr.io/project-zot/zot-linux-amd64:latest
       command:
         - zot-linux-amd64
         - serve
-        - /etc/zot/conf/config.yaml
+        - /etc/zot/config.yaml
       volumeMounts:
         - name: zot-config
-          mountPath: /etc/zot/conf
+          mountPath: /etc/zot
         - name: zot-data
           mountPath: /var/lib/zot
   volumes:
-    - name: zot-nginx
+    - name: nginx-config
       configMap:
-        name: zot-nginx
+        name: nginx-config
+    - name: nginx-pki
+      hostPath:
+        path: /etc/nginx/pki
+        type: DirectoryOrCreate
     - name: zot-config
       configMap:
         name: zot-config
-    - name: zot-pki
-      hostPath:
-        path: /etc/zot/pki
-        type: DirectoryOrCreate
     - name: zot-data
       hostPath:
         path: /var/lib/zot
