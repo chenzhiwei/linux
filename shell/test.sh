@@ -19,13 +19,9 @@ function app::component::action() {
 }
 
 function app::component::stdout() {
-    cat <<EOF >&1
-
-Hello stdout!
-
-This is the FULL_PATH: ${FULL_PATH}
-
-EOF
+    cat <<EOF | sed 's/^        //' >&1
+        instance-id: qemu/
+    EOF
 }
 
 function app::component::stderr() {
